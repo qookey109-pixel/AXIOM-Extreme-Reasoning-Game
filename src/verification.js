@@ -133,6 +133,41 @@ function predictedSequence(model,last){
 function sameSequenceSpec(a,b){
  return a&&b&&a.sides===b.sides&&a.angle===b.angle&&a.fill===b.fill;
 }
+function canonicalLines(lines){return [...new Set(lines)].sort().join("|");}
+function lineSetOp(model,a,b){
+ const A=new Set(a),B=new Set(b),out=[];
+ const all=[...new Set([...A,...B])];
+ for(const x of all){
+  const hit=model==="xor"?(A.has(x)!==B.has(x)):model==="or"?(A.has(x)||B.has(x)):(A.has(x)&&B.has(x));
+  if(hit)out.push(x);
+ }
+ return out.sort();
+}
+const FIXED_CUBE_CELLS=[["A",0,-1],["B",-1,0],["C",0,0],["D",1,0],["E",2,0],["F",0,1]];
+const neg=v=>v.map(x=>-x);
+function foldCubeNet(cells){
+ const byCoord=new Map(cells.map(([label,x,y])=>[x+","+y,label]));
+ const byLabel=new Map(cells.map(([label,x,y])=>[label,{x,y}]));
+ const first=cells.find(x=>x[0]==="C")||cells[0];
+ const orient=new Map([[first[0],{u:[1,0,0],v:[0,1,0],n:[0,0,1]}]]);
+ const queue=[first[0]];
+ const moves=[[1,0,"east"],[-1,0,"west"],[0,1,"south"],[0,-1,"north"]];
+ while(queue.length){
+  const label=queue.shift(),pos=byLabel.get(label),o=orient.get(label);
+  for(const [dx,dy,dir] of moves){
+   const next=byCoord.get((pos.x+dx)+","+(pos.y+dy));if(!next||orient.has(next))continue;
+   let no;
+   if(dir==="east")no={u:neg(o.n),v:o.v.slice(),n:o.u.slice()};
+   if(dir==="west")no={u:o.n.slice(),v:o.v.slice(),n:neg(o.u)};
+   if(dir==="south")no={u:o.u.slice(),v:neg(o.n),n:o.v.slice()};
+   if(dir==="north")no={u:o.u.slice(),v:o.n.slice(),n:neg(o.v)};
+   orient.set(next,no);queue.push(next);
+  }
+ }
+ return orient;
+}
+function sameVec(a,b){return a&&b&&a.length===b.length&&a.every((x,i)=>x===b[i]);}
+
 function baseManifest(q){
  const generated=!["P01","C01","R01","M01","S01","ROT01","MOVE01","SP01"].includes(q.id);
  return {
@@ -171,8 +206,51 @@ function verifyStructural(q,m){
  if(!ok)m.machine.notes.push("structural validation failed");
  return ok;
 }
+function verifyPyramid(q,m){
+ const c=q.checker;
+ const rows=c?.kind==="pyramid"?c.rows:(q.figure?.kind==="pyramid"?q.figure.rows:null);
+ if(!Array.isArray(rows)||rows.length!==4)return false;
+ const weights=c?.weights||[1,2,3,4,5,6];
+ const matches=weights.filter(w=>{
+  for(let layer=0;layer<3;layer++){
+   const parent=rows[layer],child=rows[layer+1];
+   for(let j=0;j<parent.length;j++){
+    if(typeof parent[j]!=="number"||typeof child[j]!=="number"||typeof child[j+1]!=="number")continue;
+    if(parent[j]!==child[j]+w*child[j+1])return false;
+   }
+  }
+  return true;
+ });
+ const parent=rows[2][rows[2].length-1],left=rows[3][rows[3].length-2];
+ const predictions=[...new Set(matches.map(w=>(parent-left)/w).filter(Number.isFinite))];
+ const expected=Number(q.options[q.answer]);
+ m.rule_grammar={weighted_parent:"left + k*right",k:weights.slice()};
+ m.machine.solver_verified=matches.length>0&&predictions.includes(expected);
+ m.machine.answer={scope:"semantic_target",count:predictions.length,unique:predictions.length===1,value:expected};
+ m.machine.semantic_solution_count=predictions.length;
+ m.machine.model={applicable:true,grammar:"weighted_pyramid_v1",count:matches.length,unique:matches.length===1,
+  bounded_claim:"Unique only within integer weights k in the declared weighted-parent grammar."};
+ m.machine.notes.push("Pyramid model uniqueness is bounded to left + k*right with declared k values.");
+ return true;
+}
 function verifyMatrix(q,m){
- const c=q.checker;if(!c||!Array.isArray(c.rows)||!Array.isArray(c.masks))return false;
+ const c=q.checker;
+ if(c?.kind==="matrixLines"){
+  const demos=c.rows.slice(0,2),grammar=c.grammar||["xor","or","and"];
+  const matching=grammar.filter(model=>demos.every(([a,b,out])=>canonicalLines(lineSetOp(model,a,b))===canonicalLines(out)));
+  const [a,b]=c.rows[2];
+  const predictions=[...new Set(matching.map(model=>canonicalLines(lineSetOp(model,a,b))))];
+  const expected=canonicalLines(q.answerSpecs?.[q.answer]?.lines||[]);
+  m.rule_grammar=grammar.slice();
+  m.machine.solver_verified=matching.length>0&&predictions.includes(expected);
+  m.machine.answer={scope:"semantic_target",count:predictions.length,unique:predictions.length===1,value:expected};
+  m.machine.semantic_solution_count=predictions.length;
+  m.machine.model={applicable:true,grammar:"legacy_line_set_ops_v1",count:matching.length,unique:matching.length===1,
+   bounded_claim:"Unique only within the declared line-set operations."};
+  m.machine.notes.push("Legacy M01 is reconstructed from its repository SVG and checked inside the declared line-set grammar.");
+  return true;
+ }
+ if(!c||c.kind!=="matrix"||!Array.isArray(c.rows)||!Array.isArray(c.masks))return false;
  const demos=c.rows.slice(0,2);
  const matching=MATRIX_MODELS.filter(model=>demos.every(([a,b,out])=>matrixOp(model,a,b)===out));
  const [a,b]=c.rows[2];
@@ -188,8 +266,13 @@ function verifyMatrix(q,m){
  return true;
 }
 function verifyCircle(q,m){
- const pairs=q.figure?.pairs;if(!Array.isArray(pairs)||pairs.length<5)return false;
- const demos=pairs.slice(0,4),target=pairs[4];
+ const c=q.checker;
+ let demos,target;
+ if(c?.kind==="circle"&&Array.isArray(c.pairs)&&Array.isArray(c.target)){demos=c.pairs;target=c.target;}
+ else {
+  const pairs=q.figure?.pairs;if(!Array.isArray(pairs)||pairs.length<5)return false;
+  demos=pairs.slice(0,4);target=pairs[4];
+ }
  const matching=CIRCLE_MODELS.filter(model=>demos.every(([a,b,out])=>circleOp(model,a,b)===out));
  const predictions=[...new Set(matching.map(model=>circleOp(model,target[0],target[1])))];
  const expected=Number(q.options[q.answer]);
@@ -203,8 +286,9 @@ function verifyCircle(q,m){
  return true;
 }
 function verifyPath(q,m){
- const f=q.figure;if(f?.kind!=="path"||!Array.isArray(f.vals)||!Array.isArray(f.edges))return false;
- const solved=allPathWitnesses(f.vals,f.edges,5),expected=Number(q.options[q.answer]);
+ const c=q.checker,f=c?.kind==="path"?c:q.figure;
+ if(!Array.isArray(f?.vals)||!Array.isArray(f?.edges))return false;
+ const solved=allPathWitnesses(f.vals,f.edges,f.k||5),expected=Number(q.options[q.answer]);
  m.machine.solver_verified=solved.max===expected;
  m.machine.answer={scope:"optimal_value",count:1,unique:true,value:solved.max};
  m.machine.semantic_solution_count=1;
@@ -213,7 +297,8 @@ function verifyPath(q,m){
  return true;
 }
 function verifyLights(q,m){
- const f=q.figure;if(f?.kind!=="lights"||!Array.isArray(f.bits))return false;
+ const c=q.checker,f=c?.kind==="lights"?c:q.figure;
+ if(!Array.isArray(f?.bits))return false;
  const solved=solveLights(f.bits),expected=Number(q.options[q.answer]);
  m.machine.solver_verified=solved.best===expected;
  m.machine.answer={scope:"minimum_move_count",count:1,unique:true,value:solved.best};
@@ -266,7 +351,9 @@ function verifyTruth(q,m){
  return true;
 }
 function verifySequence(q,m){
- const frames=q.figure?.frames;if(q.figure?.kind!=="sequence"||!Array.isArray(frames)||frames.length<3)return false;
+ const c=q.checker;
+ const frames=c?.kind==="sequence"?c.frames:q.figure?.frames;
+ if(!Array.isArray(frames)||frames.length<3)return false;
  const matching=sequenceModels(frames);
  const predictions=matching.map(model=>predictedSequence(model,frames[frames.length-1]));
  const uniquePredictions=[];
@@ -282,6 +369,15 @@ function verifySequence(q,m){
  return true;
 }
 function verifyRotation(q,m){
+ const c=q.checker;
+ if(c?.kind==="rotationChoice"){
+  const good=c.options.map((x,i)=>({x,i})).filter(({x})=>x.mirror===false&&((x.angle%360)+360)%360!==0);
+  m.machine.solver_verified=good.length===1&&q.answer===good[0].i;
+  m.machine.answer={scope:"displayed_options",count:good.length,unique:good.length===1,value:q.options[q.answer]};
+  m.machine.semantic_solution_count=good.length;
+  m.machine.model={applicable:false,grammar:null,count:null,unique:null,bounded_claim:"The prompt asks for the sole pure non-mirrored rotation among displayed transforms."};
+  return true;
+ }
  if(q.figure?.kind!=="rotation"||!Array.isArray(q.answerSpecs))return false;
  const target=q.answerSpecs.filter(x=>x.kind==="rotation"&&x.angle===q.figure.degrees&&x.mirror===false);
  m.machine.solver_verified=target.length===1&&q.answerSpecs[q.answer]===target[0];
@@ -291,21 +387,24 @@ function verifyRotation(q,m){
  return true;
 }
 function verifyCube(q,m){
- if(q.figure?.kind!=="cubeNet"||!Array.isArray(q.options))return false;
- const opposite={A:"F",F:"A",B:"D",D:"B",C:"E",E:"C"}[q.figure.ask];
+ const c=q.checker,cells=c?.kind==="cubeNet"?c.cells:FIXED_CUBE_CELLS;
+ const ask=c?.kind==="cubeNet"?c.ask:q.figure?.ask;
+ if(!Array.isArray(cells)||!ask||!Array.isArray(q.options))return false;
+ const orient=foldCubeNet(cells),targetNormal=neg(orient.get(ask)?.n||[]);
+ const opposite=[...orient.entries()].find(([label,o])=>label!==ask&&sameVec(o.n,targetNormal))?.[0];
  if(!opposite)return false;
  const hits=q.options.filter(x=>x===opposite);
  m.machine.solver_verified=hits.length===1&&q.options[q.answer]===opposite;
  m.machine.answer={scope:"explicit_geometry",count:hits.length,unique:hits.length===1,value:opposite};
  m.machine.semantic_solution_count=1;
- m.machine.model={applicable:false,grammar:null,count:null,unique:null,bounded_claim:"Fixed cube-net geometry; hidden-rule model uniqueness is not applicable."};
+ m.machine.model={applicable:false,grammar:null,count:null,unique:null,bounded_claim:"Opposite faces are derived by folding the declared 2D cube net into face normals."};
  return true;
 }
 
 export function buildVerificationManifest(q){
  const m=baseManifest(q);
  if(!verifyStructural(q,m))return m;
- const handlers=[verifyMatrix,verifyCircle,verifyPath,verifyLights,verifyCoins,verifyOrder,verifyLogic,verifyTruth,verifySequence,verifyRotation,verifyCube];
+ const handlers=[verifyPyramid,verifyMatrix,verifyCircle,verifyPath,verifyLights,verifyCoins,verifyOrder,verifyLogic,verifyTruth,verifySequence,verifyRotation,verifyCube];
  const handled=handlers.some(fn=>fn(q,m));
  if(!handled){
   m.machine.notes.push("No independent V0.5 verifier yet; keep existing gameplay but do not upgrade verification claims.");
