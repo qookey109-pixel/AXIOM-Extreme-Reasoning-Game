@@ -16,6 +16,11 @@ assert.deepEqual(summary.legacy_or_pending,[],"published bank contains pending v
 for(const m of manifests){
  assert.equal(m.schema_version,VERIFICATION_SCHEMA_VERSION,m.id);
  assert(typeof m.family==="string"&&m.family.length>0,m.id+" missing family");
+ assert(typeof m.generator?.id==="string"&&m.generator.id.length>0,m.id+" missing generator id");
+ assert(typeof m.generator?.version==="string"&&m.generator.version.length>0,m.id+" missing generator version");
+ assert(Object.hasOwn(m.generator,"seed"),m.id+" missing generator seed field");
+ assert(Object.hasOwn(m.generator,"option_seed"),m.id+" missing option seed field");
+ assert(["deterministic_static","deterministic_seeded"].includes(m.generator.reproducibility),m.id+" bad reproducibility");
  assert(m.provenance?.origin==="axiom_original",m.id+" provenance");
  assert(m.editorial?.published===true,m.id+" publication state");
  if(m.machine.solver_verified){
