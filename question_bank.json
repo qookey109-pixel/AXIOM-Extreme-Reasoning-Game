@@ -1,5 +1,6 @@
 {
-  "version": "0.3.2",
+  "version": "0.4.0",
+  "source_of_truth": "src/questions.js",
   "categories": [
     "數字金字塔",
     "圓盤數字",
@@ -14,12 +15,41 @@
     "真假命題",
     "空間／展開圖"
   ],
+  "difficulty_labels": [
+    "Hard",
+    "Expert",
+    "Ω"
+  ],
+  "meta": {
+    "version": "0.4.0",
+    "count": 50,
+    "categoryCount": 12,
+    "difficultyCounts": {
+      "Hard": 18,
+      "Expert": 22,
+      "Ω": 10
+    },
+    "categoryCounts": {
+      "數字金字塔": 5,
+      "圓盤數字": 5,
+      "路徑最佳化": 4,
+      "圖形缺項": 5,
+      "圖形序列": 5,
+      "旋轉／鏡像": 4,
+      "棋子移動": 4,
+      "空間／展開圖": 3,
+      "幣值／組合限制": 4,
+      "排序／分組": 4,
+      "Logic Grid": 4,
+      "真假命題": 3
+    }
+  },
   "questions": [
     {
       "id": "P01",
       "category": "數字金字塔",
       "difficulty": "Hard",
-      "prompt": "同一個生成規則套用到每一層。底部的 ? 應是多少？",
+      "prompt": "同一個生成規則套用到每一層。底部 ? 是多少？",
       "options": [
         "2",
         "3",
@@ -27,19 +57,37 @@
         "5"
       ],
       "answer": 1,
-      "hint": "觀察父節點與正下方兩個子節點的關係；左右權重不同。",
-      "explain": "父節點 = 左子節點 + 2×右子節點，所以 7 = 1 + 2×3。",
-      "asset": {
-        "src": "assets/png/pyramid.png",
-        "width": 1000,
-        "height": 650
-      }
+      "hint": "父節點 = 左子節點 + 2×右子節點。",
+      "explain": "7 = 1 + 2×3。",
+      "asset": "assets/png/pyramid.png",
+      "figure": {
+        "kind": "legacy",
+        "img": "pyramid.png"
+      },
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": "2"
+        },
+        {
+          "kind": "number",
+          "value": "3"
+        },
+        {
+          "kind": "number",
+          "value": "4"
+        },
+        {
+          "kind": "number",
+          "value": "5"
+        }
+      ]
     },
     {
       "id": "C01",
       "category": "圓盤數字",
       "difficulty": "Hard",
-      "prompt": "每一個扇區都使用同一條規則。問號是多少？",
+      "prompt": "每個扇區遵循同一條運算規則。? 是多少？",
       "options": [
         "40",
         "41",
@@ -47,19 +95,37 @@
         "45"
       ],
       "answer": 2,
-      "hint": "先試乘積，再看還差多少。",
-      "explain": "內值 = a×b + |a−b|，所以 5×8+3=43。",
-      "asset": {
-        "src": "assets/png/circle.png",
-        "width": 800,
-        "height": 800
-      }
+      "hint": "先看兩數乘積，再看它們的差。",
+      "explain": "a×b+|a−b|；5×8+3=43。",
+      "asset": "assets/png/circle.png",
+      "figure": {
+        "kind": "legacy",
+        "img": "circle.png"
+      },
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": "40"
+        },
+        {
+          "kind": "number",
+          "value": "41"
+        },
+        {
+          "kind": "number",
+          "value": "43"
+        },
+        {
+          "kind": "number",
+          "value": "45"
+        }
+      ]
     },
     {
       "id": "R01",
       "category": "路徑最佳化",
       "difficulty": "Expert",
-      "prompt": "沿線走訪恰好 5 個不同節點，節點不可重複。最大總和是多少？",
+      "prompt": "沿線走訪 5 個不同節點。最大總和是多少？",
       "options": [
         "31",
         "33",
@@ -67,19 +133,37 @@
         "37"
       ],
       "answer": 2,
-      "hint": "試著把 7、9、8、6、5 串成一條合法路徑。",
-      "explain": "7→9→8→6→5 是合法路徑，總和 35。",
-      "asset": {
-        "src": "assets/png/graph.png",
-        "width": 1000,
-        "height": 620
-      }
+      "hint": "高值節點不一定可以全部直接串在一起。",
+      "explain": "7→9→8→6→5，總和 35。",
+      "asset": "assets/png/graph.png",
+      "figure": {
+        "kind": "legacy",
+        "img": "graph.png"
+      },
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": "31"
+        },
+        {
+          "kind": "number",
+          "value": "33"
+        },
+        {
+          "kind": "number",
+          "value": "35"
+        },
+        {
+          "kind": "number",
+          "value": "37"
+        }
+      ]
     },
     {
       "id": "M01",
       "category": "圖形缺項",
       "difficulty": "Ω",
-      "prompt": "找出右下角缺失圖。規則沒有直接告訴你。",
+      "prompt": "找出右下角缺失圖。先自行推導規則。",
       "options": [
         "A",
         "B",
@@ -87,39 +171,97 @@
         "D"
       ],
       "answer": 2,
-      "hint": "把每格視為一組線段；共同線段會消失。",
-      "explain": "每列第三格是前兩格的 XOR，所以答案是 C。",
-      "asset": {
-        "src": "assets/png/matrix.png",
-        "width": 900,
-        "height": 900
-      }
+      "hint": "把圖形拆成線段集合；看看重複部分。",
+      "explain": "每列第三格為前兩格的線段 XOR，答案 C。",
+      "asset": "assets/png/matrix.png",
+      "figure": {
+        "kind": "legacy",
+        "img": "matrix.png"
+      },
+      "answerSpecs": [
+        {
+          "kind": "segments",
+          "lines": [
+            "v",
+            "h"
+          ]
+        },
+        {
+          "kind": "segments",
+          "lines": [
+            "d1",
+            "d2"
+          ]
+        },
+        {
+          "kind": "segments",
+          "lines": [
+            "v",
+            "h",
+            "d1"
+          ]
+        },
+        {
+          "kind": "segments",
+          "lines": [
+            "v",
+            "h",
+            "d2"
+          ]
+        }
+      ]
     },
     {
       "id": "S01",
       "category": "圖形序列",
       "difficulty": "Expert",
-      "prompt": "外框、箭頭方向與中心狀態同時改變。下一個應是哪個？",
+      "prompt": "外框、箭頭與中心狀態都在變。下一圖是？",
       "options": [
-        "七邊形＋箭頭向下＋實心",
-        "七邊形＋箭頭向右＋空心",
-        "六邊形＋箭頭向左＋實心",
-        "八邊形＋箭頭向下＋空心"
+        "A",
+        "B",
+        "C",
+        "D"
       ],
       "answer": 0,
-      "hint": "外框邊數 +1；中心實空交替；箭頭每次轉固定角度。",
-      "explain": "外框 3→4→5→6→7，中心實空交替，下一個為實心；箭頭落在下。",
-      "asset": {
-        "src": "assets/png/sequence.png",
-        "width": 1200,
-        "height": 520
-      }
+      "hint": "分別追蹤邊數、角度與實空變化。",
+      "explain": "七邊形、向下箭頭、實心中心。",
+      "asset": "assets/png/sequence.png",
+      "figure": {
+        "kind": "legacy",
+        "img": "sequence.png"
+      },
+      "answerSpecs": [
+        {
+          "kind": "sequence",
+          "sides": 7,
+          "angle": 90,
+          "fill": 1
+        },
+        {
+          "kind": "sequence",
+          "sides": 7,
+          "angle": 0,
+          "fill": 0
+        },
+        {
+          "kind": "sequence",
+          "sides": 6,
+          "angle": 90,
+          "fill": 1
+        },
+        {
+          "kind": "sequence",
+          "sides": 8,
+          "angle": 90,
+          "fill": 0
+        }
+      ]
     },
     {
       "id": "ROT01",
       "category": "旋轉／鏡像",
       "difficulty": "Expert",
-      "prompt": "只允許旋轉，不允許鏡射。哪個候選與原圖完全相同？",
+      "prompt": "僅一個候選保留原圖的旋轉關係，請找出它。",
       "options": [
         "A",
         "B",
@@ -127,19 +269,37 @@
         "D"
       ],
       "answer": 1,
-      "hint": "追蹤小圓點相對凹口的位置。",
-      "explain": "B 是原圖純旋轉後的結果；C、D 改變了左右手性。",
-      "asset": {
-        "src": "assets/png/rotation.png",
-        "width": 1200,
-        "height": 500
-      }
+      "hint": "鏡射會改變圖形的左右手性。",
+      "explain": "B 為相符的純旋轉圖形。",
+      "asset": "assets/png/rotation.png",
+      "figure": {
+        "kind": "legacy",
+        "img": "rotation.png"
+      },
+      "answerSpecs": [
+        {
+          "kind": "letter",
+          "value": "A"
+        },
+        {
+          "kind": "letter",
+          "value": "B"
+        },
+        {
+          "kind": "letter",
+          "value": "C"
+        },
+        {
+          "kind": "letter",
+          "value": "D"
+        }
+      ]
     },
     {
       "id": "MOVE01",
       "category": "棋子移動",
       "difficulty": "Expert",
-      "prompt": "按下一格會翻轉自己與上下左右。把全部變白，最少要按幾次？",
+      "prompt": "按一格會翻轉自己與上下左右。全白最少幾次？",
       "options": [
         "3",
         "4",
@@ -147,19 +307,37 @@
         "6"
       ],
       "answer": 2,
-      "hint": "每格只需考慮按或不按。",
-      "explain": "枚舉 2^9 個按法後，最小解為 5 次。",
-      "asset": {
-        "src": "assets/png/lights.png",
-        "width": 700,
-        "height": 700
-      }
+      "hint": "同一格按兩次會互相抵銷。",
+      "explain": "枚舉 512 種按法，最短為 5 次。",
+      "asset": "assets/png/lights.png",
+      "figure": {
+        "kind": "legacy",
+        "img": "lights.png"
+      },
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": "3"
+        },
+        {
+          "kind": "number",
+          "value": "4"
+        },
+        {
+          "kind": "number",
+          "value": "5"
+        },
+        {
+          "kind": "number",
+          "value": "6"
+        }
+      ]
     },
     {
       "id": "SP01",
       "category": "空間／展開圖",
       "difficulty": "Hard",
-      "prompt": "把立方體展開圖折起來。哪一面會與 C 相對？",
+      "prompt": "把展開圖折成立方體，哪一面與 C 相對？",
       "options": [
         "A",
         "B",
@@ -167,18 +345,3035 @@
         "E"
       ],
       "answer": 3,
-      "hint": "直接與 C 相鄰的四面不可能與 C 相對。",
-      "explain": "A、B、D、F 都與 C 相鄰，所以 E 與 C 相對。",
-      "asset": {
-        "src": "assets/png/cube.png",
-        "width": 1000,
-        "height": 650
+      "hint": "直接接著 C 的四面一定與 C 相鄰。",
+      "explain": "C 的相對面是 E。",
+      "asset": "assets/png/cube.png",
+      "figure": {
+        "kind": "legacy",
+        "img": "cube.png"
+      },
+      "answerSpecs": [
+        {
+          "kind": "face",
+          "value": "A"
+        },
+        {
+          "kind": "face",
+          "value": "B"
+        },
+        {
+          "kind": "face",
+          "value": "D"
+        },
+        {
+          "kind": "face",
+          "value": "E"
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "category": "數字金字塔",
+      "difficulty": "Hard",
+      "prompt": "從全部層級推回底部缺少的值。",
+      "hint": "同一個權重套用於每個父節點；觀察左右的貢獻。",
+      "explain": "父=左+2×右；底部 ? = 5。",
+      "figure": {
+        "kind": "pyramid",
+        "rows": [
+          [
+            103
+          ],
+          [
+            27,
+            38
+          ],
+          [
+            7,
+            10,
+            14
+          ],
+          [
+            3,
+            2,
+            4,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "4",
+        "5",
+        "7",
+        "6"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 4
+        },
+        {
+          "kind": "number",
+          "value": 5
+        },
+        {
+          "kind": "number",
+          "value": 7
+        },
+        {
+          "kind": "number",
+          "value": 6
+        }
+      ]
+    },
+    {
+      "id": "P03",
+      "category": "數字金字塔",
+      "difficulty": "Hard",
+      "prompt": "從全部層級推回底部缺少的值。",
+      "hint": "同一個權重套用於每個父節點；觀察左右的貢獻。",
+      "explain": "父=左+3×右；底部 ? = 6。",
+      "figure": {
+        "kind": "pyramid",
+        "rows": [
+          [
+            247
+          ],
+          [
+            40,
+            69
+          ],
+          [
+            13,
+            9,
+            20
+          ],
+          [
+            4,
+            3,
+            2,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "6",
+        "5",
+        "8",
+        "7"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 6
+        },
+        {
+          "kind": "number",
+          "value": 5
+        },
+        {
+          "kind": "number",
+          "value": 8
+        },
+        {
+          "kind": "number",
+          "value": 7
+        }
+      ]
+    },
+    {
+      "id": "P04",
+      "category": "數字金字塔",
+      "difficulty": "Expert",
+      "prompt": "從全部層級推回底部缺少的值。",
+      "hint": "同一個權重套用於每個父節點；觀察左右的貢獻。",
+      "explain": "父=左+2×右；底部 ? = 3。",
+      "figure": {
+        "kind": "pyramid",
+        "rows": [
+          [
+            103
+          ],
+          [
+            35,
+            34
+          ],
+          [
+            11,
+            12,
+            11
+          ],
+          [
+            7,
+            2,
+            5,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "3",
+        "2",
+        "5",
+        "4"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 3
+        },
+        {
+          "kind": "number",
+          "value": 2
+        },
+        {
+          "kind": "number",
+          "value": 5
+        },
+        {
+          "kind": "number",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "P05",
+      "category": "數字金字塔",
+      "difficulty": "Expert",
+      "prompt": "從全部層級推回底部缺少的值。",
+      "hint": "同一個權重套用於每個父節點；觀察左右的貢獻。",
+      "explain": "父=左+4×右；底部 ? = 5。",
+      "figure": {
+        "kind": "pyramid",
+        "rows": [
+          [
+            538
+          ],
+          [
+            98,
+            110
+          ],
+          [
+            26,
+            18,
+            23
+          ],
+          [
+            2,
+            6,
+            3,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "4",
+        "5",
+        "7",
+        "6"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 4
+        },
+        {
+          "kind": "number",
+          "value": 5
+        },
+        {
+          "kind": "number",
+          "value": 7
+        },
+        {
+          "kind": "number",
+          "value": 6
+        }
+      ]
+    },
+    {
+      "id": "C02",
+      "category": "圓盤數字",
+      "difficulty": "Hard",
+      "prompt": "四個扇區示範同一規則。最後扇區中心值為何？",
+      "hint": "同一套運算要解釋全部四個範例，而非只解釋一個。",
+      "explain": "共同規則為 a×b+a+b，所以答案 11。",
+      "figure": {
+        "kind": "circle",
+        "pairs": [
+          [
+            4,
+            5,
+            29
+          ],
+          [
+            7,
+            2,
+            23
+          ],
+          [
+            6,
+            3,
+            27
+          ],
+          [
+            5,
+            8,
+            53
+          ],
+          [
+            3,
+            2,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "7",
+        "11",
+        "19",
+        "15"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 7
+        },
+        {
+          "kind": "number",
+          "value": 11
+        },
+        {
+          "kind": "number",
+          "value": 19
+        },
+        {
+          "kind": "number",
+          "value": 15
+        }
+      ]
+    },
+    {
+      "id": "C03",
+      "category": "圓盤數字",
+      "difficulty": "Expert",
+      "prompt": "四個扇區示範同一規則。最後扇區中心值為何？",
+      "hint": "同一套運算要解釋全部四個範例，而非只解釋一個。",
+      "explain": "共同規則為 2a+b²，所以答案 23。",
+      "figure": {
+        "kind": "circle",
+        "pairs": [
+          [
+            4,
+            6,
+            44
+          ],
+          [
+            5,
+            2,
+            14
+          ],
+          [
+            4,
+            9,
+            89
+          ],
+          [
+            8,
+            8,
+            80
+          ],
+          [
+            7,
+            3,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "23",
+        "19",
+        "31",
+        "27"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 23
+        },
+        {
+          "kind": "number",
+          "value": 19
+        },
+        {
+          "kind": "number",
+          "value": 31
+        },
+        {
+          "kind": "number",
+          "value": 27
+        }
+      ]
+    },
+    {
+      "id": "C04",
+      "category": "圓盤數字",
+      "difficulty": "Expert",
+      "prompt": "四個扇區示範同一規則。最後扇區中心值為何？",
+      "hint": "同一套運算要解釋全部四個範例，而非只解釋一個。",
+      "explain": "共同規則為 a²+2b，所以答案 15。",
+      "figure": {
+        "kind": "circle",
+        "pairs": [
+          [
+            4,
+            6,
+            28
+          ],
+          [
+            2,
+            3,
+            10
+          ],
+          [
+            2,
+            7,
+            18
+          ],
+          [
+            4,
+            7,
+            30
+          ],
+          [
+            3,
+            3,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "15",
+        "23",
+        "11",
+        "19"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 15
+        },
+        {
+          "kind": "number",
+          "value": 23
+        },
+        {
+          "kind": "number",
+          "value": 11
+        },
+        {
+          "kind": "number",
+          "value": 19
+        }
+      ]
+    },
+    {
+      "id": "C05",
+      "category": "圓盤數字",
+      "difficulty": "Ω",
+      "prompt": "四個扇區示範同一規則。最後扇區中心值為何？",
+      "hint": "同一套運算要解釋全部四個範例，而非只解釋一個。",
+      "explain": "共同規則為 (a+b)×(|a−b|+1)，所以答案 16。",
+      "figure": {
+        "kind": "circle",
+        "pairs": [
+          [
+            4,
+            7,
+            44
+          ],
+          [
+            7,
+            3,
+            50
+          ],
+          [
+            6,
+            5,
+            22
+          ],
+          [
+            7,
+            6,
+            26
+          ],
+          [
+            8,
+            8,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "24",
+        "16",
+        "12",
+        "20"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 24
+        },
+        {
+          "kind": "number",
+          "value": 16
+        },
+        {
+          "kind": "number",
+          "value": 12
+        },
+        {
+          "kind": "number",
+          "value": 20
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "category": "路徑最佳化",
+      "difficulty": "Hard",
+      "prompt": "沿著線走恰好 5 個不同節點，最大的節點總和？",
+      "hint": "試列舉所有長度 5 的簡單路徑；方向不受限制。",
+      "explain": "最大總和 40，可由路徑 5→7→11→9→8 取得。",
+      "figure": {
+        "kind": "path",
+        "vals": [
+          7,
+          5,
+          11,
+          3,
+          9,
+          2,
+          8,
+          4
+        ],
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            6,
+            7
+          ]
+        ]
+      },
+      "options": [
+        "40",
+        "38",
+        "44",
+        "42"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 40
+        },
+        {
+          "kind": "number",
+          "value": 38
+        },
+        {
+          "kind": "number",
+          "value": 44
+        },
+        {
+          "kind": "number",
+          "value": 42
+        }
+      ]
+    },
+    {
+      "id": "R03",
+      "category": "路徑最佳化",
+      "difficulty": "Expert",
+      "prompt": "沿著線走恰好 5 個不同節點，最大的節點總和？",
+      "hint": "試列舉所有長度 5 的簡單路徑；方向不受限制。",
+      "explain": "最大總和 45，可由路徑 12→7→11→10→5 取得。",
+      "figure": {
+        "kind": "path",
+        "vals": [
+          4,
+          12,
+          5,
+          7,
+          10,
+          6,
+          11,
+          3
+        ],
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            6,
+            7
+          ]
+        ]
+      },
+      "options": [
+        "43",
+        "45",
+        "49",
+        "47"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 43
+        },
+        {
+          "kind": "number",
+          "value": 45
+        },
+        {
+          "kind": "number",
+          "value": 49
+        },
+        {
+          "kind": "number",
+          "value": 47
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "category": "路徑最佳化",
+      "difficulty": "Ω",
+      "prompt": "沿著線走恰好 5 個不同節點，最大的節點總和？",
+      "hint": "試列舉所有長度 5 的簡單路徑；方向不受限制。",
+      "explain": "最大總和 45，可由路徑 8→13→7→5→12 取得。",
+      "figure": {
+        "kind": "path",
+        "vals": [
+          9,
+          3,
+          8,
+          12,
+          2,
+          13,
+          5,
+          7
+        ],
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            6,
+            7
+          ]
+        ]
+      },
+      "options": [
+        "49",
+        "45",
+        "43",
+        "47"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 49
+        },
+        {
+          "kind": "number",
+          "value": 45
+        },
+        {
+          "kind": "number",
+          "value": 43
+        },
+        {
+          "kind": "number",
+          "value": 47
+        }
+      ]
+    },
+    {
+      "id": "M02",
+      "category": "圖形缺項",
+      "difficulty": "Hard",
+      "prompt": "同列前兩格依同一法則變成第三格。缺哪張圖？",
+      "hint": "只看四種線段的存在與否；別被圖形輪廓誤導。",
+      "explain": "共同規則為 XOR；最後一格的線段已由此規則確定。",
+      "figure": {
+        "kind": "matrix",
+        "rows": [
+          [
+            7,
+            9,
+            14
+          ],
+          [
+            9,
+            7,
+            14
+          ],
+          [
+            13,
+            11,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "segments",
+          "mask": 6
+        },
+        {
+          "kind": "segments",
+          "mask": 2
+        },
+        {
+          "kind": "segments",
+          "mask": 4
+        },
+        {
+          "kind": "segments",
+          "mask": 7
+        }
+      ],
+      "checker": {
+        "kind": "matrix",
+        "op": 0,
+        "rows": [
+          [
+            7,
+            9,
+            14
+          ],
+          [
+            9,
+            7,
+            14
+          ],
+          [
+            13,
+            11,
+            6
+          ]
+        ],
+        "masks": [
+          6,
+          2,
+          4,
+          7
+        ]
       }
+    },
+    {
+      "id": "M03",
+      "category": "圖形缺項",
+      "difficulty": "Expert",
+      "prompt": "同列前兩格依同一法則變成第三格。缺哪張圖？",
+      "hint": "只看四種線段的存在與否；別被圖形輪廓誤導。",
+      "explain": "共同規則為 聯集；最後一格的線段已由此規則確定。",
+      "figure": {
+        "kind": "matrix",
+        "rows": [
+          [
+            7,
+            11,
+            15
+          ],
+          [
+            13,
+            3,
+            15
+          ],
+          [
+            5,
+            9,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "segments",
+          "mask": 9
+        },
+        {
+          "kind": "segments",
+          "mask": 13
+        },
+        {
+          "kind": "segments",
+          "mask": 15
+        },
+        {
+          "kind": "segments",
+          "mask": 12
+        }
+      ],
+      "checker": {
+        "kind": "matrix",
+        "op": 1,
+        "rows": [
+          [
+            7,
+            11,
+            15
+          ],
+          [
+            13,
+            3,
+            15
+          ],
+          [
+            5,
+            9,
+            13
+          ]
+        ],
+        "masks": [
+          9,
+          13,
+          15,
+          12
+        ]
+      }
+    },
+    {
+      "id": "M04",
+      "category": "圖形缺項",
+      "difficulty": "Ω",
+      "prompt": "同列前兩格依同一法則變成第三格。缺哪張圖？",
+      "hint": "只看四種線段的存在與否；別被圖形輪廓誤導。",
+      "explain": "共同規則為 交集；最後一格的線段已由此規則確定。",
+      "figure": {
+        "kind": "matrix",
+        "rows": [
+          [
+            7,
+            12,
+            4
+          ],
+          [
+            11,
+            8,
+            8
+          ],
+          [
+            13,
+            6,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "segments",
+          "mask": 0
+        },
+        {
+          "kind": "segments",
+          "mask": 4
+        },
+        {
+          "kind": "segments",
+          "mask": 6
+        },
+        {
+          "kind": "segments",
+          "mask": 5
+        }
+      ],
+      "checker": {
+        "kind": "matrix",
+        "op": 2,
+        "rows": [
+          [
+            7,
+            12,
+            4
+          ],
+          [
+            11,
+            8,
+            8
+          ],
+          [
+            13,
+            6,
+            4
+          ]
+        ],
+        "masks": [
+          0,
+          4,
+          6,
+          5
+        ]
+      }
+    },
+    {
+      "id": "M05",
+      "category": "圖形缺項",
+      "difficulty": "Ω",
+      "prompt": "同列前兩格依同一法則變成第三格。缺哪張圖？",
+      "hint": "只看四種線段的存在與否；別被圖形輪廓誤導。",
+      "explain": "共同規則為 XOR 後整體旋轉；最後一格的線段已由此規則確定。",
+      "figure": {
+        "kind": "matrix",
+        "rows": [
+          [
+            7,
+            13,
+            5
+          ],
+          [
+            4,
+            5,
+            2
+          ],
+          [
+            9,
+            11,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "segments",
+          "mask": 1
+        },
+        {
+          "kind": "segments",
+          "mask": 5
+        },
+        {
+          "kind": "segments",
+          "mask": 3
+        },
+        {
+          "kind": "segments",
+          "mask": 0
+        }
+      ],
+      "checker": {
+        "kind": "matrix",
+        "op": 3,
+        "rows": [
+          [
+            7,
+            13,
+            5
+          ],
+          [
+            4,
+            5,
+            2
+          ],
+          [
+            9,
+            11,
+            1
+          ]
+        ],
+        "masks": [
+          1,
+          5,
+          3,
+          0
+        ]
+      }
+    },
+    {
+      "id": "S02",
+      "category": "圖形序列",
+      "difficulty": "Hard",
+      "prompt": "外框邊數、方向與中心填色同時變化。下一格是？",
+      "hint": "三個維度各有自己的規律；逐一追蹤。",
+      "explain": "邊數每次 +1，方向每次旋轉 90°，填色每次反轉。",
+      "figure": {
+        "kind": "sequence",
+        "frames": [
+          {
+            "sides": 3,
+            "angle": 90,
+            "fill": 1
+          },
+          {
+            "sides": 4,
+            "angle": 180,
+            "fill": 0
+          },
+          {
+            "sides": 5,
+            "angle": 270,
+            "fill": 1
+          },
+          {
+            "sides": 6,
+            "angle": 0,
+            "fill": 0
+          }
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "sequence",
+          "sides": 7,
+          "angle": 180,
+          "fill": 1
+        },
+        {
+          "kind": "sequence",
+          "sides": 7,
+          "angle": 90,
+          "fill": 1
+        },
+        {
+          "kind": "sequence",
+          "sides": 6,
+          "angle": 90,
+          "fill": 1
+        },
+        {
+          "kind": "sequence",
+          "sides": 7,
+          "angle": 90,
+          "fill": 0
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "category": "圖形序列",
+      "difficulty": "Expert",
+      "prompt": "外框邊數、方向與中心填色同時變化。下一格是？",
+      "hint": "三個維度各有自己的規律；逐一追蹤。",
+      "explain": "邊數每次 +1，方向每次旋轉 135°，填色每次反轉。",
+      "figure": {
+        "kind": "sequence",
+        "frames": [
+          {
+            "sides": 4,
+            "angle": 45,
+            "fill": 0
+          },
+          {
+            "sides": 5,
+            "angle": 180,
+            "fill": 1
+          },
+          {
+            "sides": 6,
+            "angle": 315,
+            "fill": 0
+          },
+          {
+            "sides": 7,
+            "angle": 90,
+            "fill": 1
+          }
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "sequence",
+          "sides": 8,
+          "angle": 225,
+          "fill": 0
+        },
+        {
+          "kind": "sequence",
+          "sides": 8,
+          "angle": 315,
+          "fill": 0
+        },
+        {
+          "kind": "sequence",
+          "sides": 7,
+          "angle": 225,
+          "fill": 0
+        },
+        {
+          "kind": "sequence",
+          "sides": 8,
+          "angle": 225,
+          "fill": 1
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "category": "圖形序列",
+      "difficulty": "Expert",
+      "prompt": "外框邊數、方向與中心填色同時變化。下一格是？",
+      "hint": "三個維度各有自己的規律；逐一追蹤。",
+      "explain": "邊數每次 +1，方向每次旋轉 -90°，填色每次反轉。",
+      "figure": {
+        "kind": "sequence",
+        "frames": [
+          {
+            "sides": 3,
+            "angle": 180,
+            "fill": 1
+          },
+          {
+            "sides": 4,
+            "angle": 90,
+            "fill": 0
+          },
+          {
+            "sides": 5,
+            "angle": 0,
+            "fill": 1
+          },
+          {
+            "sides": 6,
+            "angle": 270,
+            "fill": 0
+          }
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "sequence",
+          "sides": 7,
+          "angle": 270,
+          "fill": 1
+        },
+        {
+          "kind": "sequence",
+          "sides": 7,
+          "angle": 180,
+          "fill": 1
+        },
+        {
+          "kind": "sequence",
+          "sides": 6,
+          "angle": 180,
+          "fill": 1
+        },
+        {
+          "kind": "sequence",
+          "sides": 7,
+          "angle": 180,
+          "fill": 0
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "category": "圖形序列",
+      "difficulty": "Ω",
+      "prompt": "外框邊數、方向與中心填色同時變化。下一格是？",
+      "hint": "三個維度各有自己的規律；逐一追蹤。",
+      "explain": "邊數每次 +1，方向每次旋轉 45°，填色每次反轉。",
+      "figure": {
+        "kind": "sequence",
+        "frames": [
+          {
+            "sides": 4,
+            "angle": 0,
+            "fill": 0
+          },
+          {
+            "sides": 5,
+            "angle": 45,
+            "fill": 1
+          },
+          {
+            "sides": 6,
+            "angle": 90,
+            "fill": 0
+          },
+          {
+            "sides": 7,
+            "angle": 135,
+            "fill": 1
+          }
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "sequence",
+          "sides": 8,
+          "angle": 270,
+          "fill": 0
+        },
+        {
+          "kind": "sequence",
+          "sides": 7,
+          "angle": 180,
+          "fill": 0
+        },
+        {
+          "kind": "sequence",
+          "sides": 8,
+          "angle": 180,
+          "fill": 0
+        },
+        {
+          "kind": "sequence",
+          "sides": 8,
+          "angle": 180,
+          "fill": 1
+        }
+      ]
+    },
+    {
+      "id": "ROT02",
+      "category": "旋轉／鏡像",
+      "difficulty": "Hard",
+      "prompt": "將原圖順時針旋轉 90°，不允許鏡射。選出結果。",
+      "hint": "注意圖形上不對稱的小標記，它的位置也要一起旋轉。",
+      "explain": "旋轉方向固定為順時針 90°；只有一項同時保留小標記與輪廓手性。",
+      "figure": {
+        "kind": "rotation",
+        "degrees": 90
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "rotation",
+          "angle": 90,
+          "mirror": false
+        },
+        {
+          "kind": "rotation",
+          "angle": 90,
+          "mirror": true
+        },
+        {
+          "kind": "rotation",
+          "angle": 0,
+          "mirror": false
+        },
+        {
+          "kind": "rotation",
+          "angle": 180,
+          "mirror": false
+        }
+      ]
+    },
+    {
+      "id": "ROT03",
+      "category": "旋轉／鏡像",
+      "difficulty": "Expert",
+      "prompt": "將原圖順時針旋轉 180°，不允許鏡射。選出結果。",
+      "hint": "注意圖形上不對稱的小標記，它的位置也要一起旋轉。",
+      "explain": "旋轉方向固定為順時針 180°；只有一項同時保留小標記與輪廓手性。",
+      "figure": {
+        "kind": "rotation",
+        "degrees": 180
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "rotation",
+          "angle": 180,
+          "mirror": true
+        },
+        {
+          "kind": "rotation",
+          "angle": 180,
+          "mirror": false
+        },
+        {
+          "kind": "rotation",
+          "angle": 90,
+          "mirror": false
+        },
+        {
+          "kind": "rotation",
+          "angle": 270,
+          "mirror": false
+        }
+      ]
+    },
+    {
+      "id": "ROT04",
+      "category": "旋轉／鏡像",
+      "difficulty": "Ω",
+      "prompt": "將原圖順時針旋轉 270°，不允許鏡射。選出結果。",
+      "hint": "注意圖形上不對稱的小標記，它的位置也要一起旋轉。",
+      "explain": "旋轉方向固定為順時針 270°；只有一項同時保留小標記與輪廓手性。",
+      "figure": {
+        "kind": "rotation",
+        "degrees": 270
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "rotation",
+          "angle": 180,
+          "mirror": false
+        },
+        {
+          "kind": "rotation",
+          "angle": 270,
+          "mirror": true
+        },
+        {
+          "kind": "rotation",
+          "angle": 270,
+          "mirror": false
+        },
+        {
+          "kind": "rotation",
+          "angle": 0,
+          "mirror": false
+        }
+      ]
+    },
+    {
+      "id": "MOVE02",
+      "category": "棋子移動",
+      "difficulty": "Hard",
+      "prompt": "按下一格翻轉自己與四鄰。讓棋盤全白至少按幾次？",
+      "hint": "每格只需按一次或零次；同一組按法順序不影響最後狀態。",
+      "explain": "枚舉所有 512 種按法，最短 3 次。",
+      "figure": {
+        "kind": "lights",
+        "bits": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        "maskFound": 56
+      },
+      "options": [
+        "4",
+        "3",
+        "5",
+        "2"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 4
+        },
+        {
+          "kind": "number",
+          "value": 3
+        },
+        {
+          "kind": "number",
+          "value": 5
+        },
+        {
+          "kind": "number",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "MOVE03",
+      "category": "棋子移動",
+      "difficulty": "Expert",
+      "prompt": "按下一格翻轉自己與四鄰。讓棋盤全白至少按幾次？",
+      "hint": "每格只需按一次或零次；同一組按法順序不影響最後狀態。",
+      "explain": "枚舉所有 512 種按法，最短 4 次。",
+      "figure": {
+        "kind": "lights",
+        "bits": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "maskFound": 46
+      },
+      "options": [
+        "6",
+        "5",
+        "4",
+        "3"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 6
+        },
+        {
+          "kind": "number",
+          "value": 5
+        },
+        {
+          "kind": "number",
+          "value": 4
+        },
+        {
+          "kind": "number",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "MOVE04",
+      "category": "棋子移動",
+      "difficulty": "Expert",
+      "prompt": "按下一格翻轉自己與四鄰。讓棋盤全白至少按幾次？",
+      "hint": "每格只需按一次或零次；同一組按法順序不影響最後狀態。",
+      "explain": "枚舉所有 512 種按法，最短 5 次。",
+      "figure": {
+        "kind": "lights",
+        "bits": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "maskFound": 47
+      },
+      "options": [
+        "6",
+        "7",
+        "5",
+        "4"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 6
+        },
+        {
+          "kind": "number",
+          "value": 7
+        },
+        {
+          "kind": "number",
+          "value": 5
+        },
+        {
+          "kind": "number",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "COM01",
+      "category": "幣值／組合限制",
+      "difficulty": "Hard",
+      "prompt": "六種面額選四種，各使用 2 枚；總額 152。哪組面額正確？",
+      "hint": "用總額除以每種使用的枚數，得到四種面額之和。",
+      "explain": "152 ÷ 2 = 76；所以是 1、5、20、50。",
+      "figure": {
+        "kind": "coins",
+        "denom": [
+          1,
+          2,
+          5,
+          10,
+          20,
+          50
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            5,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            2,
+            5,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            2,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            10,
+            20,
+            50
+          ]
+        }
+      ],
+      "checker": {
+        "kind": "coins",
+        "n": 2,
+        "total": 152,
+        "variants": [
+          [
+            1,
+            5,
+            20,
+            50
+          ],
+          [
+            2,
+            5,
+            20,
+            50
+          ],
+          [
+            1,
+            2,
+            20,
+            50
+          ],
+          [
+            1,
+            10,
+            20,
+            50
+          ]
+        ]
+      }
+    },
+    {
+      "id": "COM02",
+      "category": "幣值／組合限制",
+      "difficulty": "Hard",
+      "prompt": "六種面額選四種，各使用 3 枚；總額 231。哪組面額正確？",
+      "hint": "用總額除以每種使用的枚數，得到四種面額之和。",
+      "explain": "231 ÷ 3 = 77；所以是 2、5、20、50。",
+      "figure": {
+        "kind": "coins",
+        "denom": [
+          1,
+          2,
+          5,
+          10,
+          20,
+          50
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            5,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            2,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            2,
+            5,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            10,
+            20,
+            50
+          ]
+        }
+      ],
+      "checker": {
+        "kind": "coins",
+        "n": 3,
+        "total": 231,
+        "variants": [
+          [
+            1,
+            5,
+            20,
+            50
+          ],
+          [
+            1,
+            2,
+            20,
+            50
+          ],
+          [
+            2,
+            5,
+            20,
+            50
+          ],
+          [
+            1,
+            10,
+            20,
+            50
+          ]
+        ]
+      }
+    },
+    {
+      "id": "COM03",
+      "category": "幣值／組合限制",
+      "difficulty": "Expert",
+      "prompt": "六種面額選四種，各使用 4 枚；總額 324。哪組面額正確？",
+      "hint": "用總額除以每種使用的枚數，得到四種面額之和。",
+      "explain": "324 ÷ 4 = 81；所以是 1、10、20、50。",
+      "figure": {
+        "kind": "coins",
+        "denom": [
+          1,
+          2,
+          5,
+          10,
+          20,
+          50
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            2,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            5,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            10,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            2,
+            5,
+            20,
+            50
+          ]
+        }
+      ],
+      "checker": {
+        "kind": "coins",
+        "n": 4,
+        "total": 324,
+        "variants": [
+          [
+            1,
+            2,
+            20,
+            50
+          ],
+          [
+            1,
+            5,
+            20,
+            50
+          ],
+          [
+            1,
+            10,
+            20,
+            50
+          ],
+          [
+            2,
+            5,
+            20,
+            50
+          ]
+        ]
+      }
+    },
+    {
+      "id": "COM04",
+      "category": "幣值／組合限制",
+      "difficulty": "Expert",
+      "prompt": "六種面額選四種，各使用 5 枚；總額 365。哪組面額正確？",
+      "hint": "用總額除以每種使用的枚數，得到四種面額之和。",
+      "explain": "365 ÷ 5 = 73；所以是 1、2、20、50。",
+      "figure": {
+        "kind": "coins",
+        "denom": [
+          1,
+          2,
+          5,
+          10,
+          20,
+          50
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            10,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            5,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            2,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            2,
+            5,
+            20,
+            50
+          ]
+        }
+      ],
+      "checker": {
+        "kind": "coins",
+        "n": 5,
+        "total": 365,
+        "variants": [
+          [
+            1,
+            10,
+            20,
+            50
+          ],
+          [
+            1,
+            5,
+            20,
+            50
+          ],
+          [
+            1,
+            2,
+            20,
+            50
+          ],
+          [
+            2,
+            5,
+            20,
+            50
+          ]
+        ]
+      }
+    },
+    {
+      "id": "ORD01",
+      "category": "排序／分組",
+      "difficulty": "Hard",
+      "prompt": "依照下方五條限制，選出唯一符合條件的排列。",
+      "clues": [
+        "A 在 D 前",
+        "C 緊接在 B 後",
+        "E 不在兩端",
+        "F 在 A 前",
+        "D 不與 E 相鄰"
+      ],
+      "hint": "先找必須相鄰的兩個字母，再測試其他限制。",
+      "explain": "合法排列為 B–C–E–F–A–D；其餘選項至少違反一項條件。",
+      "figure": {
+        "kind": "tokens",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "tokens",
+          "labels": [
+            "F",
+            "C",
+            "E",
+            "D",
+            "A",
+            "B"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "D",
+            "C",
+            "F",
+            "B",
+            "A",
+            "E"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "B",
+            "C",
+            "E",
+            "F",
+            "A",
+            "D"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "A",
+            "D",
+            "E",
+            "B",
+            "F",
+            "C"
+          ]
+        }
+      ],
+      "checker": {
+        "kind": "order",
+        "candidates": [
+          [
+            "F",
+            "C",
+            "E",
+            "D",
+            "A",
+            "B"
+          ],
+          [
+            "D",
+            "C",
+            "F",
+            "B",
+            "A",
+            "E"
+          ],
+          [
+            "B",
+            "C",
+            "E",
+            "F",
+            "A",
+            "D"
+          ],
+          [
+            "A",
+            "D",
+            "E",
+            "B",
+            "F",
+            "C"
+          ]
+        ],
+        "rules": [
+          {
+            "a": "A",
+            "b": "D",
+            "kind": "before"
+          },
+          {
+            "a": "B",
+            "b": "C",
+            "kind": "touch"
+          },
+          {
+            "a": "E",
+            "kind": "inside"
+          },
+          {
+            "a": "F",
+            "b": "A",
+            "kind": "before"
+          },
+          {
+            "a": "D",
+            "b": "E",
+            "kind": "apart"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ORD02",
+      "category": "排序／分組",
+      "difficulty": "Hard",
+      "prompt": "依照下方五條限制，選出唯一符合條件的排列。",
+      "clues": [
+        "E 緊接在 D 後",
+        "A 在 B 前",
+        "C 不在兩端",
+        "F 在 C 前",
+        "B 不與 D 相鄰"
+      ],
+      "hint": "先找必須相鄰的兩個字母，再測試其他限制。",
+      "explain": "合法排列為 A–F–C–D–E–B；其餘選項至少違反一項條件。",
+      "figure": {
+        "kind": "tokens",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "tokens",
+          "labels": [
+            "A",
+            "E",
+            "F",
+            "C",
+            "B",
+            "D"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "F",
+            "D",
+            "C",
+            "E",
+            "B",
+            "A"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "A",
+            "F",
+            "C",
+            "D",
+            "E",
+            "B"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "B",
+            "D",
+            "C",
+            "E",
+            "A",
+            "F"
+          ]
+        }
+      ],
+      "checker": {
+        "kind": "order",
+        "candidates": [
+          [
+            "A",
+            "E",
+            "F",
+            "C",
+            "B",
+            "D"
+          ],
+          [
+            "F",
+            "D",
+            "C",
+            "E",
+            "B",
+            "A"
+          ],
+          [
+            "A",
+            "F",
+            "C",
+            "D",
+            "E",
+            "B"
+          ],
+          [
+            "B",
+            "D",
+            "C",
+            "E",
+            "A",
+            "F"
+          ]
+        ],
+        "rules": [
+          {
+            "a": "D",
+            "b": "E",
+            "kind": "touch"
+          },
+          {
+            "a": "A",
+            "b": "B",
+            "kind": "before"
+          },
+          {
+            "a": "C",
+            "kind": "inside"
+          },
+          {
+            "a": "F",
+            "b": "C",
+            "kind": "before"
+          },
+          {
+            "a": "B",
+            "b": "D",
+            "kind": "apart"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ORD03",
+      "category": "排序／分組",
+      "difficulty": "Expert",
+      "prompt": "依照下方五條限制，選出唯一符合條件的排列。",
+      "clues": [
+        "E 緊接在 B 後",
+        "E 在 F 前",
+        "D 不在兩端",
+        "C 在 A 前",
+        "A 不與 D 相鄰"
+      ],
+      "hint": "先找必須相鄰的兩個字母，再測試其他限制。",
+      "explain": "合法排列為 C–B–E–D–F–A；其餘選項至少違反一項條件。",
+      "figure": {
+        "kind": "tokens",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "tokens",
+          "labels": [
+            "D",
+            "F",
+            "B",
+            "C",
+            "A",
+            "E"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "C",
+            "B",
+            "E",
+            "D",
+            "F",
+            "A"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "F",
+            "E",
+            "C",
+            "A",
+            "D",
+            "B"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "F",
+            "D",
+            "A",
+            "E",
+            "C",
+            "B"
+          ]
+        }
+      ],
+      "checker": {
+        "kind": "order",
+        "candidates": [
+          [
+            "D",
+            "F",
+            "B",
+            "C",
+            "A",
+            "E"
+          ],
+          [
+            "C",
+            "B",
+            "E",
+            "D",
+            "F",
+            "A"
+          ],
+          [
+            "F",
+            "E",
+            "C",
+            "A",
+            "D",
+            "B"
+          ],
+          [
+            "F",
+            "D",
+            "A",
+            "E",
+            "C",
+            "B"
+          ]
+        ],
+        "rules": [
+          {
+            "a": "B",
+            "b": "E",
+            "kind": "touch"
+          },
+          {
+            "a": "E",
+            "b": "F",
+            "kind": "before"
+          },
+          {
+            "a": "D",
+            "kind": "inside"
+          },
+          {
+            "a": "C",
+            "b": "A",
+            "kind": "before"
+          },
+          {
+            "a": "A",
+            "b": "D",
+            "kind": "apart"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ORD04",
+      "category": "排序／分組",
+      "difficulty": "Expert",
+      "prompt": "依照下方五條限制，選出唯一符合條件的排列。",
+      "clues": [
+        "C 緊接在 A 後",
+        "D 在 F 前",
+        "B 不在兩端",
+        "E 在 A 前",
+        "B 不與 F 相鄰"
+      ],
+      "hint": "先找必須相鄰的兩個字母，再測試其他限制。",
+      "explain": "合法排列為 D–B–E–A–C–F；其餘選項至少違反一項條件。",
+      "figure": {
+        "kind": "tokens",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "tokens",
+          "labels": [
+            "D",
+            "B",
+            "E",
+            "A",
+            "C",
+            "F"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "D",
+            "C",
+            "B",
+            "F",
+            "E",
+            "A"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "A",
+            "F",
+            "C",
+            "E",
+            "D",
+            "B"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "A",
+            "B",
+            "D",
+            "F",
+            "C",
+            "E"
+          ]
+        }
+      ],
+      "checker": {
+        "kind": "order",
+        "candidates": [
+          [
+            "D",
+            "B",
+            "E",
+            "A",
+            "C",
+            "F"
+          ],
+          [
+            "D",
+            "C",
+            "B",
+            "F",
+            "E",
+            "A"
+          ],
+          [
+            "A",
+            "F",
+            "C",
+            "E",
+            "D",
+            "B"
+          ],
+          [
+            "A",
+            "B",
+            "D",
+            "F",
+            "C",
+            "E"
+          ]
+        ],
+        "rules": [
+          {
+            "a": "A",
+            "b": "C",
+            "kind": "touch"
+          },
+          {
+            "a": "D",
+            "b": "F",
+            "kind": "before"
+          },
+          {
+            "a": "B",
+            "kind": "inside"
+          },
+          {
+            "a": "E",
+            "b": "A",
+            "kind": "before"
+          },
+          {
+            "a": "B",
+            "b": "F",
+            "kind": "apart"
+          }
+        ]
+      }
+    },
+    {
+      "id": "LG01",
+      "category": "Logic Grid",
+      "difficulty": "Hard",
+      "prompt": "四人各佔一個位置，白／綠／紅／藍各一次。誰對應藍色？",
+      "clues": [
+        "A 緊接在 D 之前",
+        "C 緊接在 B 之前",
+        "A 在 B 之前",
+        "白色在第 1 位",
+        "綠色在第 2 位",
+        "B 不是紅色"
+      ],
+      "hint": "先找兩組相鄰人物，再由顏色和順序鎖定位置。",
+      "explain": "唯一順序為 A→D→C→B；所以藍色屬於 B。",
+      "figure": {
+        "kind": "logic",
+        "names": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "options": [
+        "A",
+        "C",
+        "B",
+        "D"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "avatar",
+          "value": "A"
+        },
+        {
+          "kind": "avatar",
+          "value": "C"
+        },
+        {
+          "kind": "avatar",
+          "value": "B"
+        },
+        {
+          "kind": "avatar",
+          "value": "D"
+        }
+      ],
+      "checker": {
+        "kind": "logic",
+        "answer": "B"
+      }
+    },
+    {
+      "id": "LG02",
+      "category": "Logic Grid",
+      "difficulty": "Expert",
+      "prompt": "四人各佔一個位置，白／綠／紅／藍各一次。誰對應藍色？",
+      "clues": [
+        "K 緊接在 N 之前",
+        "M 緊接在 L 之前",
+        "K 在 L 之前",
+        "白色在第 1 位",
+        "綠色在第 2 位",
+        "L 不是紅色"
+      ],
+      "hint": "先找兩組相鄰人物，再由顏色和順序鎖定位置。",
+      "explain": "唯一順序為 K→N→M→L；所以藍色屬於 L。",
+      "figure": {
+        "kind": "logic",
+        "names": [
+          "K",
+          "L",
+          "M",
+          "N"
+        ]
+      },
+      "options": [
+        "K",
+        "M",
+        "L",
+        "N"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "avatar",
+          "value": "K"
+        },
+        {
+          "kind": "avatar",
+          "value": "M"
+        },
+        {
+          "kind": "avatar",
+          "value": "L"
+        },
+        {
+          "kind": "avatar",
+          "value": "N"
+        }
+      ],
+      "checker": {
+        "kind": "logic",
+        "answer": "L"
+      }
+    },
+    {
+      "id": "LG03",
+      "category": "Logic Grid",
+      "difficulty": "Ω",
+      "prompt": "四人各佔一個位置，白／綠／紅／藍各一次。誰對應藍色？",
+      "clues": [
+        "P 緊接在 S 之前",
+        "R 緊接在 Q 之前",
+        "P 在 Q 之前",
+        "白色在第 1 位",
+        "綠色在第 2 位",
+        "Q 不是紅色"
+      ],
+      "hint": "先找兩組相鄰人物，再由顏色和順序鎖定位置。",
+      "explain": "唯一順序為 P→S→R→Q；所以藍色屬於 Q。",
+      "figure": {
+        "kind": "logic",
+        "names": [
+          "P",
+          "Q",
+          "R",
+          "S"
+        ]
+      },
+      "options": [
+        "R",
+        "P",
+        "Q",
+        "S"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "avatar",
+          "value": "R"
+        },
+        {
+          "kind": "avatar",
+          "value": "P"
+        },
+        {
+          "kind": "avatar",
+          "value": "Q"
+        },
+        {
+          "kind": "avatar",
+          "value": "S"
+        }
+      ],
+      "checker": {
+        "kind": "logic",
+        "answer": "Q"
+      }
+    },
+    {
+      "id": "LG04",
+      "category": "Logic Grid",
+      "difficulty": "Ω",
+      "prompt": "四人各佔一個位置，白／綠／紅／藍各一次。誰對應藍色？",
+      "clues": [
+        "W 緊接在 Z 之前",
+        "Y 緊接在 X 之前",
+        "W 在 X 之前",
+        "白色在第 1 位",
+        "綠色在第 2 位",
+        "X 不是紅色"
+      ],
+      "hint": "先找兩組相鄰人物，再由顏色和順序鎖定位置。",
+      "explain": "唯一順序為 W→Z→Y→X；所以藍色屬於 X。",
+      "figure": {
+        "kind": "logic",
+        "names": [
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ]
+      },
+      "options": [
+        "W",
+        "Y",
+        "X",
+        "Z"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "avatar",
+          "value": "W"
+        },
+        {
+          "kind": "avatar",
+          "value": "Y"
+        },
+        {
+          "kind": "avatar",
+          "value": "X"
+        },
+        {
+          "kind": "avatar",
+          "value": "Z"
+        }
+      ],
+      "checker": {
+        "kind": "logic",
+        "answer": "X"
+      }
+    },
+    {
+      "id": "T01",
+      "category": "真假命題",
+      "difficulty": "Hard",
+      "prompt": "四人之中只有一人犯案，而且下列四句話恰好一真。是誰？",
+      "clues": [
+        "A：「B 犯案」",
+        "B：「D 犯案」",
+        "C：「我沒有犯案」",
+        "D：「A 說謊」"
+      ],
+      "hint": "逐一假設四個嫌疑人犯案，檢查真話數是否恰好為一。",
+      "explain": "假設 C 犯案時，恰有一句為真；其他假設都不符合。",
+      "figure": {
+        "kind": "suspects",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "options": [
+        "C",
+        "A",
+        "B",
+        "D"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "avatar",
+          "value": "C"
+        },
+        {
+          "kind": "avatar",
+          "value": "A"
+        },
+        {
+          "kind": "avatar",
+          "value": "B"
+        },
+        {
+          "kind": "avatar",
+          "value": "D"
+        }
+      ],
+      "checker": {
+        "kind": "truth",
+        "candidates": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "T02",
+      "category": "真假命題",
+      "difficulty": "Expert",
+      "prompt": "四人之中只有一人犯案，而且下列四句話恰好一真。是誰？",
+      "clues": [
+        "A：「C 犯案」",
+        "B：「A 犯案」",
+        "C：「D 沒有犯案」",
+        "D：「B 說真話」"
+      ],
+      "hint": "逐一假設四個嫌疑人犯案，檢查真話數是否恰好為一。",
+      "explain": "假設 B 犯案時，恰有一句為真；其他假設都不符合。",
+      "figure": {
+        "kind": "suspects",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "options": [
+        "C",
+        "A",
+        "B",
+        "D"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "avatar",
+          "value": "C"
+        },
+        {
+          "kind": "avatar",
+          "value": "A"
+        },
+        {
+          "kind": "avatar",
+          "value": "B"
+        },
+        {
+          "kind": "avatar",
+          "value": "D"
+        }
+      ],
+      "checker": {
+        "kind": "truth",
+        "candidates": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "T03",
+      "category": "真假命題",
+      "difficulty": "Ω",
+      "prompt": "四人之中只有一人犯案，而且下列四句話恰好一真。是誰？",
+      "clues": [
+        "A：「A 沒有犯案」",
+        "B：「C 犯案」",
+        "C：「B 沒有犯案」",
+        "D：「A 說謊」"
+      ],
+      "hint": "逐一假設四個嫌疑人犯案，檢查真話數是否恰好為一。",
+      "explain": "假設 B 犯案時，恰有一句為真；其他假設都不符合。",
+      "figure": {
+        "kind": "suspects",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "options": [
+        "A",
+        "C",
+        "B",
+        "D"
+      ],
+      "answer": 2,
+      "answerSpecs": [
+        {
+          "kind": "avatar",
+          "value": "A"
+        },
+        {
+          "kind": "avatar",
+          "value": "C"
+        },
+        {
+          "kind": "avatar",
+          "value": "B"
+        },
+        {
+          "kind": "avatar",
+          "value": "D"
+        }
+      ],
+      "checker": {
+        "kind": "truth",
+        "candidates": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "SP02",
+      "category": "空間／展開圖",
+      "difficulty": "Hard",
+      "prompt": "把立方體展開圖折起來，哪一面與 A 相對？",
+      "hint": "立方體互相相對的面不可能共用邊。",
+      "explain": "展開圖折起來後 A 與 F 位於相對兩面。",
+      "figure": {
+        "kind": "cubeNet",
+        "ask": "A"
+      },
+      "options": [
+        "D",
+        "F",
+        "E",
+        "C"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "face",
+          "value": "D"
+        },
+        {
+          "kind": "face",
+          "value": "F"
+        },
+        {
+          "kind": "face",
+          "value": "E"
+        },
+        {
+          "kind": "face",
+          "value": "C"
+        }
+      ]
+    },
+    {
+      "id": "SP03",
+      "category": "空間／展開圖",
+      "difficulty": "Expert",
+      "prompt": "把立方體展開圖折起來，哪一面與 B 相對？",
+      "hint": "立方體互相相對的面不可能共用邊。",
+      "explain": "展開圖折起來後 B 與 D 位於相對兩面。",
+      "figure": {
+        "kind": "cubeNet",
+        "ask": "B"
+      },
+      "options": [
+        "A",
+        "C",
+        "E",
+        "D"
+      ],
+      "answer": 3,
+      "answerSpecs": [
+        {
+          "kind": "face",
+          "value": "A"
+        },
+        {
+          "kind": "face",
+          "value": "C"
+        },
+        {
+          "kind": "face",
+          "value": "E"
+        },
+        {
+          "kind": "face",
+          "value": "D"
+        }
+      ]
     }
   ],
-  "difficulty_labels": [
-    "Hard",
-    "Expert",
-    "Ω"
-  ]
+  "notice": "Original authored and deterministic puzzle variants. Difficulty is editorial (not psychometric calibration)."
 }
