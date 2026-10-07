@@ -224,6 +224,28 @@ function generatorMeta(id){
  return {id:gen,version:"1.0.0",seed,option_seed,
   reproducibility:seed===null?"deterministic_static":"deterministic_seeded",source:"src/questions.js"};
 }
+const STRUCTURAL_HINTS={
+ "數字金字塔":"先分層觀察：不要直接猜問號，先找相鄰兩個子節點如何共同生成上一層。",
+ "圓盤數字":"把每個扇區都視為同一個輸入→輸出函數；規則必須同時解釋所有已知範例。",
+ "路徑最佳化":"先把『可走的連線』和『節點的分數』分開看，再遵守走訪節點數與不可重複的限制。",
+ "圖形缺項":"把複雜圖形拆成基本線段或元素，逐列比較哪些元素保留、消失或轉換。",
+ "圖形序列":"把外框、方向與填色拆成三條獨立序列，不要用單一外觀一次猜整題。",
+ "旋轉／鏡像":"先選一個不對稱的小標記當錨點，追蹤它移動後的位置，同時檢查左右手性有沒有反轉。",
+ "棋子移動":"把每一格按或不按視為二元選擇；先利用『按兩次等於沒按』縮小搜尋空間。",
+ "幣值／組合限制":"先把『每種面額使用相同枚數』換成面額總和的限制，再檢查候選組合。",
+ "排序／分組":"先處理相鄰、緊接、先後這類最強限制，再套用不能相鄰或不能在兩端等條件。",
+ "Logic Grid":"先固定能直接鎖定位置的條件，再把人物與屬性的一對一關係逐步填入。",
+ "真假命題":"不要憑語氣判斷；逐一假設每個候選成立，再計算該假設下有幾句話為真。",
+ "空間／展開圖":"先找出一定相鄰的面，再追蹤折起後方向相反、因此互為相對面的那一面。"
+};
+function progressiveHints(q){
+ const structural=STRUCTURAL_HINTS[q.category];
+ if(!structural)throw Error("missing structural hint "+q.id);
+ return [
+  {stage:"structural",text:structural},
+  {stage:"stronger",text:q.hint}
+ ];
+}
 export function buildBank(){
  let bank=makeBase();
  // 4 additional pyramids: same compact geometry, distinct weighted recurrences.
@@ -407,7 +429,7 @@ export function buildBank(){
   P05:"Expert",C04:"Expert"
  };
  bank.forEach(q=>{if(gradeOverrides[q.id])q.difficulty=gradeOverrides[q.id];});
- bank.forEach(q=>{q.generator=generatorMeta(q.id);});
+ bank.forEach(q=>{q.generator=generatorMeta(q.id);q.hint_steps=progressiveHints(q);});
  if(bank.length!==50)throw Error("expected 50, got "+bank.length);
  if(new Set(bank.map(x=>x.id)).size!==bank.length)throw Error("duplicate puzzle ids");
  // Audit every key gameplay invariant (category coverage, options, solver-backed unique answer).
@@ -434,7 +456,7 @@ export function buildBank(){
 }
 export const PUZZLES=buildBank();
 export const BANK_META={
- version:"0.4.0",count:PUZZLES.length,
+ version:"0.5.0",count:PUZZLES.length,
  categoryCount:CATEGORIES.length,
  difficultyCounts:PUZZLES.reduce((m,q)=>(m[q.difficulty]=(m[q.difficulty]||0)+1,m),{}),
  categoryCounts:PUZZLES.reduce((m,q)=>(m[q.category]=(m[q.category]||0)+1,m),{})
