@@ -9,9 +9,9 @@ try{
   const faults=[];
   page.on("pageerror",e=>faults.push(e.message));
   await page.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
-  assert.equal(await page.evaluate(()=>window.AXIOM_QA?.build),"V0.4.3-20261007",
+  assert.equal(await page.evaluate(()=>window.AXIOM_QA?.build),"V0.5.0-20261007",
     "stale browser JavaScript in "+width+"x"+height);
-  assert((await page.locator(".tag").innerText()).includes("V0.4.3"),"stale HTML in "+width+"x"+height);
+  assert((await page.locator(".tag").innerText()).includes("V0.5"),"stale HTML in "+width+"x"+height);
   await page.locator("#startTen").click();
   await page.waitForSelector("#game.is-active");
   await page.locator(".answer img").first().waitFor({state:"visible"});
@@ -52,9 +52,22 @@ try{
  assert.equal(await full.locator("#detailButton").count(),0,"題意 button must be removed");
  assert.equal(await full.locator("#hintButton").count(),1);
  assert.equal(await full.locator("#clearButton").count(),1);
+ const firstHintQuestion=await full.evaluate(()=>window.AXIOM_QA.state.pool[window.AXIOM_QA.state.index]);
+ assert.equal(firstHintQuestion.hint_steps.length,2,"expected two progressive hint stages");
+ assert((await full.locator("#hintButton").innerText()).includes("1 / 2"));
  await full.locator("#hintButton").click();
  assert.equal(await full.locator("#dialog").evaluate(x=>x.open),true);
+ assert((await full.locator("#dialogTitle").innerText()).includes("提示 1 / 2"));
+ assert.equal(await full.locator("#dialogText").innerText(),firstHintQuestion.hint_steps[0].text);
  await full.locator("#dialogClose").click();
+ assert.equal(await full.locator("#hintButton").isDisabled(),false);
+ assert((await full.locator("#hintButton").innerText()).includes("2 / 2"));
+ await full.locator("#hintButton").click();
+ assert((await full.locator("#dialogTitle").innerText()).includes("提示 2 / 2"));
+ assert.equal(await full.locator("#dialogText").innerText(),firstHintQuestion.hint_steps[1].text);
+ await full.locator("#dialogClose").click();
+ assert.equal(await full.locator("#hintButton").isDisabled(),true);
+ assert.equal(await full.evaluate(()=>window.AXIOM_QA.state.hints),2);
  for(let i=0;i<50;i++){
   await full.waitForFunction(()=>{const im=document.getElementById("mainFigure");return im.complete&&im.naturalWidth>0;});
   assert.equal(await full.locator(".answer").count(),4);

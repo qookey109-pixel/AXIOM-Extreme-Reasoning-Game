@@ -1,9 +1,9 @@
 import {PUZZLES,CATEGORIES,BANK_META} from "./questions.js";
 import {renderFigure,renderChoiceImage} from "./graphics.js";
-export const APP_BUILD="V0.4.3-20261007";
+export const APP_BUILD="V0.5.0-20261007";
 const $=id=>document.getElementById(id);
 const screens=["home","game","results"];
-const state={pool:[],index:0,selected:-1,answered:[],hints:0,hinted:false,started:0,questionStart:0,correct:0,mode:10,category:"全部",difficulty:"全部"};
+const state={pool:[],index:0,selected:-1,answered:[],hints:0,hinted:false,hintStep:0,started:0,questionStart:0,correct:0,mode:10,category:"全部",difficulty:"全部"};
 const saveKey="axiom-v04-completed";
 function setScreen(name){
  screens.forEach(id=>$(id).classList.toggle("is-active",id===name));
@@ -63,7 +63,7 @@ function start(mode){
    if(!progress)break;
   }
  }else deck=shuffled(a);
- state.pool=deck;state.index=0;state.answered=[];state.hints=0;state.hinted=false;state.correct=0;
+ state.pool=deck;state.index=0;state.answered=[];state.hints=0;state.hinted=false;state.hintStep=0;state.correct=0;
  state.mode=deck.length;state.started=Date.now();state.questionStart=Date.now();
  setScreen("game");render();
 }
@@ -99,7 +99,7 @@ function displayClue(q){
 }
 function render(){
  const q=state.pool[state.index];if(!q)return;
- state.selected=-1;state.hinted=false;state.questionStart=Date.now();
+ state.selected=-1;state.hinted=false;state.hintStep=0;state.questionStart=Date.now();
  $("categoryLabel").textContent=q.category;
  $("difficultyLabel").textContent=q.difficulty;
  $("questionNum").textContent=String(state.index+1).padStart(2,"0")+" / "+state.pool.length;
@@ -132,8 +132,9 @@ function render(){
   $("answerGrid").append(btn);
  }
  $("confirm").disabled=true;
+ const hintSteps=Array.isArray(q.hint_steps)&&q.hint_steps.length?q.hint_steps:[{stage:"stronger",text:q.hint}];
  $("hintButton").disabled=false;
- $("hintButton").textContent="提示";
+ $("hintButton").textContent="提示 1 / "+hintSteps.length;
  $("confirm").textContent=state.index===state.pool.length-1?"提交並完成":"確認作答";
 }
 function choose(i){
@@ -164,9 +165,16 @@ function finish(){
  setScreen("results");$("progressBar").style.width="100%";
 }
 function useHint(){
- const q=state.pool[state.index];if(state.hinted)return;
- state.hinted=true;state.hints++;$("hintButton").disabled=true;$("hintButton").textContent="已用提示";
- openDialog("提示",q.hint);
+ const q=state.pool[state.index];
+ const steps=Array.isArray(q.hint_steps)&&q.hint_steps.length?q.hint_steps:[{stage:"stronger",text:q.hint}];
+ if(state.hintStep>=steps.length)return;
+ const step=steps[state.hintStep],number=state.hintStep+1;
+ state.hinted=true;state.hints++;state.hintStep++;
+ const button=$("hintButton"),done=state.hintStep>=steps.length;
+ button.disabled=done;
+ button.textContent=done?"提示已用完":"下一提示 "+(state.hintStep+1)+" / "+steps.length;
+ const stageName=step.stage==="structural"?"結構":step.stage==="stronger"?"加強":"提示";
+ openDialog("提示 "+number+" / "+steps.length+" · "+stageName,step.text);
 }
 function review(){
  const lines=state.pool.map((q,i)=>{
