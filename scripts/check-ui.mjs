@@ -9,9 +9,9 @@ try{
   const faults=[];
   page.on("pageerror",e=>faults.push(e.message));
   await page.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
-  assert.equal(await page.evaluate(()=>window.AXIOM_QA?.build),"V0.4.2-20261007",
+  assert.equal(await page.evaluate(()=>window.AXIOM_QA?.build),"V0.4.3-20261007",
     "stale browser JavaScript in "+width+"x"+height);
-  assert((await page.locator(".tag").innerText()).includes("V0.4.2"),"stale HTML in "+width+"x"+height);
+  assert((await page.locator(".tag").innerText()).includes("V0.4.3"),"stale HTML in "+width+"x"+height);
   await page.locator("#startTen").click();
   await page.waitForSelector("#game.is-active");
   await page.locator(".answer img").first().waitFor({state:"visible"});
@@ -49,7 +49,10 @@ try{
  await full.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
  await full.locator("#startAll").click();
  assert.equal(await full.evaluate(()=>window.AXIOM_QA.state.pool.length),50);
- await full.locator("#detailButton").click();
+ assert.equal(await full.locator("#detailButton").count(),0,"題意 button must be removed");
+ assert.equal(await full.locator("#hintButton").count(),1);
+ assert.equal(await full.locator("#clearButton").count(),1);
+ await full.locator("#hintButton").click();
  assert.equal(await full.locator("#dialog").evaluate(x=>x.open),true);
  await full.locator("#dialogClose").click();
  for(let i=0;i<50;i++){
