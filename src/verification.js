@@ -175,10 +175,11 @@ function baseManifest(q){
   id:q.id,
   family:FAMILY_BY_CATEGORY[q.category]||"unknown",
   variant:q.checker?.kind||q.figure?.kind||"legacy",
-  generator:{
+  generator:q.generator||{
    id:generated?"axiom_catalog_v04":"legacy_static_v01",
    version:"0.4.x",
    seed:null,
+   option_seed:null,
    reproducibility:generated?"deterministic_source":"legacy_asset"
   },
   provenance:{origin:"axiom_original",source:"src/questions.js"},
