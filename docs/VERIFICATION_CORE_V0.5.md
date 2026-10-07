@@ -102,6 +102,16 @@ The migration does not change visible game wording, answers, scoring or interact
 
 Generator provenance is now complete for the current catalog: every puzzle carries a generator id, version, explicit seed field and option seed field. Static constructions use `seed: null` rather than inventing randomness; seeded generators preserve the exact deterministic seeds already used by the V0.4 source.
 
+## Progressive hint contract
+
+The V0.5 player flow reveals hints in increasing strength:
+
+1. `structural`: points to the representation or decomposition strategy without naming the answer;
+2. `stronger`: preserves the previously reviewed per-puzzle hint and narrows the solving method;
+3. `solution explanation`: remains outside `hint_steps` and is shown only in post-answer review.
+
+The complete explanation is deliberately not copied into the hint array. CI checks that the two current hint stages exist for every puzzle and that neither equals the solution explanation. The interface counts each revealed hint stage separately, so asking for stronger assistance carries an additional bounded score penalty.
+
 ## CI policy
 
 `npm test` runs both the existing bank invariant test and the V0.5 verification audit.
