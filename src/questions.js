@@ -21,17 +21,17 @@ const base=[
  ["R01",2,"Expert","沿線走訪 5 個不同節點。最大總和是多少？",["31","33","35","37"],2,"高值節點不一定可以全部直接串在一起。","7→9→8→6→5，總和 35。","graph.png"],
  ["M01",3,"Ω","找出右下角缺失圖。先自行推導規則。",["A","B","C","D"],2,"把圖形拆成線段集合；看看重複部分。","每列第三格為前兩格的線段 XOR，答案 C。","matrix.png"],
  ["S01",4,"Expert","外框、箭頭與中心狀態都在變。下一圖是？",["A","B","C","D"],0,"分別追蹤邊數、角度與實空變化。","七邊形、向下箭頭、實心中心。","sequence.png"],
- ["ROT01",5,"Expert","哪些候選只經過旋轉，不曾鏡射？請選 B。",["A","B","C","D"],1,"鏡射會改變圖形的左右手性。","B 為相符的純旋轉圖形。","rotation.png"],
+ ["ROT01",5,"Expert","僅一個候選保留原圖的旋轉關係，請找出它。",["A","B","C","D"],1,"鏡射會改變圖形的左右手性。","B 為相符的純旋轉圖形。","rotation.png"],
  ["MOVE01",6,"Expert","按一格會翻轉自己與上下左右。全白最少幾次？",["3","4","5","6"],2,"同一格按兩次會互相抵銷。","枚舉 512 種按法，最短為 5 次。","lights.png"],
  ["SP01",11,"Hard","把展開圖折成立方體，哪一面與 C 相對？",["A","B","D","E"],3,"直接接著 C 的四面一定與 C 相鄰。","C 的相對面是 E。","cube.png"]
 ];
 const legacyChoiceSpecs={
  M01:[["v","h"],["d1","d2"],["v","h","d1"],["v","h","d2"]].map(lines=>({kind:"segments",lines})),
  S01:[
-  {kind:"sequence",sides:7,angle:180,fill:1},
+  {kind:"sequence",sides:7,angle:90,fill:1},
   {kind:"sequence",sides:7,angle:0,fill:0},
-  {kind:"sequence",sides:6,angle:180,fill:1},
-  {kind:"sequence",sides:8,angle:180,fill:0}
+  {kind:"sequence",sides:6,angle:90,fill:1},
+  {kind:"sequence",sides:8,angle:90,fill:0}
  ],
  SP01:["A","B","D","E"].map(value=>({kind:"face",value})),
  ROT01:L.map(value=>({kind:"letter",value}))
@@ -354,6 +354,13 @@ export function buildBank(){
    figure:{kind:"cubeNet",ask},options:opts,answer:opts.indexOf(opposite),
    answerSpecs:opts.map(value=>({kind:"face",value}))});
  });
+ // Internal grade labels are explicit editorial bins, not measured IQ difficulty.
+ const gradeOverrides={
+  P03:"Hard",C02:"Hard",R02:"Hard",M02:"Hard",S02:"Hard",
+  ROT02:"Hard",MOVE02:"Hard",LG01:"Hard",T01:"Hard",
+  P05:"Expert",C04:"Expert"
+ };
+ bank.forEach(q=>{if(gradeOverrides[q.id])q.difficulty=gradeOverrides[q.id];});
  if(bank.length!==50)throw Error("expected 50, got "+bank.length);
  if(new Set(bank.map(x=>x.id)).size!==bank.length)throw Error("duplicate puzzle ids");
  // Audit every key gameplay invariant (category coverage, options, solver-backed unique answer).
