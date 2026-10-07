@@ -1,9 +1,11 @@
 {
   "name": "axiom-extreme-reasoning-game",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/check-bank.mjs"
+    "test": "node scripts/check-bank.mjs && node scripts/check-verification.mjs",
+    "test:bank": "node scripts/check-bank.mjs",
+    "test:verification": "node scripts/check-verification.mjs"
   }
 }
