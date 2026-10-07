@@ -1,5 +1,6 @@
 import {PUZZLES,CATEGORIES,BANK_META} from "./questions.js";
 import {renderFigure,renderChoiceImage} from "./graphics.js";
+export const APP_BUILD="V0.4.2-20261007";
 const $=id=>document.getElementById(id);
 const screens=["home","game","results"];
 const state={pool:[],index:0,selected:-1,answered:[],hints:0,hinted:false,started:0,questionStart:0,correct:0,mode:10,category:"全部",difficulty:"全部"};
@@ -215,4 +216,4 @@ setInterval(()=>{
 setChoices();
 const counter=$("bankCounter");
 counter.textContent=BANK_META.count+" QUESTIONS · "+BANK_META.categoryCount+" DOMAINS";
-window.AXIOM_QA={bank:PUZZLES,meta:BANK_META,state,render,renderFigure,renderChoiceImage};
+window.AXIOM_QA={bank:PUZZLES,meta:BANK_META,build:APP_BUILD,state,render,renderFigure,renderChoiceImage};
