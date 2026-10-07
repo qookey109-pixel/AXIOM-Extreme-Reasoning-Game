@@ -64,5 +64,41 @@ try{
  await full.locator("#dialogClose").click();
  await full.close();
  console.log("PASS: all 50 puzzles render 4 graphical choices and complete the full trial");
+
+ // Regression: the truth-tellers, ordering and logic-grid questions must
+ // display every essential statement directly inside the puzzle stage.
+ for(const [category,expectedCount] of [["真假命題",4],["排序／分組",5],["Logic Grid",6]]){
+  for(const [width,height] of [[320,568],[390,844],[1440,900],[667,375]]){
+   const p=await browser.newPage({viewport:{width,height}});
+   await p.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
+   await p.selectOption("#categoryFilter",category);
+   await p.locator("#startAll").click();
+   const first=await p.evaluate(()=>window.AXIOM_QA.state.pool[window.AXIOM_QA.state.index]);
+   assert(first.clues&&first.clues.length===expectedCount,"wrong clue count "+category+" "+first.id);
+   assert.equal(await p.locator("#clueBoard .clue-card").count(),expectedCount);
+   assert.equal(await p.locator("#clueBoard").isVisible(),true,category+" clues hidden "+width);
+   assert.equal(await p.locator("#mainFigure").isVisible(),false,category+" placeholder not hidden");
+   const checks=await p.locator("#clueBoard .clue-card").evaluateAll((cards)=>cards.map(card=>{
+    const content=card.querySelector(".clue-copy"),c=content.getBoundingClientRect(),b=card.getBoundingClientRect();
+    return {text:content.textContent,visible:!!content.textContent.trim(),inside:
+      c.left>=b.left-1&&c.right<=b.right+1&&c.top>=b.top-2&&c.bottom<=b.bottom+2,
+      cardHeight:b.height,textHeight:c.height};
+   }));
+   assert(checks.every(x=>x.visible),category+" empty statement");
+   assert(checks.every(x=>x.inside),category+" clipped statements "+width+"x"+height+" "+JSON.stringify(checks));
+   const currentText=(await p.locator("#clueBoard").innerText());
+   for(const clue of first.clues){
+    const normalized=clue.replace(/^[A-D]：/,"");
+    assert(currentText.includes(normalized),category+" missing rule: "+normalized);
+   }
+   const doc=await p.evaluate(()=>({width:document.documentElement.scrollWidth,height:document.documentElement.scrollHeight}));
+   assert(doc.width<=width+1&&doc.height<=height+1,category+" unexpected document scroll "+width+"x"+height);
+   await p.locator("#zoomButton").click();
+   assert((await p.locator("#dialogText").innerText()).includes(first.clues[0]),"enlarged rules missing");
+   await p.locator("#dialogClose").click();
+   await p.close();
+   console.log("PASS "+category+" @ "+width+"x"+height+": all "+expectedCount+" rules visible and unclipped");
+  }
+ }
 } finally {await browser.close();}
 console.log("AXIOM browser QA PASS: "+passed+"/"+viewports.length+" viewports");

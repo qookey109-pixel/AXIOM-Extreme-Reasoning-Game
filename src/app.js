@@ -67,12 +67,34 @@ function start(mode){
  setScreen("game");render();
 }
 function displayClue(q){
- const button=$("clueButton");
- button.hidden=!q.clues||!q.clues.length;
- if(!button.hidden){
-  button.textContent="查看完整條件 · "+q.clues.length+" 條";
-  button.onclick=()=>openDialog("完整條件",q.clues.map((c,i)=>(i+1)+"．"+c).join("\n"));
- }
+ const hasClues=Array.isArray(q.clues)&&q.clues.length>0;
+ const board=$("clueBoard"),stage=$("puzzleStage"),button=$("clueButton"),zoom=$("zoomButton");
+ board.replaceChildren();
+ board.hidden=!hasClues;
+ board.dataset.count=hasClues?String(q.clues.length):"0";
+ stage.classList.toggle("has-clues",hasClues);
+ button.hidden=!hasClues;
+ zoom.textContent=hasClues?"放大條件 ↗":"放大 ↗";
+ zoom.setAttribute("aria-label",hasClues?"放大查看全部推理條件":"放大題圖");
+ if(!hasClues)return;
+ button.textContent="條件已顯示 · 放大閱讀";
+ const fullText=q.clues.map((s,i)=>(i+1)+"．"+s).join("\n");
+ button.onclick=()=>openDialog("本題全部條件",fullText);
+ const whoSpeaks=q.figure?.kind==="suspects";
+ q.clues.forEach((raw,i)=>{
+  const card=document.createElement("div");card.className="clue-card";card.setAttribute("role","listitem");
+  const label=document.createElement("span");label.className="clue-number";
+  const content=document.createElement("span");content.className="clue-copy";
+  let phrase=raw;
+  if(whoSpeaks){
+   const match=raw.match(/^([A-D])：(.+)$/);
+   if(match){label.textContent=match[1];phrase=match[2];}
+   else label.textContent=String(i+1).padStart(2,"0");
+  }else label.textContent=String(i+1).padStart(2,"0");
+  content.textContent=phrase;
+  card.append(label,content);
+  board.append(card);
+ });
 }
 function render(){
  const q=state.pool[state.index];if(!q)return;
@@ -101,6 +123,9 @@ function render(){
   const badge=document.createElement("span");badge.className="answer-letter";badge.textContent=String.fromCharCode(65+i);
   const img=document.createElement("img");img.alt="";img.draggable=false;img.loading="eager";img.src=renderChoiceImage(q,i);
   const label=document.createElement("span");label.className="answer-label";label.textContent=q.options[i];
+  if(q.answerSpecs?.[i]?.kind==="avatar"){
+   label.classList.add("answer-caption");label.textContent="人物 "+q.options[i];
+  }
   btn.append(badge,img,label);
   btn.onclick=()=>choose(i);
   $("answerGrid").append(btn);
@@ -169,7 +194,11 @@ function showCompletePrompt(){
 }
 $("detailButton").onclick=showCompletePrompt;
 $("hintButton").onclick=useHint;
-$("zoomButton").onclick=()=>openDialog("放大題圖","", $("mainFigure").src);
+$("zoomButton").onclick=()=>{
+ const q=state.pool[state.index];
+ if(q?.clues?.length)openDialog("本題全部條件",q.clues.map((s,i)=>(i+1)+"．"+s).join("\n"));
+ else openDialog("放大題圖","", $("mainFigure").src);
+};
 $("reviewButton").onclick=review;
 $("retryButton").onclick=()=>setScreen("home");
 $("dialogClose").onclick=closeDialog;
