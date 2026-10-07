@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/check-bank.mjs && node scripts/check-verification.mjs",
+    "test": "node scripts/check-bank.mjs && node scripts/check-verification.mjs && node scripts/check-advanced-prototypes.mjs",
     "test:bank": "node scripts/check-bank.mjs",
-    "test:verification": "node scripts/check-verification.mjs"
+    "test:verification": "node scripts/check-verification.mjs",
+    "test:prototypes": "node scripts/check-advanced-prototypes.mjs"
   }
 }
