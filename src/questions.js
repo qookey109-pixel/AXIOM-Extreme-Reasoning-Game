@@ -199,6 +199,31 @@ function truthPatterns(){
   return {statements:s,candidates};
  });
 }
+function generatorMeta(id){
+ const legacy={
+  P01:"pyramid.svg",C01:"circle.svg",R01:"graph.svg",M01:"matrix.svg",
+  S01:"sequence.svg",ROT01:"rotation.svg",MOVE01:"lights.svg",SP01:"cube.svg"
+ };
+ if(legacy[id])return {id:"legacy_svg_v1",version:"1.0.0",seed:null,option_seed:null,
+  reproducibility:"deterministic_static",source_asset:"assets/"+legacy[id]};
+ const n=Number((id.match(/\d+/)||["0"])[0]);
+ let gen=null,seed=null,option_seed=null;
+ if(/^P0[2-5]$/.test(id)){gen="weighted_pyramid_v1";option_seed=100+(n-2);}
+ else if(/^C0[2-5]$/.test(id)){gen="circle_rule_v1";seed=200+(n-2);option_seed=300+(n-2);}
+ else if(/^R0[2-4]$/.test(id)){gen="path_values_v1";option_seed=400+(n-2);}
+ else if(/^M0[2-5]$/.test(id)){gen="matrix_rule_v1";seed=500+(n-2);option_seed=600+(n-2);}
+ else if(/^S0[2-5]$/.test(id)){gen="sequence_attributes_v1";option_seed=700+(n-2);}
+ else if(/^ROT0[2-4]$/.test(id)){gen="rotation_transform_v1";option_seed=800+(n-2);}
+ else if(/^MOVE0[2-4]$/.test(id)){gen="lights_search_v1";option_seed=900+(n-2);}
+ else if(/^COM0[1-4]$/.test(id)){gen="coin_constraints_v1";option_seed=1000+(n-1);}
+ else if(/^ORD0[1-4]$/.test(id)){gen="ordering_constraints_v1";seed=1200+(n-1);option_seed=1300+(n-1);}
+ else if(/^LG0[1-4]$/.test(id)){gen="logic_grid_v1";option_seed=1500+(n-1);}
+ else if(/^T0[1-3]$/.test(id)){gen="truth_constraints_v1";option_seed=1600+(n-1);}
+ else if(/^SP0[2-3]$/.test(id)){gen="cube_net_v1";seed=1700+(n-2);option_seed=1800+(n-2);}
+ if(!gen)throw Error("missing generator metadata "+id);
+ return {id:gen,version:"1.0.0",seed,option_seed,
+  reproducibility:seed===null?"deterministic_static":"deterministic_seeded",source:"src/questions.js"};
+}
 export function buildBank(){
  let bank=makeBase();
  // 4 additional pyramids: same compact geometry, distinct weighted recurrences.
@@ -382,6 +407,7 @@ export function buildBank(){
   P05:"Expert",C04:"Expert"
  };
  bank.forEach(q=>{if(gradeOverrides[q.id])q.difficulty=gradeOverrides[q.id];});
+ bank.forEach(q=>{q.generator=generatorMeta(q.id);});
  if(bank.length!==50)throw Error("expected 50, got "+bank.length);
  if(new Set(bank.map(x=>x.id)).size!==bank.length)throw Error("duplicate puzzle ids");
  // Audit every key gameplay invariant (category coverage, options, solver-backed unique answer).
