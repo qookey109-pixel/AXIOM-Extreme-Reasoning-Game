@@ -1,0 +1,25 @@
+import assert from "node:assert/strict";
+import {PUZZLES,CATEGORIES,BANK_META} from "../src/questions.js";
+assert.equal(PUZZLES.length,50);
+assert.equal(CATEGORIES.length,12);
+assert.deepEqual(BANK_META.difficultyCounts,{Hard:18,Expert:22,"Ω":10});
+const ids=new Set();
+for(const q of PUZZLES){
+ assert(!ids.has(q.id),"duplicate id "+q.id);ids.add(q.id);
+ assert(CATEGORIES.includes(q.category),"unknown domain "+q.id);
+ assert(["Hard","Expert","Ω"].includes(q.difficulty),"unknown level "+q.id);
+ assert.equal(q.options.length,4,q.id);
+ assert.equal(new Set(q.options).size,4,q.id);
+ assert(q.answer>=0&&q.answer<=3,q.id);
+ assert(typeof q.prompt==="string"&&q.prompt.length>10,q.id);
+ assert(typeof q.hint==="string"&&q.hint.length>5,q.id);
+ assert(typeof q.explain==="string"&&q.explain.length>5,q.id);
+ assert(q.figure&&typeof q.figure.kind==="string",q.id);
+ assert(q.asset||q.figure.kind!=="legacy",q.id);
+ assert.equal(q.answerSpecs.length,4,q.id);
+}
+assert.equal(Object.keys(BANK_META.categoryCounts).length,12);
+assert(Object.values(BANK_META.categoryCounts).every(n=>n>=3));
+assert(!PUZZLES.find(q=>q.id==="ROT01").prompt.includes("請選 B"),"answer leaked in prompt");
+console.log(JSON.stringify({status:"PASS",version:BANK_META.version,questionCount:50,
+  tiers:BANK_META.difficultyCounts,categories:BANK_META.categoryCounts},null,2));
