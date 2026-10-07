@@ -36,11 +36,32 @@ const legacyChoiceSpecs={
  SP01:["A","B","D","E"].map(value=>({kind:"face",value})),
  ROT01:L.map(value=>({kind:"letter",value}))
 };
+const legacyCheckers={
+ P01:{kind:"pyramid",rows:[[62],[22,20],[10,6,7],[2,4,1,"?"]],weights:[1,2,3,4,5,6]},
+ C01:{kind:"circle",pairs:[[2,5,13],[3,7,25],[4,6,26],[2,9,25],[6,1,11]],target:[5,8]},
+ R01:{kind:"path",vals:[7,3,9,4,8,2,6,5],edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,6],[4,6],[4,7],[5,7],[6,7]],k:5},
+ M01:{kind:"matrixLines",rows:[
+  [["v","d1"],["h","d1"],["v","h"]],
+  [["v","d2"],["v","h"],["h","d2"]],
+  [["h","d1","d2"],["v","d2"],"?"]
+ ],grammar:["xor","or","and"]},
+ S01:{kind:"sequence",frames:[
+  {sides:3,angle:270,fill:1},{sides:4,angle:45,fill:0},
+  {sides:5,angle:180,fill:1},{sides:6,angle:315,fill:0}
+ ]},
+ ROT01:{kind:"rotationChoice",options:[
+  {angle:180,mirror:true},{angle:90,mirror:false},{angle:90,mirror:true},{angle:0,mirror:true}
+ ],criterion:"pure_rotation"},
+ MOVE01:{kind:"lights",bits:[1,1,0,0,1,1,1,0,0]},
+ SP01:{kind:"cubeNet",ask:"C",cells:[
+  ["A",0,-1],["B",-1,0],["C",0,0],["D",1,0],["E",2,0],["F",0,1]
+ ]}
+};
 function makeBase(){
  return base.map(([id,ci,difficulty,prompt,options,answer,hint,explain,img])=>({
   id,category:CATEGORIES[ci],difficulty,prompt,options,answer,hint,explain,
   asset:"assets/png/"+img,figure:{kind:"legacy",img},answerSpecs:legacyChoiceSpecs[id]||
-     options.map(value=>({kind:"number",value}))
+     options.map(value=>({kind:"number",value})),checker:legacyCheckers[id]||null
  }));
 }
 function pushQ(bank,q){
