@@ -162,6 +162,12 @@ $("startTen").onclick=()=>start(10);
 $("startAll").onclick=()=>start(Infinity);
 $("confirm").onclick=submit;
 $("clearButton").onclick=()=>{state.selected=-1;[...$("answerGrid").children].forEach(b=>{b.classList.remove("selected");b.setAttribute("aria-pressed","false");});$("confirm").disabled=true;};
+function showCompletePrompt(){
+ const q=state.pool[state.index];if(!q)return;
+ const rules=q.clues&&q.clues.length?"\n\n完整條件：\n"+q.clues.map((c,i)=>(i+1)+"．"+c).join("\n"):"";
+ openDialog("題目全文與條件",q.prompt+rules);
+}
+$("detailButton").onclick=showCompletePrompt;
 $("hintButton").onclick=useHint;
 $("zoomButton").onclick=()=>openDialog("放大題圖","", $("mainFigure").src);
 $("reviewButton").onclick=review;
