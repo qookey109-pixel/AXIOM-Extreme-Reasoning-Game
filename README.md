@@ -1,18 +1,40 @@
 # AXIOM — Extreme Reasoning Game
 
-**獨立極限推理遊戲**。目前版本：**V0.3.2 · Locked Raster prototype**。
+**獨立原創極限推理遊戲**。本版 **V0.4 · Visual Answers / One-Screen / 50-Puzzle Bank**。
 
-## 本次上傳
-- 8 道已接入流程的原創視覺推理練習題，採 Hard / Expert / Ω 三種玩家可見難度。
-- 題圖先設計為 SVG 原始資產，雲端 GitHub Actions 轉成高解析 PNG。
-- 網頁優先載入 `assets/png/*.png`；首次雲端生成前回退到隔離式 `<img src="assets/*.svg">`，不會出現破圖。
-- 支援圖片等比例縮放、手機點圖放大、提示與總結。
-- 12 大題型架構、擴充 50 題與自動唯一解驗證器屬後續開發，**尚未完成**。
+公開遊戲： https://qookey109-pixel.github.io/AXIOM-Extreme-Reasoning-Game/
 
-## Source & licensing
-題型機制可研究經典數學謎題與公開領域素材，正式內容不直接搬運 MENSA / Raven 商業測驗原題。
+## 本版實作
 
-## Cloud-only deployment
-1. 主分支上的 `.github/workflows/render-assets.yml` 自動產生靜態 PNG，並提交回 GitHub。
-2. 靜態網站入口：`index.html`。如需公開 GitHub Pages，將 Pages source 設定為 Deploy from branch → main / (root)。
-3. GitHub Actions 必須允許 workflow 寫入 repository contents；若該權限被限制，圖形可由 SVG fallback 顯示，但 PNG 尚未建立。
+- 12 大類、50 題可玩的 finite catalog，包含舊版 8 題與 42 題新設計／確定性生成的變體。
+- 難度只顯示 **Hard 18 / Expert 22 / Ω 10**；標籤目前是設計分級，尚未使用實際玩家數據校準。
+- 4 個**可點選的圖形選項卡**，包括圖形矩陣、圖形序列、旋轉、空間展開、硬幣排列、人物符號等；數字題也改成視覺數字卡。
+- 全頁視窗內解題，手機答案為 2×2、桌機為一列 4 張；網頁本體禁止垂直／水平捲動。
+- 題圖保持固定邏輯 Canvas → PNG data URL；過去 8 道題則繼續使用 `assets/png/*.png`。圖形僅等比例縮放，不由網頁 DOM 組裝。
+- 可選擇題型、難度、快速 10 題或完整題組；線索／提示／放大圖／答案解析以浮層呈現，不撐長頁面。
+- 鍵盤 1–4 選答案、Enter 提交、Backspace 清除。
+- 解題正確率、總時間、提示次數與總分。
+
+## 題庫 source of truth
+
+`src/questions.js` 內含所有題目、生成規則、答案和局部驗證；`question_bank.json` 為同一版 **50 題**的靜態資料快照。謎題畫面由 `src/graphics.js` 繪製，`src/app.js` 處理遊戲流程，`src/styles.css` 處理固定視窗版面。
+
+12 大類：**數字金字塔、圓盤數字、路徑最佳化、圖形缺項、圖形序列、旋轉／鏡像、棋子移動、幣值／組合限制、排序／分組、Logic Grid、真假命題、空間／展開圖**。
+
+## 品質檢查
+
+`npm test`：題目數、三階難度分布、12 大類涵蓋、答案合法性、選項重複、部分模板唯一性和求解器檢查。
+
+Pull Request workflow `.github/workflows/axiom-qa.yml`：Node logic test + headless Chromium 瀏覽器，測 **320／360／375／390／430／768／1024／1440 px** 及一種橫向視窗，驗證 body 無溢出、題圖與 4 個答案圖像存在、可選擇提交。
+
+## 待優化
+
+- Ω 目前是原創探索性高難度模板，仍需真人測試和更嚴密的規則文法模型校驗；不要把它當作臨床 IQ 評估。
+- 長篇條件與解析使用彈窗內部捲動，讓主畫面維持單螢幕。
+- 後續可增加更多原創題型／難度校準／玩法與每日題。
+- 圖像生成仍在使用者瀏覽器的 Canvas 裡輸出為 raster PNG data URL，屬於穩定顯示技術，並不等於從網站亂數抓取他人的現成題目。
+
+## 授權與題源
+
+經典益智書與 MENSA／Raven 可以**研究玩法結構**，但不直接複製原題文字、商業測驗圖像或頁面排版。AXIOM 題目圖形與描述皆以專案自身生成／重新設計為主。
+
