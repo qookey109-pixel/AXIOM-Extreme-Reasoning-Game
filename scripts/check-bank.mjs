@@ -13,6 +13,11 @@ for(const q of PUZZLES){
  assert(q.answer>=0&&q.answer<=3,q.id);
  assert(typeof q.prompt==="string"&&q.prompt.length>10,q.id);
  assert(typeof q.hint==="string"&&q.hint.length>5,q.id);
+ assert(Array.isArray(q.hint_steps)&&q.hint_steps.length>=2,q.id+" staged hints");
+ assert.deepEqual(q.hint_steps.map(x=>x.stage),["structural","stronger"],q.id+" hint stages");
+ assert(q.hint_steps.every(x=>typeof x.text==="string"&&x.text.length>5),q.id+" hint text");
+ assert.equal(q.hint_steps.at(-1).text,q.hint,q.id+" stronger hint must preserve original hint");
+ assert(q.hint_steps.every(x=>x.text!==q.explain),q.id+" solution explanation leaked into hints");
  assert(typeof q.explain==="string"&&q.explain.length>5,q.id);
  assert(q.figure&&typeof q.figure.kind==="string",q.id);
  assert(q.asset||q.figure.kind!=="legacy",q.id);
