@@ -7,9 +7,11 @@ assert.equal(VERIFICATION_SCHEMA_VERSION,"0.5.0");
 assert.equal(manifests.length,50);
 assert.equal(summary.valid,50,"all published puzzles must remain structurally valid");
 
-// V0.5 is a migration layer: only families with an independent verifier are upgraded.
-// This threshold prevents silent regression without falsely claiming all legacy items are verified.
-assert(summary.solver_verified>=35,"verification coverage unexpectedly regressed: "+summary.solver_verified);
+// V0.5 migration is complete for the current 50-puzzle bank.
+// Any future puzzle must enter with an independent verifier rather than lowering coverage.
+assert.equal(summary.solver_verified,50,"every published puzzle must be independently solver verified");
+assert.equal(summary.answer_unique,50,"every published puzzle must have a unique verified answer");
+assert.deepEqual(summary.legacy_or_pending,[],"published bank contains pending verification");
 
 for(const m of manifests){
  assert.equal(m.schema_version,VERIFICATION_SCHEMA_VERSION,m.id);
@@ -32,8 +34,8 @@ const omega=PUZZLES.filter(q=>q.difficulty==="Ω").map(q=>{
  const manifest=manifests.find(m=>m.id===q.id);
  return {id:q.id,verified:manifest.machine.solver_verified,...omegaAdmission(manifest)};
 });
-const verifiedOmega=omega.filter(x=>x.verified);
-assert(verifiedOmega.length>0,"expected at least one independently verified Ω puzzle");
-assert(verifiedOmega.every(x=>x.pass),JSON.stringify(verifiedOmega.filter(x=>!x.pass)));
+assert.equal(omega.length,10,"Ω catalog size changed unexpectedly");
+assert(omega.every(x=>x.verified),"every Ω puzzle must be independently verified");
+assert(omega.every(x=>x.pass),JSON.stringify(omega.filter(x=>!x.pass)));
 
 console.log(JSON.stringify({status:"PASS",schema:VERIFICATION_SCHEMA_VERSION,...summary,omega},null,2));
