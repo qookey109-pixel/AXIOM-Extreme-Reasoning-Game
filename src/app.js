@@ -1,6 +1,6 @@
 import {PUZZLES,CATEGORIES,BANK_META} from "./questions.js";
 import {renderFigure,renderChoiceImage} from "./graphics.js";
-export const APP_BUILD="V0.4.2-20261007";
+export const APP_BUILD="V0.4.3-20261007";
 const $=id=>document.getElementById(id);
 const screens=["home","game","results"];
 const state={pool:[],index:0,selected:-1,answered:[],hints:0,hinted:false,started:0,questionStart:0,correct:0,mode:10,category:"全部",difficulty:"全部"};
@@ -188,12 +188,6 @@ $("startTen").onclick=()=>start(10);
 $("startAll").onclick=()=>start(Infinity);
 $("confirm").onclick=submit;
 $("clearButton").onclick=()=>{state.selected=-1;[...$("answerGrid").children].forEach(b=>{b.classList.remove("selected");b.setAttribute("aria-pressed","false");});$("confirm").disabled=true;};
-function showCompletePrompt(){
- const q=state.pool[state.index];if(!q)return;
- const rules=q.clues&&q.clues.length?"\n\n完整條件：\n"+q.clues.map((c,i)=>(i+1)+"．"+c).join("\n"):"";
- openDialog("題目全文與條件",q.prompt+rules);
-}
-$("detailButton").onclick=showCompletePrompt;
 $("hintButton").onclick=useHint;
 $("zoomButton").onclick=()=>{
  const q=state.pool[state.index];
