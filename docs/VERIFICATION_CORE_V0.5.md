@@ -18,7 +18,7 @@ Each runtime manifest produced by `buildVerificationManifest(q)` includes:
 - `schema_version`
 - stable `id`
 - `family` and `variant`
-- generator/reproducibility metadata
+- generator identity/version plus semantic and option-selection seeds
 - provenance
 - verifier identity/version
 - structural validity
@@ -96,10 +96,11 @@ The migration does not change visible game wording, answers, scoring or interact
 
 ## Next migration stages
 
-1. add explicit generator id/version/seed metadata to generated puzzles;
-2. split single hints into structural / stronger / near-solution stages;
-3. add editorial human-QA and calibration records;
-4. add Proof Compression, Necessary Clue and Counterexample Hunt prototypes only after those foundations remain green.
+1. split single hints into structural / stronger / near-solution stages;
+2. add editorial human-QA and calibration records;
+3. add Proof Compression, Necessary Clue and Counterexample Hunt prototypes only after those foundations remain green.
+
+Generator provenance is now complete for the current catalog: every puzzle carries a generator id, version, explicit seed field and option seed field. Static constructions use `seed: null` rather than inventing randomness; seeded generators preserve the exact deterministic seeds already used by the V0.4 source.
 
 ## CI policy
 
