@@ -1,7 +1,79 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>AXIOM — Extreme Reasoning Game</title><style>
-:root{--paper:#fffdf8;--ink:#17202a;--muted:#667085;--line:#d8d2c6;--blue:#2457d6}*{box-sizing:border-box}html,body{margin:0;max-width:100%;overflow-x:clip}body{background:linear-gradient(180deg,#f8f5ed,#ece7dc);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;min-height:100vh}.wrap{width:min(100% - 16px,1040px);margin:auto;padding:18px 0 56px;min-width:0}header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px;min-width:0}.brand{font-weight:950;letter-spacing:.22em}.small{font-size:12px;color:var(--muted);line-height:1.55}.pill{border:1px solid var(--line);border-radius:999px;padding:8px 11px;background:#fff9;font-weight:850;font-size:12px;white-space:nowrap;flex:0 0 auto}.panel{min-width:0;background:#fffdf8ef;border:1px solid var(--line);border-radius:22px;padding:clamp(16px,3.5vw,36px);box-shadow:0 20px 70px #28304412;overflow:hidden}h1{font-size:clamp(34px,7vw,68px);line-height:.98;letter-spacing:-.05em;margin:8px 0 14px}p{line-height:1.6}.kicker{font-size:12px;color:var(--blue);font-weight:950;letter-spacing:.1em;text-transform:uppercase}.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:20px 0}.rule{border:1px solid var(--line);border-radius:14px;background:#faf8f2;padding:12px;min-width:0}.hidden{display:none!important}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;min-width:0}.progress{height:7px;background:#e7e1d7;border-radius:99px;overflow:hidden;margin:18px 0 22px}.progress>div{height:100%;background:var(--blue)}.q{font-size:clamp(21px,3vw,30px);font-weight:880;line-height:1.38;margin:0 0 16px;overflow-wrap:anywhere}.visual-shell{width:100%;min-width:0;max-width:100%;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#f9f7f1;padding:10px;margin-bottom:16px;contain:layout paint}.visual-frame{width:100%;max-width:920px;margin:0 auto;display:grid;place-items:center;overflow:hidden;min-width:0}.puzzle-asset{display:block;width:100%;height:auto;max-width:100%;border:0;min-width:0;object-fit:contain;cursor:zoom-in}.zoom-note{font-size:11px;color:var(--muted);text-align:center;margin-top:7px}.lightbox{position:fixed;inset:0;z-index:9999;background:#0f172acc;display:grid;place-items:center;padding:12px}.lightbox.hidden{display:none!important}.lightbox-card{width:min(98vw,1200px);height:min(94vh,900px);background:#fffdf8;border-radius:18px;padding:10px;display:grid;place-items:center;position:relative;overflow:auto}.lightbox-card img{display:block;max-width:100%;max-height:calc(94vh - 20px);width:auto;height:auto}.lightbox-close{position:absolute;top:10px;right:10px;z-index:2;border:1px solid var(--line);background:#fff;border-radius:999px;width:42px;height:42px;font-weight:900;cursor:pointer}.options{display:grid;gap:9px;min-width:0}button{font:inherit}.option{width:100%;min-width:0;border:1px solid var(--line);background:#fffefa;border-radius:14px;padding:13px 15px;text-align:left;font-weight:800;overflow-wrap:anywhere;cursor:pointer}.option.sel{border-color:var(--blue);background:#e9efff}.nav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:16px}.primary,.ghost{min-height:48px;border-radius:14px;padding:11px 15px;font-weight:850;cursor:pointer}.primary{border:0;background:var(--ink);color:#fff}.ghost{border:1px solid var(--line);background:transparent}.hint{display:none;margin-top:13px;padding:12px 14px;border:1px solid #e3c965;border-radius:13px;background:#fff5ce;line-height:1.55}.result{font-size:clamp(48px,10vw,88px);font-weight:950;letter-spacing:-.06em}.review{display:grid;gap:11px;margin-top:22px}.ri{border-top:1px solid var(--line);padding-top:13px}.good{color:#18794e}.bad{color:#b42318}.qa-note{font-size:12px;color:var(--muted);margin-top:14px}@media(max-width:700px){.rules{grid-template-columns:1fr}.visual-shell{padding:6px}header{gap:8px}.brand{font-size:15px}}@media(max-height:650px) and (orientation:landscape){.puzzle-asset{max-height:52vh;width:auto;max-width:100%}}
-</style></head><body><div class="wrap"><header><div><div class="brand">AXIOM</div><div class="small">Extreme Reasoning Game</div></div><div class="pill">V0.3.2 · Locked Raster</div></header>
-<main id="home" class="panel"><div class="kicker">Layout Fix</div><h1>把圖形直接固定成高解析圖片。</h1><p>上一版已經把 SVG 隔離，但不同瀏覽器仍可能對 SVG 字型與向量邊界做不同計算。這版改成預先渲染的高解析 PNG；題目內部不再參與瀏覽器排版，只剩整張圖片等比例縮放。</p><div class="rules"><div class="rule"><b>預渲染 PNG asset</b><br><span class="small">線、字、節點位置全部固定，不再由瀏覽器重算。</span></div><div class="rule"><b>使用圖片原生比例</b><br><span class="small">只做等比例縮放，不拉伸、不裁切。</span></div><div class="rule"><b>完全隔離排版</b><br><span class="small">父頁只能改整張圖片大小，不能動圖內任何元素。</span></div><div class="rule"><b>手機可點圖放大</b><br><span class="small">寬圖若縮得太小，可開啟全螢幕檢視。</span></div></div><button class="primary" id="start">開始 Locked Raster 測試</button><div class="qa-note">這版的目標是把響應式造成的跑版從架構上消除；若還有問題，就只剩原始題圖本身需要修。</div></main>
-<main id="game" class="panel hidden"><div class="top"><div><div class="kicker" id="meta"></div><div class="small" id="qid"></div></div><div class="pill" id="difficulty"></div></div><div class="progress"><div id="bar"></div></div><div class="q" id="prompt"></div><div class="visual-shell"><div class="visual-frame" id="frame"><img id="asset" class="puzzle-asset" alt="圖形推理題" decoding="async"></div><div class="zoom-note">手機上可點圖放大</div></div><div class="options" id="options"></div><div class="hint" id="hint"></div><div class="nav"><button class="ghost" id="hintBtn">提示</button><button class="primary" id="next" disabled>鎖定答案</button></div></main>
-<main id="results" class="panel hidden"><div class="kicker">Layout QA Complete</div><h1>Renderer isolated.</h1><div class="result" id="score"></div><p id="summary"></p><button class="primary" id="restart">再玩一次</button><div class="review" id="review"></div></main></div><div id="lightbox" class="lightbox hidden" aria-hidden="true"><div class="lightbox-card"><button id="lightboxClose" class="lightbox-close" aria-label="關閉">×</button><img id="lightboxImg" alt="放大題圖"></div></div>
-<script>const Q=[{"id": "P01", "category": "數字金字塔", "difficulty": "Hard", "prompt": "同一個生成規則套用到每一層。底部的 ? 應是多少？", "options": ["2", "3", "4", "5"], "answer": 1, "hint": "觀察父節點與正下方兩個子節點的關係；左右權重不同。", "explain": "父節點 = 左子節點 + 2×右子節點，所以 7 = 1 + 2×3。", "asset": {"src": "assets/png/pyramid.png", "width": 1000, "height": 650}}, {"id": "C01", "category": "圓盤數字", "difficulty": "Hard", "prompt": "每一個扇區都使用同一條規則。問號是多少？", "options": ["40", "41", "43", "45"], "answer": 2, "hint": "先試乘積，再看還差多少。", "explain": "內值 = a×b + |a−b|，所以 5×8+3=43。", "asset": {"src": "assets/png/circle.png", "width": 800, "height": 800}}, {"id": "R01", "category": "路徑最佳化", "difficulty": "Expert", "prompt": "沿線走訪恰好 5 個不同節點，節點不可重複。最大總和是多少？", "options": ["31", "33", "35", "37"], "answer": 2, "hint": "試著把 7、9、8、6、5 串成一條合法路徑。", "explain": "7→9→8→6→5 是合法路徑，總和 35。", "asset": {"src": "assets/png/graph.png", "width": 1000, "height": 620}}, {"id": "M01", "category": "圖形缺項", "difficulty": "Ω", "prompt": "找出右下角缺失圖。規則沒有直接告訴你。", "options": ["A", "B", "C", "D"], "answer": 2, "hint": "把每格視為一組線段；共同線段會消失。", "explain": "每列第三格是前兩格的 XOR，所以答案是 C。", "asset": {"src": "assets/png/matrix.png", "width": 900, "height": 900}}, {"id": "S01", "category": "圖形序列", "difficulty": "Expert", "prompt": "外框、箭頭方向與中心狀態同時改變。下一個應是哪個？", "options": ["七邊形＋箭頭向下＋實心", "七邊形＋箭頭向右＋空心", "六邊形＋箭頭向左＋實心", "八邊形＋箭頭向下＋空心"], "answer": 0, "hint": "外框邊數 +1；中心實空交替；箭頭每次轉固定角度。", "explain": "外框 3→4→5→6→7，中心實空交替，下一個為實心；箭頭落在下。", "asset": {"src": "assets/png/sequence.png", "width": 1200, "height": 520}}, {"id": "ROT01", "category": "旋轉／鏡像", "difficulty": "Expert", "prompt": "只允許旋轉，不允許鏡射。哪個候選與原圖完全相同？", "options": ["A", "B", "C", "D"], "answer": 1, "hint": "追蹤小圓點相對凹口的位置。", "explain": "B 是原圖純旋轉後的結果；C、D 改變了左右手性。", "asset": {"src": "assets/png/rotation.png", "width": 1200, "height": 500}}, {"id": "MOVE01", "category": "棋子移動", "difficulty": "Expert", "prompt": "按下一格會翻轉自己與上下左右。把全部變白，最少要按幾次？", "options": ["3", "4", "5", "6"], "answer": 2, "hint": "每格只需考慮按或不按。", "explain": "枚舉 2^9 個按法後，最小解為 5 次。", "asset": {"src": "assets/png/lights.png", "width": 700, "height": 700}}, {"id": "SP01", "category": "空間／展開圖", "difficulty": "Hard", "prompt": "把立方體展開圖折起來。哪一面會與 C 相對？", "options": ["A", "B", "D", "E"], "answer": 3, "hint": "直接與 C 相鄰的四面不可能與 C 相對。", "explain": "A、B、D、F 都與 C 相鄰，所以 E 與 C 相對。", "asset": {"src": "assets/png/cube.png", "width": 1000, "height": 650}}];const $=s=>document.querySelector(s);let idx=0,sel=null,ans=[],hints=0,hinted=false;function screen(id){['#home','#game','#results'].forEach(x=>$(x).classList.add('hidden'));$(id).classList.remove('hidden')}function render(){const q=Q[idx];$('#meta').textContent=q.category+' · '+(idx+1)+' / '+Q.length;$('#qid').textContent=q.id;$('#difficulty').textContent=q.difficulty;$('#bar').style.width=(idx/Q.length*100)+'%';$('#prompt').textContent=q.prompt;const im=$('#asset');im.onerror=()=>{if(im.dataset.fallback!=='yes'){im.dataset.fallback='yes';im.src=q.asset.src.replace('assets/png/','assets/').replace('.png','.svg')}};im.dataset.fallback='no';im.src=q.asset.src;im.width=q.asset.width*2;im.height=q.asset.height*2;const o=$('#options');o.innerHTML='';q.options.forEach((x,i)=>{const b=document.createElement('button');b.className='option';b.textContent=x;b.onclick=()=>{sel=i;[...o.children].forEach((e,j)=>e.classList.toggle('sel',j===i));$('#next').disabled=false};o.appendChild(b)});$('#hint').style.display='none';$('#hint').textContent='';$('#hintBtn').disabled=false;$('#hintBtn').textContent='提示';hinted=false;sel=null;$('#next').disabled=true;$('#next').textContent=idx===Q.length-1?'完成':'鎖定答案'}function start(){idx=0;ans=[];hints=0;screen('#game');render()}$('#start').onclick=start;$('#restart').onclick=start;$('#hintBtn').onclick=()=>{if(hinted)return;hinted=true;hints++;$('#hint').textContent=Q[idx].hint;$('#hint').style.display='block';$('#hintBtn').disabled=true;$('#hintBtn').textContent='已使用提示'};$('#next').onclick=()=>{if(sel===null)return;ans.push({choice:sel,hint:hinted});if(idx<Q.length-1){idx++;render();window.scrollTo({top:0,behavior:'smooth'})}else finish()};function finish(){const correct=ans.reduce((n,a,i)=>n+(a.choice===Q[i].answer),0),score=Math.max(0,Math.round(correct/Q.length*1000-hints*25));$('#score').textContent=score;$('#summary').textContent=`正確 ${correct} / ${Q.length} · 使用提示 ${hints} 次`;const r=$('#review');r.innerHTML='';Q.forEach((q,i)=>{const ok=ans[i].choice===q.answer,d=document.createElement('div');d.className='ri';d.innerHTML=`<b>${q.category} · ${q.difficulty}</b>　<span class="${ok?'good':'bad'}">${ok?'✓':'✕'}</span><p>${q.explain}</p>`;r.appendChild(d)});screen('#results');window.scrollTo({top:0,behavior:'smooth'})};const lb=$('#lightbox'),lbImg=$('#lightboxImg');$('#asset').onclick=()=>{lbImg.src=$('#asset').src;lb.classList.remove('hidden');lb.setAttribute('aria-hidden','false')};$('#lightboxClose').onclick=()=>{lb.classList.add('hidden');lb.setAttribute('aria-hidden','true')};lb.onclick=e=>{if(e.target===lb){lb.classList.add('hidden');lb.setAttribute('aria-hidden','true')}};document.addEventListener('keydown',e=>{if(e.key==='Escape'){lb.classList.add('hidden');lb.setAttribute('aria-hidden','true')}});</script></body></html>
+<!doctype html>
+<html lang="zh-Hant">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f4ef">
+<meta name="description" content="AXIOM 極限推理實驗室 — 12 大類、50 道 Hard / Expert / Ω 原創圖形與邏輯挑戰。">
+<title>AXIOM — Extreme Reasoning Game</title>
+<link rel="stylesheet" href="src/styles.css">
+<script type="module" src="src/app.js"></script>
+</head>
+<body data-screen="home">
+<div class="app">
+ <header class="app-header">
+  <div class="brand">AXIOM<em>EXTREME REASONING GAME</em></div>
+  <div class="header-meta"><span id="bankCounter"></span><span class="tag">V0.4 · VISUAL FIRST</span></div>
+ </header>
+ <section class="page is-active" id="home" aria-label="開始挑戰">
+  <div class="hero">
+   <div class="eyebrow">THE REASONING EXPERIMENT</div>
+   <h1>See beyond<br>the obvious.</h1>
+   <p class="home-copy">不只找答案，更要找到規則。十二大類圖形、空間、數字與邏輯挑戰。從第一題開始，就是進階推理。</p>
+   <div class="stats-line"><span>12 DOMAINS</span><span>50 ORIGINAL PUZZLES</span><span>HARD / EXPERT / Ω</span></div>
+  </div>
+  <div class="filters">
+   <div class="control"><label for="categoryFilter">選擇題型</label><select id="categoryFilter"></select></div>
+   <div class="control"><label>選擇難度</label>
+    <div class="chip-row" id="difficultyFilter" role="group" aria-label="難度篩選">
+     <button type="button" class="chip selected" data-value="全部" aria-pressed="true">全部</button>
+     <button type="button" class="chip" data-value="Hard" aria-pressed="false">Hard</button>
+     <button type="button" class="chip" data-value="Expert" aria-pressed="false">Expert</button>
+     <button type="button" class="chip" data-value="Ω" aria-pressed="false">Ω</button>
+    </div>
+   </div>
+   <div class="control"><label id="availableCount">載入題庫中</label>
+    <div class="actions-home">
+     <button type="button" class="btn btn-primary" id="startTen">快速試煉 · 10 題</button>
+     <button type="button" class="btn btn-outline" id="startAll">完整試煉 · 50 題</button>
+    </div>
+   </div>
+  </div>
+ </section>
+ <section class="page" id="game" aria-label="推理遊戲">
+  <div>
+   <div class="game-head">
+    <div class="game-left"><span id="categoryLabel" class="puzzle-category"></span><span id="difficultyLabel" class="label-difficulty"></span></div>
+    <div class="game-right"><span id="questionId" class="q-id"></span><span id="questionNum" class="game-meta"></span><span id="timer" class="game-meta">00:00</span></div>
+   </div>
+   <div class="bar" aria-hidden="true"><div id="progressBar"></div></div>
+  </div>
+  <div class="prompt-wrap"><p id="prompt" class="prompt-text"></p><button type="button" class="clue-button" id="clueButton" hidden>查看完整條件</button></div>
+  <div class="stage"><img id="mainFigure" src="" alt="推理圖案" draggable="false">
+   <button type="button" class="zoom" id="zoomButton" aria-label="放大題圖">放大 ↗</button>
+  </div>
+  <div class="answer-grid" id="answerGrid" role="group" aria-label="圖形答案選項"></div>
+  <div class="game-actions">
+   <div class="action-left"><button type="button" id="hintButton" class="btn btn-outline">提示</button><button type="button" id="clearButton" class="btn btn-outline">清除</button></div>
+   <button type="button" id="confirm" class="btn btn-primary" disabled>確認作答</button>
+  </div>
+ </section>
+ <section class="page" id="results" aria-label="測驗結果">
+  <div class="results-panel">
+   <div class="eyebrow">TRIAL COMPLETE</div>
+   <h1>REASONING SCORE</h1>
+   <div class="result-score" id="score">0</div>
+   <div class="result-stats">
+    <div class="result-stat"><small>正確率</small><span id="statAccuracy">0%</span></div>
+    <div class="result-stat"><small>答對題數</small><span id="statCorrect">0 / 0</span></div>
+    <div class="result-stat"><small>總時間</small><span id="statTime">00:00</span></div>
+    <div class="result-stat"><small>提示次數</small><span id="statHints">0</span></div>
+   </div>
+  </div>
+  <div class="result-action"><button type="button" class="btn btn-outline" id="reviewButton">查看解答與推理</button><button type="button" class="btn btn-primary" id="retryButton">返回題庫</button></div>
+ </section>
+</div>
+<dialog id="dialog" aria-labelledby="dialogTitle">
+ <div class="dialog-top"><h2 id="dialogTitle">詳細說明</h2><button type="button" class="btn btn-outline" id="dialogClose" aria-label="關閉視窗">✕</button></div>
+ <div class="dialog-inner"><p id="dialogText"></p><img id="dialogImage" alt="放大的推理題圖" hidden></div>
+</dialog>
+</body></html>
