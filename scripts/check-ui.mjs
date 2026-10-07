@@ -39,5 +39,30 @@ try{
   passed++;
   console.log("PASS "+width+"x"+height+": no overflow; raster images; four answers; submit flow");
  }
+
+ const full=await browser.newPage({viewport:{width:390,height:844}});
+ const pageErrors=[];
+ full.on("pageerror",e=>pageErrors.push(e.message));
+ await full.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
+ await full.locator("#startAll").click();
+ assert.equal(await full.evaluate(()=>window.AXIOM_QA.state.pool.length),50);
+ await full.locator("#detailButton").click();
+ assert.equal(await full.locator("#dialog").evaluate(x=>x.open),true);
+ await full.locator("#dialogClose").click();
+ for(let i=0;i<50;i++){
+  await full.waitForFunction(()=>{const im=document.getElementById("mainFigure");return im.complete&&im.naturalWidth>0;});
+  assert.equal(await full.locator(".answer").count(),4);
+  const imageCount=await full.locator(".answer img").evaluateAll(imgs=>imgs.filter(x=>x.complete&&x.naturalWidth>0).length);
+  assert.equal(imageCount,4,"missing option imagery at full trial "+(i+1));
+  await full.locator(".answer").first().click();
+  await full.locator("#confirm").click();
+ }
+ await full.waitForSelector("#results.is-active");
+ assert(!pageErrors.length,"50-puzzle sweep JS errors: "+pageErrors.join(";"));
+ await full.locator("#reviewButton").click();
+ assert.equal(await full.locator("#dialog").evaluate(x=>x.open),true);
+ await full.locator("#dialogClose").click();
+ await full.close();
+ console.log("PASS: all 50 puzzles render 4 graphical choices and complete the full trial");
 } finally {await browser.close();}
 console.log("AXIOM browser QA PASS: "+passed+"/"+viewports.length+" viewports");
