@@ -1,0 +1,184 @@
+{
+  "version": "0.3.2",
+  "categories": [
+    "數字金字塔",
+    "圓盤數字",
+    "路徑最佳化",
+    "圖形缺項",
+    "圖形序列",
+    "旋轉／鏡像",
+    "棋子移動",
+    "幣值／組合限制",
+    "排序／分組",
+    "Logic Grid",
+    "真假命題",
+    "空間／展開圖"
+  ],
+  "questions": [
+    {
+      "id": "P01",
+      "category": "數字金字塔",
+      "difficulty": "Hard",
+      "prompt": "同一個生成規則套用到每一層。底部的 ? 應是多少？",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": 1,
+      "hint": "觀察父節點與正下方兩個子節點的關係；左右權重不同。",
+      "explain": "父節點 = 左子節點 + 2×右子節點，所以 7 = 1 + 2×3。",
+      "asset": {
+        "src": "assets/png/pyramid.png",
+        "width": 1000,
+        "height": 650
+      }
+    },
+    {
+      "id": "C01",
+      "category": "圓盤數字",
+      "difficulty": "Hard",
+      "prompt": "每一個扇區都使用同一條規則。問號是多少？",
+      "options": [
+        "40",
+        "41",
+        "43",
+        "45"
+      ],
+      "answer": 2,
+      "hint": "先試乘積，再看還差多少。",
+      "explain": "內值 = a×b + |a−b|，所以 5×8+3=43。",
+      "asset": {
+        "src": "assets/png/circle.png",
+        "width": 800,
+        "height": 800
+      }
+    },
+    {
+      "id": "R01",
+      "category": "路徑最佳化",
+      "difficulty": "Expert",
+      "prompt": "沿線走訪恰好 5 個不同節點，節點不可重複。最大總和是多少？",
+      "options": [
+        "31",
+        "33",
+        "35",
+        "37"
+      ],
+      "answer": 2,
+      "hint": "試著把 7、9、8、6、5 串成一條合法路徑。",
+      "explain": "7→9→8→6→5 是合法路徑，總和 35。",
+      "asset": {
+        "src": "assets/png/graph.png",
+        "width": 1000,
+        "height": 620
+      }
+    },
+    {
+      "id": "M01",
+      "category": "圖形缺項",
+      "difficulty": "Ω",
+      "prompt": "找出右下角缺失圖。規則沒有直接告訴你。",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 2,
+      "hint": "把每格視為一組線段；共同線段會消失。",
+      "explain": "每列第三格是前兩格的 XOR，所以答案是 C。",
+      "asset": {
+        "src": "assets/png/matrix.png",
+        "width": 900,
+        "height": 900
+      }
+    },
+    {
+      "id": "S01",
+      "category": "圖形序列",
+      "difficulty": "Expert",
+      "prompt": "外框、箭頭方向與中心狀態同時改變。下一個應是哪個？",
+      "options": [
+        "七邊形＋箭頭向下＋實心",
+        "七邊形＋箭頭向右＋空心",
+        "六邊形＋箭頭向左＋實心",
+        "八邊形＋箭頭向下＋空心"
+      ],
+      "answer": 0,
+      "hint": "外框邊數 +1；中心實空交替；箭頭每次轉固定角度。",
+      "explain": "外框 3→4→5→6→7，中心實空交替，下一個為實心；箭頭落在下。",
+      "asset": {
+        "src": "assets/png/sequence.png",
+        "width": 1200,
+        "height": 520
+      }
+    },
+    {
+      "id": "ROT01",
+      "category": "旋轉／鏡像",
+      "difficulty": "Expert",
+      "prompt": "只允許旋轉，不允許鏡射。哪個候選與原圖完全相同？",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 1,
+      "hint": "追蹤小圓點相對凹口的位置。",
+      "explain": "B 是原圖純旋轉後的結果；C、D 改變了左右手性。",
+      "asset": {
+        "src": "assets/png/rotation.png",
+        "width": 1200,
+        "height": 500
+      }
+    },
+    {
+      "id": "MOVE01",
+      "category": "棋子移動",
+      "difficulty": "Expert",
+      "prompt": "按下一格會翻轉自己與上下左右。把全部變白，最少要按幾次？",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "answer": 2,
+      "hint": "每格只需考慮按或不按。",
+      "explain": "枚舉 2^9 個按法後，最小解為 5 次。",
+      "asset": {
+        "src": "assets/png/lights.png",
+        "width": 700,
+        "height": 700
+      }
+    },
+    {
+      "id": "SP01",
+      "category": "空間／展開圖",
+      "difficulty": "Hard",
+      "prompt": "把立方體展開圖折起來。哪一面會與 C 相對？",
+      "options": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ],
+      "answer": 3,
+      "hint": "直接與 C 相鄰的四面不可能與 C 相對。",
+      "explain": "A、B、D、F 都與 C 相鄰，所以 E 與 C 相對。",
+      "asset": {
+        "src": "assets/png/cube.png",
+        "width": 1000,
+        "height": 650
+      }
+    }
+  ],
+  "difficulty_labels": [
+    "Hard",
+    "Expert",
+    "Ω"
+  ]
+}
