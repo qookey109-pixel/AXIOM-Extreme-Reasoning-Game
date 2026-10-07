@@ -1,4 +1,4 @@
-name: AXIOM V0.4 logic and responsive QA
+name: AXIOM V0.5 verification and responsive QA
 on:
   pull_request:
     paths:
@@ -30,6 +30,7 @@ jobs:
       - name: Validate puzzle bank
         run: |
           node --check src/questions.js
+          node --check src/verification.js
           node --check src/graphics.js
           node --check src/app.js
           npm test
