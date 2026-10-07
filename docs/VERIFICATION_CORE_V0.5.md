@@ -79,19 +79,27 @@ V0.5 initially wraps:
 - explicit rotation validation;
 - cube-net opposite-face validation.
 
-Legacy/static items and families not yet independently reproducible remain pending rather than being labeled verified.
+The current 50-puzzle catalog is now independently reproducible at the verifier layer. Legacy visual puzzles carry explicit semantic checker inputs reconstructed from the repository's own SVG/source assets, so CI verifies their rules without scraping rendered pixels.
 
-## Migration policy
+## Current verification coverage
 
-The first PR adds the schema, adapters and CI audit only. It does not change the visible game, question wording, answer choices, scoring or current hint interaction.
+For the current 50-puzzle catalog, CI requires:
 
-Later PRs should:
+- 50 / 50 structurally valid;
+- 50 / 50 independently solver verified;
+- 50 / 50 verified unique answers;
+- zero pending verification items;
+- every Ω puzzle to pass its family-specific machine gate;
+- every rule-induction puzzle to be model-unique inside its declared bounded grammar.
 
-1. add explicit generator id/version/seed to generated puzzles;
-2. migrate remaining legacy/static items to reproducible verifier inputs;
-3. split single hints into structural / stronger / near-solution stages;
-4. add editorial human-QA and calibration records;
-5. only then add Proof Compression, Necessary Clue and Counterexample Hunt prototypes.
+The migration does not change visible game wording, answers, scoring or interaction.
+
+## Next migration stages
+
+1. add explicit generator id/version/seed metadata to generated puzzles;
+2. split single hints into structural / stronger / near-solution stages;
+3. add editorial human-QA and calibration records;
+4. add Proof Compression, Necessary Clue and Counterexample Hunt prototypes only after those foundations remain green.
 
 ## CI policy
 
