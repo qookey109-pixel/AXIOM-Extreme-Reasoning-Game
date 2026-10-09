@@ -86,37 +86,48 @@ try{
 
  // Regression: the truth-tellers, ordering and logic-grid questions must
  // display every essential statement directly inside the puzzle stage.
- for(const [category,expectedCount] of [["真假命題",4],["排序／分組",5],["Logic Grid",6]]){
+ for(const [category,minCount] of [["真假命題",4],["排序／分組",5],["Logic Grid",6]]){
   for(const [width,height] of [[320,568],[390,844],[1440,900],[667,375]]){
    const p=await browser.newPage({viewport:{width,height}});
    await p.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
    await p.selectOption("#categoryFilter",category);
    await p.locator("#startAll").click();
-   const first=await p.evaluate(()=>window.AXIOM_QA.state.pool[window.AXIOM_QA.state.index]);
-   assert(first.clues&&first.clues.length===expectedCount,"wrong clue count "+category+" "+first.id);
-   assert.equal(await p.locator("#clueBoard .clue-card").count(),expectedCount);
-   assert.equal(await p.locator("#clueBoard").isVisible(),true,category+" clues hidden "+width);
-   assert.equal(await p.locator("#mainFigure").isVisible(),false,category+" placeholder not hidden");
-   const checks=await p.locator("#clueBoard .clue-card").evaluateAll((cards)=>cards.map(card=>{
-    const content=card.querySelector(".clue-copy"),c=content.getBoundingClientRect(),b=card.getBoundingClientRect();
-    return {text:content.textContent,visible:!!content.textContent.trim(),inside:
-      c.left>=b.left-1&&c.right<=b.right+1&&c.top>=b.top-2&&c.bottom<=b.bottom+2,
-      cardHeight:b.height,textHeight:c.height};
-   }));
-   assert(checks.every(x=>x.visible),category+" empty statement");
-   assert(checks.every(x=>x.inside),category+" clipped statements "+width+"x"+height+" "+JSON.stringify(checks));
-   const currentText=(await p.locator("#clueBoard").innerText());
-   for(const clue of first.clues){
-    const normalized=clue.replace(/^[A-D]：/,"");
-    assert(currentText.includes(normalized),category+" missing rule: "+normalized);
+   // Do not test only a randomly selected first puzzle: category templates may
+   // legitimately contain different clue counts, e.g. ORD05 has six rather than five.
+   const ids=await p.evaluate(category=>window.AXIOM_QA.bank.filter(q=>q.category===category).map(q=>q.id),category);
+   for(const id of ids){
+    await p.evaluate(id=>{
+     const qa=window.AXIOM_QA,q=qa.bank.find(q=>q.id===id);
+     qa.state.pool=[q];qa.state.index=0;qa.render();
+    },id);
+    const question=await p.evaluate(()=>window.AXIOM_QA.state.pool[0]);
+    const expectedCount=question.clues?.length||0;
+    assert(expectedCount>=minCount&&expectedCount<=6,"invalid clue count "+category+" "+id);
+    if(category==="排序／分組")assert([5,6].includes(expectedCount),"ordering clue count "+id);
+    assert.equal(await p.locator("#clueBoard .clue-card").count(),expectedCount,id+" clue cards");
+    assert.equal(await p.locator("#clueBoard").isVisible(),true,id+" clues hidden at "+width);
+    assert.equal(await p.locator("#mainFigure").isVisible(),false,id+" placeholder visible");
+    const checks=await p.locator("#clueBoard .clue-card").evaluateAll(cards=>cards.map(card=>{
+     const content=card.querySelector(".clue-copy"),c=content.getBoundingClientRect(),b=card.getBoundingClientRect();
+     return {text:content.textContent,visible:!!content.textContent.trim(),inside:
+       c.left>=b.left-1&&c.right<=b.right+1&&c.top>=b.top-2&&c.bottom<=b.bottom+2,
+       fits:content.scrollHeight<=content.clientHeight+1&&card.scrollHeight<=card.clientHeight+1};
+    }));
+    assert(checks.every(x=>x.visible),id+" empty statement");
+    assert(checks.every(x=>x.inside&&x.fits),id+" clipped statements "+width+"x"+height+" "+JSON.stringify(checks));
+    const currentText=await p.locator("#clueBoard").innerText();
+    for(const clue of question.clues){
+     const normalized=clue.replace(/^[A-D]：/,"");
+     assert(currentText.includes(normalized),id+" missing rule: "+normalized);
+    }
+    const doc=await p.evaluate(()=>({width:document.documentElement.scrollWidth,height:document.documentElement.scrollHeight}));
+    assert(doc.width<=width+1&&doc.height<=height+1,id+" document overflow "+width+"x"+height);
+    await p.locator("#zoomButton").click();
+    assert((await p.locator("#dialogText").innerText()).includes(question.clues[0]),id+" enlarged rules missing");
+    await p.locator("#dialogClose").click();
+    console.log("PASS "+category+" "+id+" @ "+width+"x"+height+": all "+expectedCount+" rules visible and unclipped");
    }
-   const doc=await p.evaluate(()=>({width:document.documentElement.scrollWidth,height:document.documentElement.scrollHeight}));
-   assert(doc.width<=width+1&&doc.height<=height+1,category+" unexpected document scroll "+width+"x"+height);
-   await p.locator("#zoomButton").click();
-   assert((await p.locator("#dialogText").innerText()).includes(first.clues[0]),"enlarged rules missing");
-   await p.locator("#dialogClose").click();
    await p.close();
-   console.log("PASS "+category+" @ "+width+"x"+height+": all "+expectedCount+" rules visible and unclipped");
   }
  }
 } finally {await browser.close();}
