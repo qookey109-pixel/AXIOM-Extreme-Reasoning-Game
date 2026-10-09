@@ -2,6 +2,7 @@
  * Player-visible difficulty is Hard / Expert / Ω; these labels are design estimates.
  * All generated questions are held in an explicit, finite 50-item bank per release.
  */
+import {buildReleaseExpansion} from "./expansion-v052.js";
 export const CATEGORIES=[
  "數字金字塔","圓盤數字","路徑最佳化","圖形缺項","圖形序列","旋轉／鏡像",
  "棋子移動","幣值／組合限制","排序／分組","Logic Grid","真假命題","空間／展開圖"
@@ -430,7 +431,9 @@ export function buildBank(){
  };
  bank.forEach(q=>{if(gradeOverrides[q.id])q.difficulty=gradeOverrides[q.id];});
  bank.forEach(q=>{q.generator=generatorMeta(q.id);q.hint_steps=progressiveHints(q);});
- if(bank.length!==50)throw Error("expected 50, got "+bank.length);
+ // Preserve all existing IDs and source; append independently verified original puzzles.
+ bank.push(...buildReleaseExpansion());
+ if(bank.length!==62)throw Error("expected 62, got "+bank.length);
  if(new Set(bank.map(x=>x.id)).size!==bank.length)throw Error("duplicate puzzle ids");
  // Audit every key gameplay invariant (category coverage, options, solver-backed unique answer).
  const counts=Object.fromEntries(CATEGORIES.map(name=>[name,0]));
@@ -456,7 +459,7 @@ export function buildBank(){
 }
 export const PUZZLES=buildBank();
 export const BANK_META={
- version:"0.5.0",count:PUZZLES.length,
+ version:"0.5.2",count:PUZZLES.length,
  categoryCount:CATEGORIES.length,
  difficultyCounts:PUZZLES.reduce((m,q)=>(m[q.difficulty]=(m[q.difficulty]||0)+1,m),{}),
  categoryCounts:PUZZLES.reduce((m,q)=>(m[q.category]=(m[q.category]||0)+1,m),{})
