@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.2",
   "source_of_truth": "src/questions.js",
   "categories": [
     "數字金字塔",
@@ -21,25 +21,25 @@
     "Ω"
   ],
   "meta": {
-    "version": "0.4.0",
-    "count": 50,
+    "version": "0.5.2",
+    "count": 62,
     "categoryCount": 12,
     "difficultyCounts": {
-      "Hard": 18,
-      "Expert": 22,
-      "Ω": 10
+      "Hard": 20,
+      "Expert": 29,
+      "Ω": 13
     },
     "categoryCounts": {
-      "數字金字塔": 5,
-      "圓盤數字": 5,
-      "路徑最佳化": 4,
-      "圖形缺項": 5,
-      "圖形序列": 5,
-      "旋轉／鏡像": 4,
-      "棋子移動": 4,
+      "數字金字塔": 7,
+      "圓盤數字": 7,
+      "路徑最佳化": 5,
+      "圖形缺項": 7,
+      "圖形序列": 6,
+      "旋轉／鏡像": 5,
+      "棋子移動": 5,
       "空間／展開圖": 3,
-      "幣值／組合限制": 4,
-      "排序／分組": 4,
+      "幣值／組合限制": 5,
+      "排序／分組": 5,
       "Logic Grid": 4,
       "真假命題": 3
     }
@@ -81,6 +81,55 @@
           "kind": "number",
           "value": "5"
         }
+      ],
+      "checker": {
+        "kind": "pyramid",
+        "rows": [
+          [
+            62
+          ],
+          [
+            22,
+            20
+          ],
+          [
+            10,
+            6,
+            7
+          ],
+          [
+            2,
+            4,
+            1,
+            "?"
+          ]
+        ],
+        "weights": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "generator": {
+        "id": "legacy_svg_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": null,
+        "reproducibility": "deterministic_static",
+        "source_asset": "assets/pyramid.svg"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先分層觀察：不要直接猜問號，先找相鄰兩個子節點如何共同生成上一層。"
+        },
+        {
+          "stage": "stronger",
+          "text": "父節點 = 左子節點 + 2×右子節點。"
+        }
       ]
     },
     {
@@ -119,6 +168,58 @@
           "kind": "number",
           "value": "45"
         }
+      ],
+      "checker": {
+        "kind": "circle",
+        "pairs": [
+          [
+            2,
+            5,
+            13
+          ],
+          [
+            3,
+            7,
+            25
+          ],
+          [
+            4,
+            6,
+            26
+          ],
+          [
+            2,
+            9,
+            25
+          ],
+          [
+            6,
+            1,
+            11
+          ]
+        ],
+        "target": [
+          5,
+          8
+        ]
+      },
+      "generator": {
+        "id": "legacy_svg_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": null,
+        "reproducibility": "deterministic_static",
+        "source_asset": "assets/circle.svg"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把每個扇區都視為同一個輸入→輸出函數；規則必須同時解釋所有已知範例。"
+        },
+        {
+          "stage": "stronger",
+          "text": "先看兩數乘積，再看它們的差。"
+        }
       ]
     },
     {
@@ -156,6 +257,84 @@
         {
           "kind": "number",
           "value": "37"
+        }
+      ],
+      "checker": {
+        "kind": "path",
+        "vals": [
+          7,
+          3,
+          9,
+          4,
+          8,
+          2,
+          6,
+          5
+        ],
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            6,
+            7
+          ]
+        ],
+        "k": 5
+      },
+      "generator": {
+        "id": "legacy_svg_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": null,
+        "reproducibility": "deterministic_static",
+        "source_asset": "assets/graph.svg"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先把『可走的連線』和『節點的分數』分開看，再遵守走訪節點數與不可重複的限制。"
+        },
+        {
+          "stage": "stronger",
+          "text": "高值節點不一定可以全部直接串在一起。"
         }
       ]
     },
@@ -209,6 +388,74 @@
             "d2"
           ]
         }
+      ],
+      "checker": {
+        "kind": "matrixLines",
+        "rows": [
+          [
+            [
+              "v",
+              "d1"
+            ],
+            [
+              "h",
+              "d1"
+            ],
+            [
+              "v",
+              "h"
+            ]
+          ],
+          [
+            [
+              "v",
+              "d2"
+            ],
+            [
+              "v",
+              "h"
+            ],
+            [
+              "h",
+              "d2"
+            ]
+          ],
+          [
+            [
+              "h",
+              "d1",
+              "d2"
+            ],
+            [
+              "v",
+              "d2"
+            ],
+            "?"
+          ]
+        ],
+        "grammar": [
+          "xor",
+          "or",
+          "and"
+        ]
+      },
+      "generator": {
+        "id": "legacy_svg_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": null,
+        "reproducibility": "deterministic_static",
+        "source_asset": "assets/matrix.svg"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把複雜圖形拆成基本線段或元素，逐列比較哪些元素保留、消失或轉換。"
+        },
+        {
+          "stage": "stronger",
+          "text": "把圖形拆成線段集合；看看重複部分。"
+        }
       ]
     },
     {
@@ -255,6 +502,49 @@
           "angle": 90,
           "fill": 0
         }
+      ],
+      "checker": {
+        "kind": "sequence",
+        "frames": [
+          {
+            "sides": 3,
+            "angle": 270,
+            "fill": 1
+          },
+          {
+            "sides": 4,
+            "angle": 45,
+            "fill": 0
+          },
+          {
+            "sides": 5,
+            "angle": 180,
+            "fill": 1
+          },
+          {
+            "sides": 6,
+            "angle": 315,
+            "fill": 0
+          }
+        ]
+      },
+      "generator": {
+        "id": "legacy_svg_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": null,
+        "reproducibility": "deterministic_static",
+        "source_asset": "assets/sequence.svg"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把外框、方向與填色拆成三條獨立序列，不要用單一外觀一次猜整題。"
+        },
+        {
+          "stage": "stronger",
+          "text": "分別追蹤邊數、角度與實空變化。"
+        }
       ]
     },
     {
@@ -292,6 +582,46 @@
         {
           "kind": "letter",
           "value": "D"
+        }
+      ],
+      "checker": {
+        "kind": "rotationChoice",
+        "options": [
+          {
+            "angle": 180,
+            "mirror": true
+          },
+          {
+            "angle": 90,
+            "mirror": false
+          },
+          {
+            "angle": 90,
+            "mirror": true
+          },
+          {
+            "angle": 0,
+            "mirror": true
+          }
+        ],
+        "criterion": "pure_rotation"
+      },
+      "generator": {
+        "id": "legacy_svg_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": null,
+        "reproducibility": "deterministic_static",
+        "source_asset": "assets/rotation.svg"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先選一個不對稱的小標記當錨點，追蹤它移動後的位置，同時檢查左右手性有沒有反轉。"
+        },
+        {
+          "stage": "stronger",
+          "text": "鏡射會改變圖形的左右手性。"
         }
       ]
     },
@@ -331,6 +661,38 @@
           "kind": "number",
           "value": "6"
         }
+      ],
+      "checker": {
+        "kind": "lights",
+        "bits": [
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      "generator": {
+        "id": "legacy_svg_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": null,
+        "reproducibility": "deterministic_static",
+        "source_asset": "assets/lights.svg"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把每一格按或不按視為二元選擇；先利用『按兩次等於沒按』縮小搜尋空間。"
+        },
+        {
+          "stage": "stronger",
+          "text": "同一格按兩次會互相抵銷。"
+        }
       ]
     },
     {
@@ -368,6 +730,60 @@
         {
           "kind": "face",
           "value": "E"
+        }
+      ],
+      "checker": {
+        "kind": "cubeNet",
+        "ask": "C",
+        "cells": [
+          [
+            "A",
+            0,
+            -1
+          ],
+          [
+            "B",
+            -1,
+            0
+          ],
+          [
+            "C",
+            0,
+            0
+          ],
+          [
+            "D",
+            1,
+            0
+          ],
+          [
+            "E",
+            2,
+            0
+          ],
+          [
+            "F",
+            0,
+            1
+          ]
+        ]
+      },
+      "generator": {
+        "id": "legacy_svg_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": null,
+        "reproducibility": "deterministic_static",
+        "source_asset": "assets/cube.svg"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先找出一定相鄰的面，再追蹤折起後方向相反、因此互為相對面的那一面。"
+        },
+        {
+          "stage": "stronger",
+          "text": "直接接著 C 的四面一定與 C 相鄰。"
         }
       ]
     },
@@ -425,6 +841,24 @@
           "kind": "number",
           "value": 6
         }
+      ],
+      "generator": {
+        "id": "weighted_pyramid_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 100,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先分層觀察：不要直接猜問號，先找相鄰兩個子節點如何共同生成上一層。"
+        },
+        {
+          "stage": "stronger",
+          "text": "同一個權重套用於每個父節點；觀察左右的貢獻。"
+        }
       ]
     },
     {
@@ -480,6 +914,24 @@
         {
           "kind": "number",
           "value": 7
+        }
+      ],
+      "generator": {
+        "id": "weighted_pyramid_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 101,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先分層觀察：不要直接猜問號，先找相鄰兩個子節點如何共同生成上一層。"
+        },
+        {
+          "stage": "stronger",
+          "text": "同一個權重套用於每個父節點；觀察左右的貢獻。"
         }
       ]
     },
@@ -537,6 +989,24 @@
           "kind": "number",
           "value": 4
         }
+      ],
+      "generator": {
+        "id": "weighted_pyramid_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 102,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先分層觀察：不要直接猜問號，先找相鄰兩個子節點如何共同生成上一層。"
+        },
+        {
+          "stage": "stronger",
+          "text": "同一個權重套用於每個父節點；觀察左右的貢獻。"
+        }
       ]
     },
     {
@@ -592,6 +1062,24 @@
         {
           "kind": "number",
           "value": 6
+        }
+      ],
+      "generator": {
+        "id": "weighted_pyramid_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 103,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先分層觀察：不要直接猜問號，先找相鄰兩個子節點如何共同生成上一層。"
+        },
+        {
+          "stage": "stronger",
+          "text": "同一個權重套用於每個父節點；觀察左右的貢獻。"
         }
       ]
     },
@@ -656,6 +1144,24 @@
           "kind": "number",
           "value": 15
         }
+      ],
+      "generator": {
+        "id": "circle_rule_v1",
+        "version": "1.0.0",
+        "seed": 200,
+        "option_seed": 300,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把每個扇區都視為同一個輸入→輸出函數；規則必須同時解釋所有已知範例。"
+        },
+        {
+          "stage": "stronger",
+          "text": "同一套運算要解釋全部四個範例，而非只解釋一個。"
+        }
       ]
     },
     {
@@ -718,6 +1224,24 @@
         {
           "kind": "number",
           "value": 27
+        }
+      ],
+      "generator": {
+        "id": "circle_rule_v1",
+        "version": "1.0.0",
+        "seed": 201,
+        "option_seed": 301,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把每個扇區都視為同一個輸入→輸出函數；規則必須同時解釋所有已知範例。"
+        },
+        {
+          "stage": "stronger",
+          "text": "同一套運算要解釋全部四個範例，而非只解釋一個。"
         }
       ]
     },
@@ -782,6 +1306,24 @@
           "kind": "number",
           "value": 19
         }
+      ],
+      "generator": {
+        "id": "circle_rule_v1",
+        "version": "1.0.0",
+        "seed": 202,
+        "option_seed": 302,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把每個扇區都視為同一個輸入→輸出函數；規則必須同時解釋所有已知範例。"
+        },
+        {
+          "stage": "stronger",
+          "text": "同一套運算要解釋全部四個範例，而非只解釋一個。"
+        }
       ]
     },
     {
@@ -844,6 +1386,24 @@
         {
           "kind": "number",
           "value": 20
+        }
+      ],
+      "generator": {
+        "id": "circle_rule_v1",
+        "version": "1.0.0",
+        "seed": 203,
+        "option_seed": 303,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把每個扇區都視為同一個輸入→輸出函數；規則必須同時解釋所有已知範例。"
+        },
+        {
+          "stage": "stronger",
+          "text": "同一套運算要解釋全部四個範例，而非只解釋一個。"
         }
       ]
     },
@@ -937,6 +1497,24 @@
           "kind": "number",
           "value": 42
         }
+      ],
+      "generator": {
+        "id": "path_values_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 400,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先把『可走的連線』和『節點的分數』分開看，再遵守走訪節點數與不可重複的限制。"
+        },
+        {
+          "stage": "stronger",
+          "text": "試列舉所有長度 5 的簡單路徑；方向不受限制。"
+        }
       ]
     },
     {
@@ -1028,6 +1606,24 @@
         {
           "kind": "number",
           "value": 47
+        }
+      ],
+      "generator": {
+        "id": "path_values_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 401,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先把『可走的連線』和『節點的分數』分開看，再遵守走訪節點數與不可重複的限制。"
+        },
+        {
+          "stage": "stronger",
+          "text": "試列舉所有長度 5 的簡單路徑；方向不受限制。"
         }
       ]
     },
@@ -1121,6 +1717,24 @@
           "kind": "number",
           "value": 47
         }
+      ],
+      "generator": {
+        "id": "path_values_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 402,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先把『可走的連線』和『節點的分數』分開看，再遵守走訪節點數與不可重複的限制。"
+        },
+        {
+          "stage": "stronger",
+          "text": "試列舉所有長度 5 的簡單路徑；方向不受限制。"
+        }
       ]
     },
     {
@@ -1201,7 +1815,25 @@
           4,
           7
         ]
-      }
+      },
+      "generator": {
+        "id": "matrix_rule_v1",
+        "version": "1.0.0",
+        "seed": 500,
+        "option_seed": 600,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把複雜圖形拆成基本線段或元素，逐列比較哪些元素保留、消失或轉換。"
+        },
+        {
+          "stage": "stronger",
+          "text": "只看四種線段的存在與否；別被圖形輪廓誤導。"
+        }
+      ]
     },
     {
       "id": "M03",
@@ -1281,7 +1913,25 @@
           15,
           12
         ]
-      }
+      },
+      "generator": {
+        "id": "matrix_rule_v1",
+        "version": "1.0.0",
+        "seed": 501,
+        "option_seed": 601,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把複雜圖形拆成基本線段或元素，逐列比較哪些元素保留、消失或轉換。"
+        },
+        {
+          "stage": "stronger",
+          "text": "只看四種線段的存在與否；別被圖形輪廓誤導。"
+        }
+      ]
     },
     {
       "id": "M04",
@@ -1320,7 +1970,7 @@
       "answerSpecs": [
         {
           "kind": "segments",
-          "mask": 0
+          "mask": 12
         },
         {
           "kind": "segments",
@@ -1356,12 +2006,30 @@
           ]
         ],
         "masks": [
-          0,
+          12,
           4,
           6,
           5
         ]
-      }
+      },
+      "generator": {
+        "id": "matrix_rule_v1",
+        "version": "1.0.0",
+        "seed": 502,
+        "option_seed": 602,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把複雜圖形拆成基本線段或元素，逐列比較哪些元素保留、消失或轉換。"
+        },
+        {
+          "stage": "stronger",
+          "text": "只看四種線段的存在與否；別被圖形輪廓誤導。"
+        }
+      ]
     },
     {
       "id": "M05",
@@ -1404,15 +2072,15 @@
         },
         {
           "kind": "segments",
+          "mask": 9
+        },
+        {
+          "kind": "segments",
           "mask": 5
         },
         {
           "kind": "segments",
           "mask": 3
-        },
-        {
-          "kind": "segments",
-          "mask": 0
         }
       ],
       "checker": {
@@ -1437,11 +2105,29 @@
         ],
         "masks": [
           1,
+          9,
           5,
-          3,
-          0
+          3
         ]
-      }
+      },
+      "generator": {
+        "id": "matrix_rule_v1",
+        "version": "1.0.0",
+        "seed": 503,
+        "option_seed": 603,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把複雜圖形拆成基本線段或元素，逐列比較哪些元素保留、消失或轉換。"
+        },
+        {
+          "stage": "stronger",
+          "text": "只看四種線段的存在與否；別被圖形輪廓誤導。"
+        }
+      ]
     },
     {
       "id": "S02",
@@ -1506,6 +2192,24 @@
           "sides": 7,
           "angle": 90,
           "fill": 0
+        }
+      ],
+      "generator": {
+        "id": "sequence_attributes_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 700,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把外框、方向與填色拆成三條獨立序列，不要用單一外觀一次猜整題。"
+        },
+        {
+          "stage": "stronger",
+          "text": "三個維度各有自己的規律；逐一追蹤。"
         }
       ]
     },
@@ -1573,6 +2277,24 @@
           "angle": 225,
           "fill": 1
         }
+      ],
+      "generator": {
+        "id": "sequence_attributes_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 701,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把外框、方向與填色拆成三條獨立序列，不要用單一外觀一次猜整題。"
+        },
+        {
+          "stage": "stronger",
+          "text": "三個維度各有自己的規律；逐一追蹤。"
+        }
       ]
     },
     {
@@ -1638,6 +2360,24 @@
           "sides": 7,
           "angle": 180,
           "fill": 0
+        }
+      ],
+      "generator": {
+        "id": "sequence_attributes_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 702,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把外框、方向與填色拆成三條獨立序列，不要用單一外觀一次猜整題。"
+        },
+        {
+          "stage": "stronger",
+          "text": "三個維度各有自己的規律；逐一追蹤。"
         }
       ]
     },
@@ -1705,6 +2445,24 @@
           "angle": 180,
           "fill": 1
         }
+      ],
+      "generator": {
+        "id": "sequence_attributes_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 703,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把外框、方向與填色拆成三條獨立序列，不要用單一外觀一次猜整題。"
+        },
+        {
+          "stage": "stronger",
+          "text": "三個維度各有自己的規律；逐一追蹤。"
+        }
       ]
     },
     {
@@ -1745,6 +2503,24 @@
           "kind": "rotation",
           "angle": 180,
           "mirror": false
+        }
+      ],
+      "generator": {
+        "id": "rotation_transform_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 800,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先選一個不對稱的小標記當錨點，追蹤它移動後的位置，同時檢查左右手性有沒有反轉。"
+        },
+        {
+          "stage": "stronger",
+          "text": "注意圖形上不對稱的小標記，它的位置也要一起旋轉。"
         }
       ]
     },
@@ -1787,6 +2563,24 @@
           "angle": 270,
           "mirror": false
         }
+      ],
+      "generator": {
+        "id": "rotation_transform_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 801,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先選一個不對稱的小標記當錨點，追蹤它移動後的位置，同時檢查左右手性有沒有反轉。"
+        },
+        {
+          "stage": "stronger",
+          "text": "注意圖形上不對稱的小標記，它的位置也要一起旋轉。"
+        }
       ]
     },
     {
@@ -1827,6 +2621,24 @@
           "kind": "rotation",
           "angle": 0,
           "mirror": false
+        }
+      ],
+      "generator": {
+        "id": "rotation_transform_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 802,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先選一個不對稱的小標記當錨點，追蹤它移動後的位置，同時檢查左右手性有沒有反轉。"
+        },
+        {
+          "stage": "stronger",
+          "text": "注意圖形上不對稱的小標記，它的位置也要一起旋轉。"
         }
       ]
     },
@@ -1876,6 +2688,24 @@
           "kind": "number",
           "value": 2
         }
+      ],
+      "generator": {
+        "id": "lights_search_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 900,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把每一格按或不按視為二元選擇；先利用『按兩次等於沒按』縮小搜尋空間。"
+        },
+        {
+          "stage": "stronger",
+          "text": "每格只需按一次或零次；同一組按法順序不影響最後狀態。"
+        }
       ]
     },
     {
@@ -1924,6 +2754,24 @@
           "kind": "number",
           "value": 3
         }
+      ],
+      "generator": {
+        "id": "lights_search_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 901,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把每一格按或不按視為二元選擇；先利用『按兩次等於沒按』縮小搜尋空間。"
+        },
+        {
+          "stage": "stronger",
+          "text": "每格只需按一次或零次；同一組按法順序不影響最後狀態。"
+        }
       ]
     },
     {
@@ -1971,6 +2819,24 @@
         {
           "kind": "number",
           "value": 4
+        }
+      ],
+      "generator": {
+        "id": "lights_search_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 902,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "把每一格按或不按視為二元選擇；先利用『按兩次等於沒按』縮小搜尋空間。"
+        },
+        {
+          "stage": "stronger",
+          "text": "每格只需按一次或零次；同一組按法順序不影響最後狀態。"
         }
       ]
     },
@@ -2067,7 +2933,25 @@
             50
           ]
         ]
-      }
+      },
+      "generator": {
+        "id": "coin_constraints_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1000,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先把『每種面額使用相同枚數』換成面額總和的限制，再檢查候選組合。"
+        },
+        {
+          "stage": "stronger",
+          "text": "用總額除以每種使用的枚數，得到四種面額之和。"
+        }
+      ]
     },
     {
       "id": "COM02",
@@ -2162,7 +3046,25 @@
             50
           ]
         ]
-      }
+      },
+      "generator": {
+        "id": "coin_constraints_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1001,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先把『每種面額使用相同枚數』換成面額總和的限制，再檢查候選組合。"
+        },
+        {
+          "stage": "stronger",
+          "text": "用總額除以每種使用的枚數，得到四種面額之和。"
+        }
+      ]
     },
     {
       "id": "COM03",
@@ -2257,7 +3159,25 @@
             50
           ]
         ]
-      }
+      },
+      "generator": {
+        "id": "coin_constraints_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1002,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先把『每種面額使用相同枚數』換成面額總和的限制，再檢查候選組合。"
+        },
+        {
+          "stage": "stronger",
+          "text": "用總額除以每種使用的枚數，得到四種面額之和。"
+        }
+      ]
     },
     {
       "id": "COM04",
@@ -2352,7 +3272,25 @@
             50
           ]
         ]
-      }
+      },
+      "generator": {
+        "id": "coin_constraints_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1003,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先把『每種面額使用相同枚數』換成面額總和的限制，再檢查候選組合。"
+        },
+        {
+          "stage": "stronger",
+          "text": "用總額除以每種使用的枚數，得到四種面額之和。"
+        }
+      ]
     },
     {
       "id": "ORD01",
@@ -2494,7 +3432,25 @@
             "kind": "apart"
           }
         ]
-      }
+      },
+      "generator": {
+        "id": "ordering_constraints_v1",
+        "version": "1.0.0",
+        "seed": 1200,
+        "option_seed": 1300,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先處理相鄰、緊接、先後這類最強限制，再套用不能相鄰或不能在兩端等條件。"
+        },
+        {
+          "stage": "stronger",
+          "text": "先找必須相鄰的兩個字母，再測試其他限制。"
+        }
+      ]
     },
     {
       "id": "ORD02",
@@ -2636,7 +3592,25 @@
             "kind": "apart"
           }
         ]
-      }
+      },
+      "generator": {
+        "id": "ordering_constraints_v1",
+        "version": "1.0.0",
+        "seed": 1201,
+        "option_seed": 1301,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先處理相鄰、緊接、先後這類最強限制，再套用不能相鄰或不能在兩端等條件。"
+        },
+        {
+          "stage": "stronger",
+          "text": "先找必須相鄰的兩個字母，再測試其他限制。"
+        }
+      ]
     },
     {
       "id": "ORD03",
@@ -2778,7 +3752,25 @@
             "kind": "apart"
           }
         ]
-      }
+      },
+      "generator": {
+        "id": "ordering_constraints_v1",
+        "version": "1.0.0",
+        "seed": 1202,
+        "option_seed": 1302,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先處理相鄰、緊接、先後這類最強限制，再套用不能相鄰或不能在兩端等條件。"
+        },
+        {
+          "stage": "stronger",
+          "text": "先找必須相鄰的兩個字母，再測試其他限制。"
+        }
+      ]
     },
     {
       "id": "ORD04",
@@ -2920,7 +3912,25 @@
             "kind": "apart"
           }
         ]
-      }
+      },
+      "generator": {
+        "id": "ordering_constraints_v1",
+        "version": "1.0.0",
+        "seed": 1203,
+        "option_seed": 1303,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先處理相鄰、緊接、先後這類最強限制，再套用不能相鄰或不能在兩端等條件。"
+        },
+        {
+          "stage": "stronger",
+          "text": "先找必須相鄰的兩個字母，再測試其他限制。"
+        }
+      ]
     },
     {
       "id": "LG01",
@@ -2974,7 +3984,25 @@
       "checker": {
         "kind": "logic",
         "answer": "B"
-      }
+      },
+      "generator": {
+        "id": "logic_grid_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1500,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先固定能直接鎖定位置的條件，再把人物與屬性的一對一關係逐步填入。"
+        },
+        {
+          "stage": "stronger",
+          "text": "先找兩組相鄰人物，再由顏色和順序鎖定位置。"
+        }
+      ]
     },
     {
       "id": "LG02",
@@ -3028,7 +4056,25 @@
       "checker": {
         "kind": "logic",
         "answer": "L"
-      }
+      },
+      "generator": {
+        "id": "logic_grid_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1501,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先固定能直接鎖定位置的條件，再把人物與屬性的一對一關係逐步填入。"
+        },
+        {
+          "stage": "stronger",
+          "text": "先找兩組相鄰人物，再由顏色和順序鎖定位置。"
+        }
+      ]
     },
     {
       "id": "LG03",
@@ -3082,7 +4128,25 @@
       "checker": {
         "kind": "logic",
         "answer": "Q"
-      }
+      },
+      "generator": {
+        "id": "logic_grid_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1502,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先固定能直接鎖定位置的條件，再把人物與屬性的一對一關係逐步填入。"
+        },
+        {
+          "stage": "stronger",
+          "text": "先找兩組相鄰人物，再由顏色和順序鎖定位置。"
+        }
+      ]
     },
     {
       "id": "LG04",
@@ -3136,7 +4200,25 @@
       "checker": {
         "kind": "logic",
         "answer": "X"
-      }
+      },
+      "generator": {
+        "id": "logic_grid_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1503,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先固定能直接鎖定位置的條件，再把人物與屬性的一對一關係逐步填入。"
+        },
+        {
+          "stage": "stronger",
+          "text": "先找兩組相鄰人物，再由顏色和順序鎖定位置。"
+        }
+      ]
     },
     {
       "id": "T01",
@@ -3190,7 +4272,25 @@
         "candidates": [
           2
         ]
-      }
+      },
+      "generator": {
+        "id": "truth_constraints_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1600,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "不要憑語氣判斷；逐一假設每個候選成立，再計算該假設下有幾句話為真。"
+        },
+        {
+          "stage": "stronger",
+          "text": "逐一假設四個嫌疑人犯案，檢查真話數是否恰好為一。"
+        }
+      ]
     },
     {
       "id": "T02",
@@ -3244,7 +4344,25 @@
         "candidates": [
           1
         ]
-      }
+      },
+      "generator": {
+        "id": "truth_constraints_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1601,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "不要憑語氣判斷；逐一假設每個候選成立，再計算該假設下有幾句話為真。"
+        },
+        {
+          "stage": "stronger",
+          "text": "逐一假設四個嫌疑人犯案，檢查真話數是否恰好為一。"
+        }
+      ]
     },
     {
       "id": "T03",
@@ -3298,7 +4416,25 @@
         "candidates": [
           1
         ]
-      }
+      },
+      "generator": {
+        "id": "truth_constraints_v1",
+        "version": "1.0.0",
+        "seed": null,
+        "option_seed": 1602,
+        "reproducibility": "deterministic_static",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "不要憑語氣判斷；逐一假設每個候選成立，再計算該假設下有幾句話為真。"
+        },
+        {
+          "stage": "stronger",
+          "text": "逐一假設四個嫌疑人犯案，檢查真話數是否恰好為一。"
+        }
+      ]
     },
     {
       "id": "SP02",
@@ -3334,6 +4470,24 @@
         {
           "kind": "face",
           "value": "C"
+        }
+      ],
+      "generator": {
+        "id": "cube_net_v1",
+        "version": "1.0.0",
+        "seed": 1700,
+        "option_seed": 1800,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先找出一定相鄰的面，再追蹤折起後方向相反、因此互為相對面的那一面。"
+        },
+        {
+          "stage": "stronger",
+          "text": "立方體互相相對的面不可能共用邊。"
         }
       ]
     },
@@ -3372,8 +4526,1129 @@
           "kind": "face",
           "value": "D"
         }
+      ],
+      "generator": {
+        "id": "cube_net_v1",
+        "version": "1.0.0",
+        "seed": 1701,
+        "option_seed": 1801,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/questions.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先找出一定相鄰的面，再追蹤折起後方向相反、因此互為相對面的那一面。"
+        },
+        {
+          "stage": "stronger",
+          "text": "立方體互相相對的面不可能共用邊。"
+        }
+      ]
+    },
+    {
+      "id": "P06",
+      "category": "數字金字塔",
+      "difficulty": "Expert",
+      "prompt": "每層父節點由下一層兩數組成。反推最底層的問號。",
+      "hint": "固定規則是左 + k × 右；先由中間兩層辨識 k，再求最底層。",
+      "explain": "每個父節點 = 左 + 3×右，因此問號為 4。",
+      "figure": {
+        "kind": "pyramid",
+        "rows": [
+          [
+            267
+          ],
+          [
+            63,
+            68
+          ],
+          [
+            12,
+            17,
+            17
+          ],
+          [
+            6,
+            2,
+            5,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "7",
+        "2",
+        "6",
+        "4"
+      ],
+      "answer": 3,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 7
+        },
+        {
+          "kind": "number",
+          "value": 2
+        },
+        {
+          "kind": "number",
+          "value": 6
+        },
+        {
+          "kind": "number",
+          "value": 4
+        }
+      ],
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2101,
+        "option_seed": 2201,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先從已知相鄰數字找一條能同時解釋所有層的公式。"
+        },
+        {
+          "stage": "stronger",
+          "text": "固定規則是左 + k × 右；先由中間兩層辨識 k，再求最底層。"
+        }
+      ]
+    },
+    {
+      "id": "P07",
+      "category": "數字金字塔",
+      "difficulty": "Hard",
+      "prompt": "每層父節點由下一層兩數組成。反推最底層的問號。",
+      "hint": "固定規則是左 + k × 右；先由中間兩層辨識 k，再求最底層。",
+      "explain": "每個父節點 = 左 + 2×右，因此問號為 3。",
+      "figure": {
+        "kind": "pyramid",
+        "rows": [
+          [
+            107
+          ],
+          [
+            33,
+            37
+          ],
+          [
+            7,
+            13,
+            12
+          ],
+          [
+            5,
+            1,
+            6,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "4",
+        "2",
+        "6",
+        "3"
+      ],
+      "answer": 3,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 4
+        },
+        {
+          "kind": "number",
+          "value": 2
+        },
+        {
+          "kind": "number",
+          "value": 6
+        },
+        {
+          "kind": "number",
+          "value": 3
+        }
+      ],
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2102,
+        "option_seed": 2202,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先從已知相鄰數字找一條能同時解釋所有層的公式。"
+        },
+        {
+          "stage": "stronger",
+          "text": "固定規則是左 + k × 右；先由中間兩層辨識 k，再求最底層。"
+        }
+      ]
+    },
+    {
+      "id": "C06",
+      "category": "圓盤數字",
+      "difficulty": "Expert",
+      "prompt": "所有扇區沿用同一套雙輸入運算。求最後一個中心數字。",
+      "hint": "測試乘積、平方、差值、和等組合；每個完整扇區都要成立。",
+      "explain": "符合全部例子的規則是 a×b+|a−b|，最後得到 31。",
+      "figure": {
+        "kind": "circle",
+        "pairs": [
+          [
+            2,
+            7,
+            19
+          ],
+          [
+            4,
+            9,
+            41
+          ],
+          [
+            6,
+            3,
+            21
+          ],
+          [
+            5,
+            8,
+            43
+          ],
+          [
+            7,
+            4,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "34",
+        "27",
+        "37",
+        "31"
+      ],
+      "answer": 3,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 34
+        },
+        {
+          "kind": "number",
+          "value": 27
+        },
+        {
+          "kind": "number",
+          "value": 37
+        },
+        {
+          "kind": "number",
+          "value": 31
+        }
+      ],
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2201,
+        "option_seed": 2301,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先找一個同時適用四個完整扇區的運算，而不是為單一例子配公式。"
+        },
+        {
+          "stage": "stronger",
+          "text": "測試乘積、平方、差值、和等組合；每個完整扇區都要成立。"
+        }
+      ]
+    },
+    {
+      "id": "C07",
+      "category": "圓盤數字",
+      "difficulty": "Ω",
+      "prompt": "所有扇區沿用同一套雙輸入運算。求最後一個中心數字。",
+      "hint": "測試乘積、平方、差值、和等組合；每個完整扇區都要成立。",
+      "explain": "符合全部例子的規則是 a²+2b，最後得到 59。",
+      "figure": {
+        "kind": "circle",
+        "pairs": [
+          [
+            2,
+            3,
+            10
+          ],
+          [
+            4,
+            5,
+            26
+          ],
+          [
+            6,
+            2,
+            40
+          ],
+          [
+            3,
+            7,
+            23
+          ],
+          [
+            7,
+            5,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "62",
+        "65",
+        "55",
+        "59"
+      ],
+      "answer": 3,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 62
+        },
+        {
+          "kind": "number",
+          "value": 65
+        },
+        {
+          "kind": "number",
+          "value": 55
+        },
+        {
+          "kind": "number",
+          "value": 59
+        }
+      ],
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2202,
+        "option_seed": 2302,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先找一個同時適用四個完整扇區的運算，而不是為單一例子配公式。"
+        },
+        {
+          "stage": "stronger",
+          "text": "測試乘積、平方、差值、和等組合；每個完整扇區都要成立。"
+        }
+      ]
+    },
+    {
+      "id": "R05",
+      "category": "路徑最佳化",
+      "difficulty": "Ω",
+      "prompt": "沿著連線恰好走 5 個不同節點，最大節點總和是多少？",
+      "hint": "從每個起點探索所有不重複的 5 節點路徑，找出最大總和。",
+      "explain": "最大總和 51，其中一條路為 8→14→6→10→13。",
+      "figure": {
+        "kind": "path",
+        "vals": [
+          8,
+          14,
+          3,
+          6,
+          13,
+          7,
+          10,
+          5
+        ],
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            6,
+            7
+          ]
+        ]
+      },
+      "options": [
+        "46",
+        "49",
+        "54",
+        "51"
+      ],
+      "answer": 3,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 46
+        },
+        {
+          "kind": "number",
+          "value": 49
+        },
+        {
+          "kind": "number",
+          "value": 54
+        },
+        {
+          "kind": "number",
+          "value": 51
+        }
+      ],
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2301,
+        "option_seed": 2401,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "圖上的最短距離不是目標；把路徑總分與節點不得重複分開考慮。"
+        },
+        {
+          "stage": "stronger",
+          "text": "從每個起點探索所有不重複的 5 節點路徑，找出最大總和。"
+        }
+      ]
+    },
+    {
+      "id": "M06",
+      "category": "圖形缺項",
+      "difficulty": "Expert",
+      "prompt": "同列前兩格依同一法則構成第三格。哪張圖能補上空格？",
+      "hint": "可能是 XOR、聯集、交集或 XOR 後旋轉；同一法則要解釋前兩列。",
+      "explain": "前兩列共同排除其他法則，所求線段遮罩為 5。",
+      "figure": {
+        "kind": "matrix",
+        "rows": [
+          [
+            1,
+            4,
+            10
+          ],
+          [
+            3,
+            8,
+            7
+          ],
+          [
+            2,
+            8,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 3,
+      "answerSpecs": [
+        {
+          "kind": "segments",
+          "mask": 4
+        },
+        {
+          "kind": "segments",
+          "mask": 7
+        },
+        {
+          "kind": "segments",
+          "mask": 1
+        },
+        {
+          "kind": "segments",
+          "mask": 5
+        }
+      ],
+      "checker": {
+        "kind": "matrix",
+        "op": 3,
+        "rows": [
+          [
+            1,
+            4,
+            10
+          ],
+          [
+            3,
+            8,
+            7
+          ],
+          [
+            2,
+            8,
+            5
+          ]
+        ],
+        "masks": [
+          4,
+          7,
+          1,
+          5
+        ]
+      },
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2401,
+        "option_seed": 2501,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "分別記錄四種線段有沒有出現，再比較每列第三格。"
+        },
+        {
+          "stage": "stronger",
+          "text": "可能是 XOR、聯集、交集或 XOR 後旋轉；同一法則要解釋前兩列。"
+        }
+      ]
+    },
+    {
+      "id": "M07",
+      "category": "圖形缺項",
+      "difficulty": "Ω",
+      "prompt": "同列前兩格依同一法則構成第三格。哪張圖能補上空格？",
+      "hint": "可能是 XOR、聯集、交集或 XOR 後旋轉；同一法則要解釋前兩列。",
+      "explain": "前兩列共同排除其他法則，所求線段遮罩為 10。",
+      "figure": {
+        "kind": "matrix",
+        "rows": [
+          [
+            7,
+            11,
+            3
+          ],
+          [
+            13,
+            6,
+            4
+          ],
+          [
+            11,
+            10,
+            "?"
+          ]
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 3,
+      "answerSpecs": [
+        {
+          "kind": "segments",
+          "mask": 8
+        },
+        {
+          "kind": "segments",
+          "mask": 11
+        },
+        {
+          "kind": "segments",
+          "mask": 14
+        },
+        {
+          "kind": "segments",
+          "mask": 10
+        }
+      ],
+      "checker": {
+        "kind": "matrix",
+        "op": 2,
+        "rows": [
+          [
+            7,
+            11,
+            3
+          ],
+          [
+            13,
+            6,
+            4
+          ],
+          [
+            11,
+            10,
+            10
+          ]
+        ],
+        "masks": [
+          8,
+          11,
+          14,
+          10
+        ]
+      },
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2402,
+        "option_seed": 2502,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "分別記錄四種線段有沒有出現，再比較每列第三格。"
+        },
+        {
+          "stage": "stronger",
+          "text": "可能是 XOR、聯集、交集或 XOR 後旋轉；同一法則要解釋前兩列。"
+        }
+      ]
+    },
+    {
+      "id": "S06",
+      "category": "圖形序列",
+      "difficulty": "Expert",
+      "prompt": "外框邊數、箭頭方向、中心填色各自有規律。選出下一張圖。",
+      "hint": "外框每次多一邊，角度固定反向轉 135°，中心實空交替。",
+      "explain": "下一張是 9 邊形、箭頭 180°、實心中心。",
+      "figure": {
+        "kind": "sequence",
+        "frames": [
+          {
+            "sides": 5,
+            "angle": 0,
+            "fill": 1
+          },
+          {
+            "sides": 6,
+            "angle": 225,
+            "fill": 0
+          },
+          {
+            "sides": 7,
+            "angle": 90,
+            "fill": 1
+          },
+          {
+            "sides": 8,
+            "angle": 315,
+            "fill": 0
+          }
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 3,
+      "answerSpecs": [
+        {
+          "kind": "sequence",
+          "sides": 9,
+          "angle": 90,
+          "fill": 1
+        },
+        {
+          "kind": "sequence",
+          "sides": 9,
+          "angle": 180,
+          "fill": 0
+        },
+        {
+          "kind": "sequence",
+          "sides": 8,
+          "angle": 180,
+          "fill": 1
+        },
+        {
+          "kind": "sequence",
+          "sides": 9,
+          "angle": 180,
+          "fill": 1
+        }
+      ],
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2501,
+        "option_seed": 2601,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "請分開記錄三種屬性，不要只追蹤外框。"
+        },
+        {
+          "stage": "stronger",
+          "text": "外框每次多一邊，角度固定反向轉 135°，中心實空交替。"
+        }
+      ]
+    },
+    {
+      "id": "ROT05",
+      "category": "旋轉／鏡像",
+      "difficulty": "Expert",
+      "prompt": "先將原圖左右鏡射，再順時針旋轉 90°。哪個結果正確？",
+      "hint": "鏡射會顛倒手性，旋轉只改方向；兩個操作不能省略。",
+      "explain": "只有一項同時左右鏡射並旋轉 90°，輪廓與標記均吻合。",
+      "figure": {
+        "kind": "rotation",
+        "degrees": 90,
+        "mirror": true
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 3,
+      "answerSpecs": [
+        {
+          "kind": "rotation",
+          "angle": 270,
+          "mirror": true
+        },
+        {
+          "kind": "rotation",
+          "angle": 90,
+          "mirror": false
+        },
+        {
+          "kind": "rotation",
+          "angle": 180,
+          "mirror": true
+        },
+        {
+          "kind": "rotation",
+          "angle": 90,
+          "mirror": true
+        }
+      ],
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2601,
+        "option_seed": 2701,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先留意不對稱圓點的左右手性，再追蹤旋轉後的位置。"
+        },
+        {
+          "stage": "stronger",
+          "text": "鏡射會顛倒手性，旋轉只改方向；兩個操作不能省略。"
+        }
+      ]
+    },
+    {
+      "id": "MOVE05",
+      "category": "棋子移動",
+      "difficulty": "Expert",
+      "prompt": "每次按下會翻轉自己與上下左右。全部變白的最少按鍵數？",
+      "hint": "把每一格視為 0 或 1 次，總共只有 512 組不同按法。",
+      "explain": "列舉 512 個按鍵遮罩，最少需要 5 次。",
+      "figure": {
+        "kind": "lights",
+        "bits": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "options": [
+        "5",
+        "6",
+        "7",
+        "4"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "number",
+          "value": 5
+        },
+        {
+          "kind": "number",
+          "value": 6
+        },
+        {
+          "kind": "number",
+          "value": 7
+        },
+        {
+          "kind": "number",
+          "value": 4
+        }
+      ],
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2701,
+        "option_seed": 2801,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "重複按同一格兩次等於完全沒有按。"
+        },
+        {
+          "stage": "stronger",
+          "text": "把每一格視為 0 或 1 次，總共只有 512 組不同按法。"
+        }
+      ]
+    },
+    {
+      "id": "COM05",
+      "category": "幣值／組合限制",
+      "difficulty": "Hard",
+      "prompt": "六種硬幣面額中選四種，每種都拿 3 枚，總額 198。選出正確組合。",
+      "hint": "先算 198 ÷ 3；四種不同面額的和必須等於這個值。",
+      "explain": "198 ÷ 3 = 66，只有 1、5、10、50 符合。",
+      "figure": {
+        "kind": "coins",
+        "denom": [
+          1,
+          2,
+          5,
+          10,
+          20,
+          50
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 0,
+      "answerSpecs": [
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            5,
+            10,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            5,
+            20,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            2,
+            5,
+            10,
+            50
+          ]
+        },
+        {
+          "kind": "coins",
+          "values": [
+            1,
+            2,
+            10,
+            50
+          ]
+        }
+      ],
+      "checker": {
+        "kind": "coins",
+        "n": 3,
+        "total": 198,
+        "variants": [
+          [
+            1,
+            5,
+            10,
+            50
+          ],
+          [
+            1,
+            5,
+            20,
+            50
+          ],
+          [
+            2,
+            5,
+            10,
+            50
+          ],
+          [
+            1,
+            2,
+            10,
+            50
+          ]
+        ]
+      },
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2801,
+        "option_seed": 2901,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "面額先相加，再乘上每種面額的枚數。"
+        },
+        {
+          "stage": "stronger",
+          "text": "先算 198 ÷ 3；四種不同面額的和必須等於這個值。"
+        }
+      ]
+    },
+    {
+      "id": "ORD05",
+      "category": "排序／分組",
+      "difficulty": "Expert",
+      "prompt": "依照六條限制，哪一個排列完全成立？",
+      "clues": [
+        "A 在 D 前",
+        "F 緊接在 D 後",
+        "E 緊接在 A 後",
+        "A 不在兩端",
+        "C 與 B 不相鄰",
+        "B 不在兩端"
+      ],
+      "hint": "A 緊接 E、D 緊接 F；留意 A、B 都不能放兩端。",
+      "explain": "唯一合法排列為 C–A–E–B–D–F；其餘選項至少違反一條限制。",
+      "figure": {
+        "kind": "tokens",
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer": 1,
+      "answerSpecs": [
+        {
+          "kind": "tokens",
+          "labels": [
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "A"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "C",
+            "A",
+            "E",
+            "B",
+            "D",
+            "F"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "B",
+            "F",
+            "C",
+            "D",
+            "E",
+            "A"
+          ]
+        },
+        {
+          "kind": "tokens",
+          "labels": [
+            "A",
+            "E",
+            "C",
+            "D",
+            "F",
+            "B"
+          ]
+        }
+      ],
+      "checker": {
+        "kind": "order",
+        "candidates": [
+          [
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "A"
+          ],
+          [
+            "C",
+            "A",
+            "E",
+            "B",
+            "D",
+            "F"
+          ],
+          [
+            "B",
+            "F",
+            "C",
+            "D",
+            "E",
+            "A"
+          ],
+          [
+            "A",
+            "E",
+            "C",
+            "D",
+            "F",
+            "B"
+          ]
+        ],
+        "rules": [
+          {
+            "kind": "before",
+            "a": "A",
+            "b": "D"
+          },
+          {
+            "kind": "touch",
+            "a": "D",
+            "b": "F"
+          },
+          {
+            "kind": "touch",
+            "a": "A",
+            "b": "E"
+          },
+          {
+            "kind": "inside",
+            "a": "A"
+          },
+          {
+            "kind": "apart",
+            "a": "C",
+            "b": "B"
+          },
+          {
+            "kind": "inside",
+            "a": "B"
+          }
+        ]
+      },
+      "generator": {
+        "id": "axiom_release_expansion_v052",
+        "version": "1.0.0",
+        "seed": 2901,
+        "option_seed": 3001,
+        "reproducibility": "deterministic_seeded",
+        "source": "src/expansion-v052.js"
+      },
+      "hint_steps": [
+        {
+          "stage": "structural",
+          "text": "先把緊接關係視為不可分的塊，再套入位置限制。"
+        },
+        {
+          "stage": "stronger",
+          "text": "A 緊接 E、D 緊接 F；留意 A、B 都不能放兩端。"
+        }
       ]
     }
   ],
-  "notice": "Original authored and deterministic puzzle variants. Difficulty is editorial (not psychometric calibration)."
+  "notice": "Deterministic source snapshot of the live AXIOM catalog. Generated from src/questions.js and src/expansion-v052.js; do not edit manually."
 }
