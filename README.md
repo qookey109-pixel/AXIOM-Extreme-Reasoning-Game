@@ -1,13 +1,13 @@
 # AXIOM — Extreme Reasoning Game
 
-**獨立原創極限推理遊戲**。本版 **V0.5 · Verification Core / Progressive Hints / 50-Puzzle Bank**。
+**獨立原創極限推理遊戲**。本版 **V0.5.2 · Verification Core / Progressive Hints / 62-Puzzle Bank**。
 
 公開遊戲： https://qookey109-pixel.github.io/AXIOM-Extreme-Reasoning-Game/
 
 ## 本版實作
 
-- 12 大類、50 題可玩的 finite catalog，包含舊版 8 題與 42 題新設計／確定性生成的變體。
-- 難度只顯示 **Hard 18 / Expert 22 / Ω 10**；標籤目前是設計分級，尚未使用實際玩家數據校準。
+- 12 大類、62 題可玩的 finite catalog，包含舊版 8 題、先前 42 題與新增 12 題可驗證原創題。
+- 難度只顯示 **Hard 20 / Expert 29 / Ω 13**；標籤目前是設計分級，尚未使用實際玩家數據校準。
 - 4 個**可點選的圖形選項卡**，包括圖形矩陣、圖形序列、旋轉、空間展開、硬幣排列、人物符號等；數字題也改成視覺數字卡。
 - 全頁視窗內解題，手機答案為 2×2、桌機為一列 4 張；網頁本體禁止垂直／水平捲動。
 - 題圖保持固定邏輯 Canvas → PNG data URL；過去 8 道題則繼續使用 `assets/png/*.png`。圖形僅等比例縮放，不由網頁 DOM 組裝。
@@ -18,13 +18,13 @@
 
 ## 題庫 source of truth
 
-`src/questions.js` 內含所有題目、生成規則、答案與 generator provenance；`src/verification.js` 提供 V0.5 統一驗證層。`question_bank.json` 是既有 **50 題**的靜態資料快照，不是 source of truth。謎題畫面由 `src/graphics.js` 繪製，`src/app.js` 處理遊戲流程，`src/styles.css` 處理固定視窗版面。
+`src/questions.js` 整合原有題庫及 `src/expansion-v052.js` 的 12 道新題，保留生成規則、答案與 generator provenance；`src/verification.js` 提供 V0.5 統一驗證層。`question_bank.json` 是既有 **50 題**的靜態資料快照，不是 source of truth。謎題畫面由 `src/graphics.js` 繪製，`src/app.js` 處理遊戲流程，`src/styles.css` 處理固定視窗版面。
 
 12 大類：**數字金字塔、圓盤數字、路徑最佳化、圖形缺項、圖形序列、旋轉／鏡像、棋子移動、幣值／組合限制、排序／分組、Logic Grid、真假命題、空間／展開圖**。
 
 ## 品質檢查
 
-`npm test`：題目數、三階難度分布、12 大類涵蓋、答案合法性、漸進提示契約、generator provenance，以及 V0.5 全題庫獨立求解驗證。CI 強制目前 **50/50 solver verified、50/50 verified unique answer、10/10 Ω 通過 family-specific machine gate**；規則推導題只在明確宣告的 bounded grammar 內宣稱 model unique。
+`npm test`：題目數、三階難度分布、12 大類涵蓋、答案合法性、漸進提示契約、generator provenance，以及 V0.5 全題庫獨立求解驗證。CI 強制目前 **62/62 solver verified、62/62 verified unique answer、13/13 Ω 通過 family-specific machine gate**；規則推導題只在明確宣告的 bounded grammar 內宣稱 model unique。
 
 Pull Request workflow `.github/workflows/axiom-qa.yml`：Node logic test + headless Chromium 瀏覽器，測 **320／360／375／390／430／768／1024／1440 px** 及一種橫向視窗，驗證 body 無溢出、題圖與 4 個答案圖像存在、可選擇提交。
 
