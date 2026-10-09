@@ -40,11 +40,12 @@ try{
   }
   assert(home.lines.every(x=>x.textWidth<=x.boxWidth+2),vp.name+" headline text clipped "+JSON.stringify(home.lines));
   assert(home.titleSize>=30,vp.name+" headline too small");
-  if(vp.width>750&&vp.height>600)assert.notEqual(home.artDisplay,"none",vp.name+" missing editorial visual artwork");
-  else assert.equal(home.artDisplay,"none",vp.name+" artwork should be compact on small viewports");
+  if(vp.height<=600&&vp.width>vp.height)assert.equal(home.artDisplay,"none",vp.name+" hide artwork in compact landscape");
+  else assert.notEqual(home.artDisplay,"none",vp.name+" missing interactive block artwork");
   await page.screenshot({path:"visual-qa/design-"+vp.name+"-home.png",animations:"disabled"});
   await page.locator("#startTen").click();
   await page.waitForSelector("#game.is-active");
+  await page.locator("#blockLaunch").waitFor({state:"hidden",timeout:4500});
   const game=await page.evaluate(()=>{
    const box=s=>{const r=document.querySelector(s).getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom}};
    return {screen:document.body.dataset.screen,docW:document.documentElement.scrollWidth,
@@ -77,5 +78,5 @@ try{
  assert.equal(motion,"none","reduced-motion disables entrance animation");
  await reduced.close();
 }finally{await browser.close();}
-await writeFile("visual-qa/design-audit.json",JSON.stringify({build:"V0.6.0",passed:records.length,records},null,2)+"\n");
-console.log("AXIOM V0.6 visual experience PASS: "+records.length+" viewports x home/game, reduced motion PASS");
+await writeFile("visual-qa/design-audit.json",JSON.stringify({build:"V0.7.0",passed:records.length,records},null,2)+"\n");
+console.log("AXIOM V0.7 visual experience PASS: "+records.length+" viewports x home/game, reduced motion PASS");
