@@ -2,7 +2,7 @@ import {PUZZLES,CATEGORIES,BANK_META} from "./questions.js";
 import {renderFigure,renderChoiceImage} from "./graphics.js";
 import {createBlockInteraction} from "./block-interaction.js";
 import {createLiquidField} from "./liquid-field.js";
-export const APP_BUILD="V0.8.0-20261009";
+export const APP_BUILD="V0.8.1-20261009";
 const $=id=>document.getElementById(id);
 const screens=["home","game","results"];
 const state={pool:[],index:0,selected:-1,answered:[],hints:0,hinted:false,hintStep:0,started:0,questionStart:0,correct:0,mode:10,category:"全部",difficulty:"全部"};
@@ -220,6 +220,5 @@ setInterval(()=>{
  if($("game").classList.contains("is-active"))$("timer").textContent=fmtTime(Date.now()-state.started);
 },500);
 setChoices();
-const counter=$("bankCounter");
-counter.textContent=BANK_META.count+" QUESTIONS · "+BANK_META.categoryCount+" DOMAINS";
+// The home screen is intentionally full-bleed without the former top header.
 window.AXIOM_QA={bank:PUZZLES,meta:BANK_META,build:APP_BUILD,state,render,renderFigure,renderChoiceImage,blockArt,liquidArt};

@@ -81,3 +81,12 @@ Technical implementation:
 - `src/liquid-logic.css`: high-contrast light editorial interface with no shadows or colorful controls; liquid colors only in the main hero artwork and sculptural transition. Existing 12 pieces use translucent/refraction-inspired gradients. Both category and difficulty changes alter the block layout and light field.
 - Single-screen mobile and landscape remain intact. Solver, all 62 published questions, score, hints and unpublished Ω candidates are unchanged.
 - `scripts/check-liquid-logic.mjs`: five viewport browser QA, shader/fallback presence, light-field response, readable four answer tiles, no page overflow, reduced-motion and screenshot artifacts.
+
+## V0.8.1 — Full-bleed art, no extra panels
+
+At the user's request, remove the **three highlighted UI regions** entirely:
+- The top AXIOM logo/version navigation bar.
+- The left white BREAK / PATTERNS editorial headline, tagline and statistics panel.
+- The bottom-left Build your experiment editorial heading tile.
+
+The remaining liquid-light + 12 animated block sculpture expands to occupy the complete main stage. The bottom control rail consists only of category selection, difficulty buttons, and the two challenge-start buttons. All 62 live puzzles, hint flow, scoring, visual-answer geometry, and unpublished candidate gates remain unchanged. A dedicated five-viewport Playwright test asserts the removed regions do not appear, the art fills its area without a leftover header row, all three controls remain accessible, and gameplay remains inside the viewport.
