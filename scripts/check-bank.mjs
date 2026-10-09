@@ -22,6 +22,16 @@ for(const q of PUZZLES){
  assert(q.figure&&typeof q.figure.kind==="string",q.id);
  assert(q.asset||q.figure.kind!=="legacy",q.id);
  assert.equal(q.answerSpecs.length,4,q.id);
+ // Every graphic answer tile must contain visible geometry; a mask of 0 was
+ // previously encoded as a valid PNG with an entirely blank interior.
+ for(const [i,spec] of q.answerSpecs.entries()){
+  if(spec.kind!=="segments")continue;
+  if(Object.hasOwn(spec,"mask")){
+   assert(Number.isInteger(spec.mask)&&spec.mask>0,q.id+" blank segment mask in option "+(i+1));
+  } else {
+   assert(Array.isArray(spec.lines)&&spec.lines.length>0,q.id+" blank segment lines in option "+(i+1));
+  }
+ }
 }
 assert.equal(Object.keys(BANK_META.categoryCounts).length,12);
 assert(Object.values(BANK_META.categoryCounts).every(n=>n>=3));

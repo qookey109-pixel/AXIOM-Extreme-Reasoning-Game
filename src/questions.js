@@ -291,8 +291,8 @@ export function buildBank(){
  });
  // Four missing-image matrices with distinct operator grammar.
  [0,1,2,3].forEach((op,i)=>{
-  const rows=computeMatrixRows(op,500+i),last=rows[2][2],wrong=[last^1,last^2,last^4].filter(x=>x!==last);
-  if(wrong.length!==3||new Set(wrong).size!==3)throw Error("matrix distractor collision");
+  const rows=computeMatrixRows(op,500+i),last=rows[2][2],wrong=[1,2,4,8].map(bit=>last^bit).filter(mask=>mask!==0).slice(0,3);
+  if(wrong.length!==3||new Set(wrong).size!==3||wrong.some(mask=>mask===0))throw Error("matrix distractor collision or blank tile");
   const masks=shuffle([last,...wrong],600+i),answer=masks.indexOf(last);
   const label=op===0?"XOR":op===1?"聯集":op===2?"交集":"XOR 後整體旋轉";
   pushQ(bank,{id:"M"+String(i+2).padStart(2,"0"),category:CATEGORIES[3],
