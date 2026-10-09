@@ -90,3 +90,7 @@ At the user's request, remove the **three highlighted UI regions** entirely:
 - The bottom-left Build your experiment editorial heading tile.
 
 The remaining liquid-light + 12 animated block sculpture expands to occupy the complete main stage. The bottom control rail consists only of category selection, difficulty buttons, and the two challenge-start buttons. All 62 live puzzles, hint flow, scoring, visual-answer geometry, and unpublished candidate gates remain unchanged. A dedicated five-viewport Playwright test asserts the removed regions do not appear, the art fills its area without a leftover header row, all three controls remain accessible, and gameplay remains inside the viewport.
+
+## V0.8.2 — One seamless liquid stage
+
+The liquid-light scene, animated 12-block sculpture and three practical controls now share **one hero container and one continuous visual surface**. The filter dock is integrated as a translucent lower shelf over the same full-bleed WebGL canvas; there is no separate bottom panel or separating gap. Phone screens reorganize the dock into two columns plus full-width action buttons. On short landscape screens the sculpture remains visible without consuming the control dock. No extra header or editorial heading panels return. Published question/solver count stays at 62.
