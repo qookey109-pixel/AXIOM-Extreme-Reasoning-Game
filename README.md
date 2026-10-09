@@ -39,3 +39,12 @@ Pull Request workflow `.github/workflows/axiom-qa.yml`：Node logic test + headl
 
 經典益智書與 MENSA／Raven 可以**研究玩法結構**，但不直接複製原題文字、商業測驗圖像或頁面排版。AXIOM 題目圖形與描述皆以專案自身生成／重新設計為主。
 
+
+## V0.5.3 (research only) — Ω Promotion Gate
+
+在原有 **62 道已公開題目**之外，加入三道**未公開**的原創高階推理候選題：Proof Compression、Necessary Clue、Counterexample Hunt。題源、唯一解及四個語義選項由 `src/promotion-candidates.js` 和獨立求解器驗證。
+
+- `src/candidate-graphics.js`：三種題型的原創 Canvas 圖案與四選一圖卡；`scripts/check-promotion-visual.mjs` 在雲端 Chromium 測試手機與桌機圖片、圖形像素非空白，並保存 screenshot artifact。
+- 研究題**不加入正式 `PUZZLES`**，`published:false`，`render.ready:false`，人工易讀性與實際難度驗收仍待完成；單純機器驗證通過不等於可直接公開。
+- Necessary Clue 候選改用 4 條線索的原型 `NC-P01`，避免 5 條線索僅有 4 個答案選項的歧義。
+- `npm test` 同時執行 **62 題正常遊戲 QA**、高階 prototype QA、資料快照同步檢查、與研究候選的 machine promotion gate。
