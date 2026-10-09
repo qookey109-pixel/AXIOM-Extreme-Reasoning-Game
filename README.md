@@ -67,3 +67,17 @@ Pull Request workflow `.github/workflows/axiom-qa.yml`：Node logic test + headl
 - 動態由 transform / CSS transition 與少量事件驅動完成，沒有持續執行的動畫迴圈；`prefers-reduced-motion` 會關閉組裝入場動畫與所有積木過渡。
 - `scripts/check-block-interaction.mjs` 以 Chromium 驗證初始散落、分類／難度重排、啟動入口轉場、答題不中斷、行動裝置／桌機及減少動態偏好，並保存初始、組裝、關卡截圖。
 - 既有 62 題題庫、Solver、答案、3 個未發布 Ω 候選均維持原狀。
+
+## V0.8 — LIQUID LOGIC (2026-10-09)
+
+Design references:
+- [ThreeUI Community](https://github.com/MengTo/threeui) — shader-led interactive visual language. Its public components are **React** components with React/Three peer dependencies. AXIOM stays a lightweight vanilla JavaScript static game; the new field renderer is original code, not a packaged ThreeUI component or copied shader.
+- [monopo saigon / Refero](https://styles.refero.design/style/3e52dd36-6ab1-48c6-bc40-47ef6d33abc2) — light monochrome editorial controls, restrained weight 400 headlines, single expressive iridescent media field and spacious transitions.
+- [Auros / Refero](https://styles.refero.design/style/21cfe0c1-778d-4613-9f47-a5718eb929b3) — bioluminescent material, cyan-pink scattering and discreet instrumentation rather than a full dark-themed interface.
+- User-provided `DESIGN.md` and `DESIGN-2.md` shaped the style roles; they are inspirations, not verbatim copies or distributed source assets.
+
+Technical implementation:
+- `src/liquid-field.js`: an original, bounded low-power WebGL fragment field (up to 540px canvas / ~24 fps while home is visible), a CSS gradient fallback when WebGL is unavailable, static low-motion mode and pause when game replaces home.
+- `src/liquid-logic.css`: high-contrast light editorial interface with no shadows or colorful controls; liquid colors only in the main hero artwork and sculptural transition. Existing 12 pieces use translucent/refraction-inspired gradients. Both category and difficulty changes alter the block layout and light field.
+- Single-screen mobile and landscape remain intact. Solver, all 62 published questions, score, hints and unpublished Ω candidates are unchanged.
+- `scripts/check-liquid-logic.mjs`: five viewport browser QA, shader/fallback presence, light-field response, readable four answer tiles, no page overflow, reduced-motion and screenshot artifacts.
