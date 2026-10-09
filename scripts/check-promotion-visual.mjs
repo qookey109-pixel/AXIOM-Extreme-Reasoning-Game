@@ -23,7 +23,14 @@ try{
     if(!q||q.published!==false)throw Error("candidate missing or published "+id);
     const figure=renderCandidateFigure(q);
     const tiles=q.options.map((_,i)=>renderCandidateOption(q,i));
-    document.body.innerHTML="";
+    // Hide the existing game without deleting DOM nodes referenced by its
+    // animation/timer loop. Only the QA sheet is swapped between candidates.
+    const app=document.querySelector(".app");
+    if(app)app.style.display="none";
+    const dialog=document.querySelector("dialog");
+    if(dialog)dialog.style.display="none";
+    document.getElementById("qa-preview")?.remove();
+    const preview=document.createElement("section");preview.id="qa-preview";
     document.body.style.cssText="margin:0;padding:18px;font-family:system-ui;background:#f6f4ef;color:#17202a;box-sizing:border-box";
     const title=document.createElement("h1");title.textContent="AXIOM — "+q.id+" | UNPUBLISHED QA";title.style.cssText="font-size:21px;margin:0 0 14px";
     const prompt=document.createElement("p");prompt.textContent=q.prompt;prompt.style.cssText="font-size:17px;font-weight:800;line-height:1.5;margin:0 0 12px";
@@ -44,7 +51,8 @@ try{
      label.style.cssText="font-size:12px;font-weight:750;text-align:center;overflow-wrap:anywhere";
      card.append(img,label);cards.append(card);imgNodes.push(img);
     });
-    document.body.append(title,prompt,main,clues,cards);
+    preview.append(title,prompt,main,clues,cards);
+    document.body.append(preview);
     await Promise.all([main,...imgNodes].map(img=>img.decode()));
     // Canvas pixel-level nonempty check rather than only naturalWidth or alt labels.
     function countInk(img){
