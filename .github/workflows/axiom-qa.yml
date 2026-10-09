@@ -37,6 +37,7 @@ jobs:
           node --check src/graphics.js
           node --check src/app.js
           node --check src/block-interaction.js
+          node --check src/liquid-field.js
           node --check src/candidate-graphics.js
           node --check src/promotion-candidates.js
           npm test
@@ -57,6 +58,8 @@ jobs:
         run: node scripts/check-art-direction.mjs
       - name: Puzzle blocks choreography and portal QA
         run: node scripts/check-block-interaction.mjs
+      - name: Liquid Logic media and readability QA
+        run: node scripts/check-liquid-logic.mjs
       - name: Upload visual audit captures
         if: always()
         uses: actions/upload-artifact@v4
