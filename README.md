@@ -18,7 +18,7 @@
 
 ## 題庫 source of truth
 
-`src/questions.js` 整合原有題庫及 `src/expansion-v052.js` 的 12 道新題，保留生成規則、答案與 generator provenance；`src/verification.js` 提供 V0.5 統一驗證層。`question_bank.json` 是既有 **50 題**的靜態資料快照，不是 source of truth。謎題畫面由 `src/graphics.js` 繪製，`src/app.js` 處理遊戲流程，`src/styles.css` 處理固定視窗版面。
+`src/questions.js` 整合原有題庫及 `src/expansion-v052.js` 的 12 道新題，保留生成規則、答案與 generator provenance；`src/verification.js` 提供 V0.5 統一驗證層。`question_bank.json` 已同步成 **62 題**靜態匯出快照（非 source of truth）。每次新增或調整題目後執行 `npm run bank:sync`，並由 `npm test` 檢查快照與即時題庫完全一致。謎題畫面由 `src/graphics.js` 繪製，`src/app.js` 處理遊戲流程，`src/styles.css` 處理固定視窗版面。
 
 12 大類：**數字金字塔、圓盤數字、路徑最佳化、圖形缺項、圖形序列、旋轉／鏡像、棋子移動、幣值／組合限制、排序／分組、Logic Grid、真假命題、空間／展開圖**。
 
