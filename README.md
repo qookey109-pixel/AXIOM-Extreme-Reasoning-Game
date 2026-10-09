@@ -100,3 +100,13 @@ The liquid-light scene, animated 12-block sculpture and three practical controls
 The previous V0.8.2 implementation retained a conspicuous full-width translucent shelf (a horizontal visual boundary) despite sharing one canvas. **V0.8.3 removes that shelf completely.** The hero and WebGL artwork now occupy the entire viewport, including the area behind the playable controls. The three control groups become independent floating instruments over the liquid field, with no shared opaque/blurred background, horizontal border, or separate row. The sculpture is compositionally centered above the floating controls without interrupting the continuous background. On phones, the controls form two compact floating groups plus independently floating challenge buttons, still over the same artwork. The artwork no longer displays its decorative bottom line.
  
 A dedicated `scripts/check-no-seam.mjs` browser audit checks actual computed CSS, full-height artwork coverage, geometrical overlap, contrast, focus and touch usability across mobile/desktop/landscape. All 62 puzzles, solutions, hints and Ω candidates remain untouched.
+
+## V0.9 — ORBITAL ASSEMBLY / Molded Bricks
+
+Creative redesign replaces the former three detached floating pill clusters with controls orbiting one physical assembly sculpture: an **underlined category dial** at left, an **engraved four-state difficulty rail** at right, and a circular **challenge-start core** at the lower centre. The full-trial action is a secondary line integrated beneath the launch core. No shared horizontal panel reappears and all source option IDs remain stable.
+
+All 12 moving blocks now have an **opaque plastic shell, chamfered perimeter, visible 8px extruded lower edge, four individually raised round studs, and a relief-like symbol** on a nested face layer. Colors are original cobalt, mint, cream, coral, navy and yellow with directional highlights and weighty contact shadows. The exact same physical parts are present during the start-transition assembly.
+
+Sources: `src/orbital-interface.css` (material + one-stage art direction) and `src/block-interaction.js` (real piece DOM geometry). `scripts/check-orbital-bricks.mjs` records screenshots and validates all studs, solid plastic, zero-glass material, circular start control, keyboard/touch and gameplay across five viewports. This is original CSS/DOM, not an imported toy brand logo/model. Reduced motion remains honored.
+
+Original verified 62-puzzle catalog and all other QA contracts remain intact.
