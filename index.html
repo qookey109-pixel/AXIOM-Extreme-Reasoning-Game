@@ -7,15 +7,16 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta name="description" content="AXIOM 極限推理實驗室 — 12 大類、62 道 Hard / Expert / Ω 原創圖形與邏輯挑戰。">
 <title>AXIOM — Extreme Reasoning Game</title>
-<link rel="stylesheet" href="src/styles.css?release=axiom-v060-20261009">
-<link rel="stylesheet" href="src/art-direction.css?release=axiom-v060-20261009">
-<script type="module" src="src/app.js?release=axiom-v060-20261009"></script>
+<link rel="stylesheet" href="src/styles.css?release=axiom-v070-20261009">
+<link rel="stylesheet" href="src/art-direction.css?release=axiom-v070-20261009">
+<link rel="stylesheet" href="src/assembly.css?release=axiom-v070-20261009">
+<script type="module" src="src/app.js?release=axiom-v070-20261009"></script>
 </head>
 <body data-screen="home">
 <div class="app">
  <header class="app-header">
   <div class="brand-wrap"><span class="brand-seal" aria-hidden="true"><span></span><span></span><span></span><span></span></span><div class="brand">AXIOM<em>EXTREME REASONING GAME</em></div></div>
-  <div class="header-meta"><span id="bankCounter"></span><span class="tag">V0.6 · THE COGNITIVE ATLAS</span></div>
+  <div class="header-meta"><span id="bankCounter"></span><span class="tag">V0.7 · THE MIND IN PIECES</span></div>
  </header>
  <section class="page is-active" id="home" aria-label="開始挑戰">
   <div class="hero">
@@ -27,21 +28,17 @@
     <div class="stats-line"><span><b>12</b> REASONING DOMAINS</span><span><b>62</b> ORIGINAL PUZZLES</span><span class="stat-omega"><b>Ω</b> BEYOND THE EXPECTED</span></div>
    </div>
    <div class="hero-art" aria-hidden="true">
-    <div class="art-top"><span>FIELD STUDY / 001</span><span>● &nbsp; LIVE SYSTEM</span></div>
+    <div class="art-top"><span>FIELD STUDY / 002</span><span class="structure-count" id="assemblyStatus">STRUCTURE / DISPERSED</span></div>
     <div class="art-center">
      <div class="art-orbit art-orbit-a"></div><div class="art-orbit art-orbit-b"></div>
-     <div class="art-matrix">
-      <span class="art-tile art-tile-1">△</span><span class="art-tile art-tile-2">↗</span><span class="art-tile art-tile-3">◇</span>
-      <span class="art-tile art-tile-4">×</span><span class="art-tile art-tile-core">?</span><span class="art-tile art-tile-6">＋</span>
-      <span class="art-tile art-tile-7">◁</span><span class="art-tile art-tile-8">∞</span><span class="art-tile art-tile-9">◯</span>
-     </div>
+     <div class="block-scene" id="blockScene" data-mode="scattered" data-pattern="none"></div>
      <div class="art-index">A / 01<br>—<br>AXIOM</div>
     </div>
     <div class="art-bottom"><span>NOT A TEST OF MEMORY.<br>A TEST OF POSSIBILITY.</span><span class="art-coordinates">35° 41′ 22″ N<br>THINK OUTSIDE</span></div>
    </div>
   </div>
   <div class="filters">
-   <div class="filter-heading"><span class="filter-serial">02 / INTERACTIVE LAB</span><strong>Choose your<br><em>experiment.</em></strong></div>
+   <div class="filter-heading"><span class="filter-serial">02 / INTERACTIVE LAB</span><strong>Build your<br><em>experiment.</em></strong><span class="composition-hint">選擇題型，讓散落積木重新組合</span></div>
    <div class="control"><label for="categoryFilter">01 / 選擇題型</label><select id="categoryFilter"></select></div>
    <div class="control"><label>02 / 選擇難度</label>
     <div class="chip-row" id="difficultyFilter" role="group" aria-label="難度篩選">
@@ -93,6 +90,7 @@
   <div class="result-action"><button type="button" class="btn btn-outline" id="reviewButton">查看解答與推理</button><button type="button" class="btn btn-primary" id="retryButton">返回題庫</button></div>
  </section>
 </div>
+<div id="blockLaunch" class="block-launch" data-phase="scatter" aria-hidden="true" hidden><span class="launch-word">CONNECT THE IMPOSSIBLE.</span><span class="launch-sub">AXIOM · ENTERING THE LAB</span></div>
 <dialog id="dialog" aria-labelledby="dialogTitle">
  <div class="dialog-top"><h2 id="dialogTitle">詳細說明</h2><button type="button" class="btn btn-outline" id="dialogClose" aria-label="關閉視窗">✕</button></div>
  <div class="dialog-inner"><p id="dialogText"></p><img id="dialogImage" alt="放大的推理題圖" hidden></div>

@@ -9,9 +9,9 @@ try{
   const faults=[];
   page.on("pageerror",e=>faults.push(e.message));
   await page.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
-  assert.equal(await page.evaluate(()=>window.AXIOM_QA?.build),"V0.6.0-20261009",
+  assert.equal(await page.evaluate(()=>window.AXIOM_QA?.build),"V0.7.0-20261009",
     "stale browser JavaScript in "+width+"x"+height);
-  assert((await page.locator(".tag").innerText()).includes("V0.6"),"stale HTML in "+width+"x"+height);
+  assert((await page.locator(".tag").innerText()).includes("V0.7"),"stale HTML in "+width+"x"+height);
   await page.locator("#startTen").click();
   await page.waitForSelector("#game.is-active");
   await page.locator(".answer img").first().waitFor({state:"visible"});

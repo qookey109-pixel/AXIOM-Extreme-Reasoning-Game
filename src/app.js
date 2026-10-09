@@ -1,10 +1,12 @@
 import {PUZZLES,CATEGORIES,BANK_META} from "./questions.js";
 import {renderFigure,renderChoiceImage} from "./graphics.js";
-export const APP_BUILD="V0.6.0-20261009";
+import {createBlockInteraction} from "./block-interaction.js";
+export const APP_BUILD="V0.7.0-20261009";
 const $=id=>document.getElementById(id);
 const screens=["home","game","results"];
 const state={pool:[],index:0,selected:-1,answered:[],hints:0,hinted:false,hintStep:0,started:0,questionStart:0,correct:0,mode:10,category:"全部",difficulty:"全部"};
 const saveKey="axiom-v04-completed";
+const blockArt=createBlockInteraction();
 function setScreen(name){
  screens.forEach(id=>$(id).classList.toggle("is-active",id===name));
  document.body.dataset.screen=name;
@@ -26,9 +28,9 @@ function setChoices(){
   const option=document.createElement("option");option.value=name;option.textContent=name;frag.appendChild(option);
  });
  categories.appendChild(frag);
- categories.onchange=()=>{state.category=categories.value;updateEstimate();};
+ categories.onchange=()=>{state.category=categories.value;updateEstimate();blockArt.recompose(state.category,state.difficulty);};
  [...$("difficultyFilter").children].forEach(btn=>{
-  btn.onclick=()=>{state.difficulty=btn.dataset.value;selectChip($("difficultyFilter"),state.difficulty);updateEstimate();};
+  btn.onclick=()=>{state.difficulty=btn.dataset.value;selectChip($("difficultyFilter"),state.difficulty);updateEstimate();blockArt.recompose(state.category,state.difficulty);};
  });
  updateEstimate();
 }
@@ -65,7 +67,7 @@ function start(mode){
  }else deck=shuffled(a);
  state.pool=deck;state.index=0;state.answered=[];state.hints=0;state.hinted=false;state.hintStep=0;state.correct=0;
  state.mode=deck.length;state.started=Date.now();state.questionStart=Date.now();
- setScreen("game");render();
+ setScreen("game");render();blockArt.launch();
 }
 function displayClue(q){
  const hasClues=Array.isArray(q.clues)&&q.clues.length>0;
@@ -203,7 +205,7 @@ $("zoomButton").onclick=()=>{
  else openDialog("放大題圖","", $("mainFigure").src);
 };
 $("reviewButton").onclick=review;
-$("retryButton").onclick=()=>setScreen("home");
+$("retryButton").onclick=()=>{blockArt.reset();setScreen("home");};
 $("dialogClose").onclick=closeDialog;
 $("dialog").addEventListener("click",e=>{if(e.target===$("dialog"))closeDialog();});
 document.addEventListener("keydown",e=>{
@@ -218,4 +220,4 @@ setInterval(()=>{
 setChoices();
 const counter=$("bankCounter");
 counter.textContent=BANK_META.count+" QUESTIONS · "+BANK_META.categoryCount+" DOMAINS";
-window.AXIOM_QA={bank:PUZZLES,meta:BANK_META,build:APP_BUILD,state,render,renderFigure,renderChoiceImage};
+window.AXIOM_QA={bank:PUZZLES,meta:BANK_META,build:APP_BUILD,state,render,renderFigure,renderChoiceImage,blockArt};

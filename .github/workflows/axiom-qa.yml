@@ -36,6 +36,7 @@ jobs:
           node --check src/verification.js
           node --check src/graphics.js
           node --check src/app.js
+          node --check src/block-interaction.js
           node --check src/candidate-graphics.js
           node --check src/promotion-candidates.js
           npm test
@@ -54,6 +55,8 @@ jobs:
         run: node scripts/check-promotion-visual.mjs
       - name: Editorial design QA across five viewports
         run: node scripts/check-art-direction.mjs
+      - name: Puzzle blocks choreography and portal QA
+        run: node scripts/check-block-interaction.mjs
       - name: Upload visual audit captures
         if: always()
         uses: actions/upload-artifact@v4
