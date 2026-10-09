@@ -57,3 +57,13 @@ Pull Request workflow `.github/workflows/axiom-qa.yml`：Node logic test + headl
 - 支援鍵盤、觸控、`focus-visible` 及 `prefers-reduced-motion`，不產生不必要的 GPU 密集循環。
 - `scripts/check-art-direction.mjs` 對 320×568、390×844、667×375、768×1024 與 1440×900 的首頁與遊戲做實際 browser QA，驗證選項點擊、無捲動、標題不裁切、圖片可見及降動態要求，並上傳截圖。
 - 此版以視覺設計競賽標準為品質方向，不代表得到評審認可、入圍或獲獎。
+
+## V0.7 — THE MIND IN PIECES：互動積木世界
+
+- 首頁主視覺從靜態矩陣更新為 12 個由 CSS / DOM 繪製的彩色立體積木，初始分散在角落，不預先組合。
+- 選擇 **題型** 時根據分類重組；選擇 **Hard / Expert / Ω** 時再次組成不同排列，共有五套幾何組裝語法；每塊積木保留獨立顏色、符號、彈性及交錯動效。
+- 點擊開始挑戰時，積木自畫面不同角落飛入中央，組成入口矩陣再散去，解題畫面已開始載入；動畫不阻擋選項或鍵盤。
+- 行動裝置保留角落迷你積木，但手機首頁與遊戲仍維持無文件捲軸原則。短橫屏隱藏裝飾以保留閱讀空間。
+- 動態由 transform / CSS transition 與少量事件驅動完成，沒有持續執行的動畫迴圈；`prefers-reduced-motion` 會關閉組裝入場動畫與所有積木過渡。
+- `scripts/check-block-interaction.mjs` 以 Chromium 驗證初始散落、分類／難度重排、啟動入口轉場、答題不中斷、行動裝置／桌機及減少動態偏好，並保存初始、組裝、關卡截圖。
+- 既有 62 題題庫、Solver、答案、3 個未發布 Ω 候選均維持原狀。
