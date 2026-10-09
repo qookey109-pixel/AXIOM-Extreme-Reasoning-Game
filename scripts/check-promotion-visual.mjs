@@ -45,6 +45,7 @@ try{
      card.append(img,label);cards.append(card);imgNodes.push(img);
     });
     document.body.append(title,prompt,main,clues,cards);
+    await Promise.all([main,...imgNodes].map(img=>img.decode()));
     // Canvas pixel-level nonempty check rather than only naturalWidth or alt labels.
     function countInk(img){
      const cvs=document.createElement("canvas");cvs.width=img.naturalWidth;cvs.height=img.naturalHeight;
