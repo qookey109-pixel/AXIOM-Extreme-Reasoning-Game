@@ -89,12 +89,12 @@ try{
   assert.deepEqual(errors,[],vp.name+" JS errors");
   records.push({viewport:vp.name,home,game});
   await page.close();
-  console.log("PASS clean V0.8.3 "+vp.name+": three highlighted panels absent, full art and controls playable");
+  console.log("PASS clean V0.9.0 "+vp.name+": three highlighted panels absent, full art and controls playable");
  }
  const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:"reduce"});
  await reduced.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
  assert.equal(await reduced.locator("#home").evaluate(x=>getComputedStyle(x).animationName),"none");
  await reduced.close();
 }finally{await browser.close();}
-await writeFile("visual-qa/clean-panel-audit.json",JSON.stringify({build:"V0.8.3",records},null,2)+"\n");
-console.log("AXIOM V0.8.3 full-bleed removal QA PASS: "+records.length+" viewports");
+await writeFile("visual-qa/clean-panel-audit.json",JSON.stringify({build:"V0.9.0",records},null,2)+"\n");
+console.log("AXIOM V0.9.0 full-bleed removal QA PASS: "+records.length+" viewports");
