@@ -48,3 +48,12 @@ Pull Request workflow `.github/workflows/axiom-qa.yml`：Node logic test + headl
 - 研究題**不加入正式 `PUZZLES`**，`published:false`，`render.ready:false`，人工易讀性與實際難度驗收仍待完成；單純機器驗證通過不等於可直接公開。
 - Necessary Clue 候選改用 4 條線索的原型 `NC-P01`，避免 5 條線索僅有 4 個答案選項的歧義。
 - `npm test` 同時執行 **62 題正常遊戲 QA**、高階 prototype QA、資料快照同步檢查、與研究候選的 machine promotion gate。
+
+## V0.6 · Cognitive Atlas — Visual Identity
+
+- 全站視覺重新設計：light editorial / geometric exhibition，明亮象牙白、鈷藍、珊瑚紅與少量檸檬黃，明確的原創辨識度；不依賴任何外部圖片、外部字型或游標跟隨特效。
+- 首頁雙欄展覽型版面，右側為 CSS-only 3×3 幾何動態圖陣；手機與低高度橫屏自動收斂為精簡的全視窗文字首頁。
+- 遊戲的原始 Canvas 圖像與 62 題正確答案完全不變；重新設計選項可辨識度、選取狀態、圖像舞台、進度條、提示及結果頁層級。
+- 支援鍵盤、觸控、`focus-visible` 及 `prefers-reduced-motion`，不產生不必要的 GPU 密集循環。
+- `scripts/check-art-direction.mjs` 對 320×568、390×844、667×375、768×1024 與 1440×900 的首頁與遊戲做實際 browser QA，驗證選項點擊、無捲動、標題不裁切、圖片可見及降動態要求，並上傳截圖。
+- 此版以視覺設計競賽標準為品質方向，不代表得到評審認可、入圍或獲獎。
