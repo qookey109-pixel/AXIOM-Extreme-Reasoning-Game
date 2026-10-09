@@ -60,6 +60,8 @@ jobs:
         run: node scripts/check-block-interaction.mjs
       - name: Liquid Logic media and readability QA
         run: node scripts/check-liquid-logic.mjs
+      - name: Confirm zero seams and floating controls across five viewports
+        run: node scripts/check-no-seam.mjs
       - name: Upload visual audit captures
         if: always()
         uses: actions/upload-artifact@v4

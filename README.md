@@ -94,3 +94,9 @@ The remaining liquid-light + 12 animated block sculpture expands to occupy the c
 ## V0.8.2 — One seamless liquid stage
 
 The liquid-light scene, animated 12-block sculpture and three practical controls now share **one hero container and one continuous visual surface**. The filter dock is integrated as a translucent lower shelf over the same full-bleed WebGL canvas; there is no separate bottom panel or separating gap. Phone screens reorganize the dock into two columns plus full-width action buttons. On short landscape screens the sculpture remains visible without consuming the control dock. No extra header or editorial heading panels return. Published question/solver count stays at 62.
+
+## V0.8.3 — Truly Seamless: floating puzzle instruments
+
+The previous V0.8.2 implementation retained a conspicuous full-width translucent shelf (a horizontal visual boundary) despite sharing one canvas. **V0.8.3 removes that shelf completely.** The hero and WebGL artwork now occupy the entire viewport, including the area behind the playable controls. The three control groups become independent floating instruments over the liquid field, with no shared opaque/blurred background, horizontal border, or separate row. The sculpture is compositionally centered above the floating controls without interrupting the continuous background. On phones, the controls form two compact floating groups plus independently floating challenge buttons, still over the same artwork. The artwork no longer displays its decorative bottom line.
+ 
+A dedicated `scripts/check-no-seam.mjs` browser audit checks actual computed CSS, full-height artwork coverage, geometrical overlap, contrast, focus and touch usability across mobile/desktop/landscape. All 62 puzzles, solutions, hints and Ω candidates remain untouched.

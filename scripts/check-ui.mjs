@@ -9,7 +9,7 @@ try{
   const faults=[];
   page.on("pageerror",e=>faults.push(e.message));
   await page.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
-  assert.equal(await page.evaluate(()=>window.AXIOM_QA?.build),"V0.8.2-20261009",
+  assert.equal(await page.evaluate(()=>window.AXIOM_QA?.build),"V0.8.3-20261009",
     "stale browser JavaScript in "+width+"x"+height);
   assert.equal(await page.locator(".app-header, .hero-content, .filter-heading").count(),0,"requested panels still present "+width+"x"+height);
   await page.locator("#startTen").click();

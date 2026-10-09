@@ -32,6 +32,12 @@ try{
     count:document.querySelectorAll(".filters>.control").length,
     stageCount:document.querySelectorAll("#blockScene .block-piece").length,
     liquid:!!document.querySelector("#liquidField"),
+    seam:{
+     background:getComputedStyle(document.querySelector(".filters")).backgroundColor,
+     image:getComputedStyle(document.querySelector(".filters")).backgroundImage,
+     border:getComputedStyle(document.querySelector(".filters")).borderTopWidth,
+     position:getComputedStyle(document.querySelector(".filters")).position
+    },
     app:box(".app")
    };
   });
@@ -43,16 +49,21 @@ try{
   assert.equal(home.stageCount,12,"twelve blocks must remain");
   assert(home.liquid&&home.artVisible,"full artwork must remain visible");
   assert(home.hero.width>0&&home.hero.height>0,"hero collapsed");
-  assert(Math.abs(home.art.width-home.hero.width)<3&&home.art.height>100,
-   vp.name+" artwork should span full width above integrated control dock");
+  assert(Math.abs(home.art.width-home.hero.width)<3&&Math.abs(home.art.height-home.hero.height)<3,
+   vp.name+" art must cover every pixel behind the floating controls");
   assert(home.docWidth<=vp.width+1&&home.docHeight<=vp.height+1,vp.name+" home overflow");
   for(const key of ["hero","art","filters","start","full"]){
    const b=home[key];assert(b&&b.x>=-1&&b.right<=vp.width+1&&b.y>=-1&&b.bottom<=vp.height+1,
    vp.name+" clipped "+key+" "+JSON.stringify(b));
   }
   assert(home.hero.y-home.app.y<18,vp.name+" header-sized empty row remains");
-  assert(home.filters.y>=home.art.bottom-2&&home.filters.bottom<=home.hero.bottom+2,
-   vp.name+" controls are not physically integrated into same hero");
+  assert(home.filters.y<home.art.bottom-25&&home.filters.bottom<=home.hero.bottom+2,
+   vp.name+" controls must OVERLAP the liquid artwork (not follow it)");
+  assert.equal(home.seam.position,"absolute",vp.name+" controls must float");
+  assert.equal(home.seam.image,"none",vp.name+" shared background strip persists");
+  assert.equal(home.seam.border,"0px",vp.name+" horizontal separator persists");
+  assert(["transparent","rgba(0, 0, 0, 0)"].includes(home.seam.background),
+   vp.name+" control dock is not transparent: "+home.seam.background);
   await page.screenshot({path:"visual-qa/clean-"+vp.name+"-home.png",animations:"disabled"});
   await page.locator("#startTen").click();
   await page.waitForSelector("#game.is-active");
@@ -78,12 +89,12 @@ try{
   assert.deepEqual(errors,[],vp.name+" JS errors");
   records.push({viewport:vp.name,home,game});
   await page.close();
-  console.log("PASS clean V0.8.1 "+vp.name+": three highlighted panels absent, full art and controls playable");
+  console.log("PASS clean V0.8.3 "+vp.name+": three highlighted panels absent, full art and controls playable");
  }
  const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:"reduce"});
  await reduced.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
  assert.equal(await reduced.locator("#home").evaluate(x=>getComputedStyle(x).animationName),"none");
  await reduced.close();
 }finally{await browser.close();}
-await writeFile("visual-qa/clean-panel-audit.json",JSON.stringify({build:"V0.8.1",records},null,2)+"\n");
-console.log("AXIOM V0.8.1 full-bleed removal QA PASS: "+records.length+" viewports");
+await writeFile("visual-qa/clean-panel-audit.json",JSON.stringify({build:"V0.8.3",records},null,2)+"\n");
+console.log("AXIOM V0.8.3 full-bleed removal QA PASS: "+records.length+" viewports");
