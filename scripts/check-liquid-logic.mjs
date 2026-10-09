@@ -32,7 +32,7 @@ try{
     sceneWidth:figure.getBoundingClientRect().width,heroWidth:hero.getBoundingClientRect().width,
     dockInside:hero.contains(document.querySelector(".filters"))};
   });
-  assert.equal(before.pageBuild,"V0.8.2-20261009",size.label+" wrong build");
+  assert.equal(before.pageBuild,"V0.8.3-20261009",size.label+" wrong build");
   assert(before.canvas,size.label+" missing liquid field");
   assert(["webgl","fallback"].includes(before.mode),size.label+" missing shader/fallback");
   assert.equal(before.blocks,12,size.label+" lost assembly pieces");
@@ -92,4 +92,4 @@ try{
  await reduced.close();
 }finally{await browser.close();}
 await writeFile("visual-qa/liquid-logic.json",JSON.stringify({viewports:records.length,reducedMotion:true,records},null,2)+"\n");
-console.log("AXIOM V0.8.1 Liquid Logic PASS: "+records.length+" viewports and accessible low-motion state");
+console.log("AXIOM V0.8.3 Liquid Logic PASS: "+records.length+" viewports and accessible low-motion state");
