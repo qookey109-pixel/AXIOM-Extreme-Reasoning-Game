@@ -5,6 +5,8 @@ on:
       - 'index.html'
       - 'src/**'
       - 'scripts/check-*.mjs'
+      - 'scripts/sync-question-bank.mjs'
+      - 'question_bank.json'
       - 'package.json'
       - '.github/workflows/axiom-qa.yml'
   push:
@@ -43,12 +45,12 @@ jobs:
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/axiom-server.log 2>&1 &
           sleep 2
           node scripts/check-ui.mjs
-      - name: Sweep all 50 visual questions and capture screenshots
+      - name: Sweep all 62 visual questions and capture screenshots
         run: node scripts/check-visual.mjs
       - name: Upload visual audit captures
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: axiom-50-puzzle-visual-audit
+          name: axiom-62-puzzle-visual-audit
           path: visual-qa/
           if-no-files-found: warn
