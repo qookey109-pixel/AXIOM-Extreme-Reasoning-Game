@@ -29,15 +29,17 @@ try{
     artDisplay:getComputedStyle(figure).display,
     removedPanels:[".app-header",".hero-content",".filter-heading"].every(s=>!document.querySelector(s)),
     pageBuild:window.AXIOM_QA.build,blocks:document.querySelectorAll(".block-piece").length,
-    sceneWidth:figure.getBoundingClientRect().width,heroWidth:hero.getBoundingClientRect().width};
+    sceneWidth:figure.getBoundingClientRect().width,heroWidth:hero.getBoundingClientRect().width,
+    dockInside:hero.contains(document.querySelector(".filters"))};
   });
-  assert.equal(before.pageBuild,"V0.8.1-20261009",size.label+" wrong build");
+  assert.equal(before.pageBuild,"V0.8.2-20261009",size.label+" wrong build");
   assert(before.canvas,size.label+" missing liquid field");
   assert(["webgl","fallback"].includes(before.mode),size.label+" missing shader/fallback");
   assert.equal(before.blocks,12,size.label+" lost assembly pieces");
   assert.equal(before.heroRadius,"0px",size.label+" expected unframed editorial art");
   assert(before.removedPanels,size.label+" old panels still present");
-  assert(Math.abs(before.sceneWidth-before.heroWidth)<3,size.label+" artwork must fill full hero");
+  assert(Math.abs(before.sceneWidth-before.heroWidth)<3,size.label+" artwork must span full stage");
+  assert(before.dockInside,size.label+" controls must live inside liquid hero");
   assert(before.htmlWidth<=size.width+1&&before.htmlHeight<=size.height+1,size.label+" home overflow");
   await page.screenshot({path:"visual-qa/liquid-"+size.label+"-home.png",animations:"disabled"});
   const options=await page.locator("#categoryFilter option").allTextContents();

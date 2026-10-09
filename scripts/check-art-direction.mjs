@@ -43,14 +43,16 @@ try{
   assert.equal(home.stageCount,12,"twelve blocks must remain");
   assert(home.liquid&&home.artVisible,"full artwork must remain visible");
   assert(home.hero.width>0&&home.hero.height>0,"hero collapsed");
-  assert(Math.abs(home.art.width-home.hero.width)<3&&Math.abs(home.art.height-home.hero.height)<3,
-   vp.name+" liquid artwork should occupy the entire hero");
+  assert(Math.abs(home.art.width-home.hero.width)<3&&home.art.height>100,
+   vp.name+" artwork should span full width above integrated control dock");
   assert(home.docWidth<=vp.width+1&&home.docHeight<=vp.height+1,vp.name+" home overflow");
   for(const key of ["hero","art","filters","start","full"]){
    const b=home[key];assert(b&&b.x>=-1&&b.right<=vp.width+1&&b.y>=-1&&b.bottom<=vp.height+1,
    vp.name+" clipped "+key+" "+JSON.stringify(b));
   }
   assert(home.hero.y-home.app.y<18,vp.name+" header-sized empty row remains");
+  assert(home.filters.y>=home.art.bottom-2&&home.filters.bottom<=home.hero.bottom+2,
+   vp.name+" controls are not physically integrated into same hero");
   await page.screenshot({path:"visual-qa/clean-"+vp.name+"-home.png",animations:"disabled"});
   await page.locator("#startTen").click();
   await page.waitForSelector("#game.is-active");
