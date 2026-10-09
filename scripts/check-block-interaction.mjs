@@ -30,7 +30,7 @@ try{
   assert.equal(new Set(start.coords.map(x=>x.join(","))).size,12,vp.name+" scattered corners must be distinct");
   assert(start.duration!=="0s",vp.name+" pieces missing transition");
   assert(start.bodyWidth<=vp.width+1&&start.bodyHeight<=vp.height+1,vp.name+" home overflow");
-  if(vp.width>vp.height)assert.equal(start.visible,false,vp.name+" compact landscape should not crowd");
+  if(vp.height<=600&&vp.width>vp.height)assert.equal(start.visible,false,vp.name+" compact landscape should not crowd");
   else assert.equal(start.visible,true,vp.name+" mobile/desktop artwork missing");
   await snap(page,vp.name+"-scattered");
   await page.selectOption("#categoryFilter","圖形缺項");
