@@ -21,7 +21,7 @@ try{
   const questions=await page.evaluate(()=>window.AXIOM_QA.bank.map(q=>({
    id:q.id,category:q.category,figure:q.figure.kind,clueCount:q.clues?.length||0
   })));
-  assert.equal(questions.length,50,"full catalog must contain 50 puzzles");
+  assert.equal(questions.length,62,"full catalog must contain 50 puzzles");
   const screenshotCategories=new Set();
   for(const q of questions){
    await page.evaluate(id=>{
@@ -94,7 +94,7 @@ try{
 console.log("AXIOM visual QA: "+JSON.stringify({
  counts,totalChoices,failures:failures.length,captureDirectory:folder
 }));
-assert.equal(counts.mobile,50,"mobile must render all 50 puzzles");
-assert.equal(counts.desktop,50,"desktop must render all 50 puzzles");
-assert.equal(totalChoices,400,"must inspect 4 choices x 50 puzzles x 2 viewports");
+assert.equal(counts.mobile,62,"mobile must render all 50 puzzles");
+assert.equal(counts.desktop,62,"desktop must render all 50 puzzles");
+assert.equal(totalChoices,496,"must inspect 4 choices x 62 puzzles x 2 viewports");
 assert.deepEqual(failures,[],"blank images, rendering faults, or layout issues found");

@@ -380,7 +380,8 @@ function verifyRotation(q,m){
   return true;
  }
  if(q.figure?.kind!=="rotation"||!Array.isArray(q.answerSpecs))return false;
- const target=q.answerSpecs.filter(x=>x.kind==="rotation"&&x.angle===q.figure.degrees&&x.mirror===false);
+ const requiredMirror=q.figure.mirror===true;
+ const target=q.answerSpecs.filter(x=>x.kind==="rotation"&&x.angle===q.figure.degrees&&x.mirror===requiredMirror);
  m.machine.solver_verified=target.length===1&&q.answerSpecs[q.answer]===target[0];
  m.machine.answer={scope:"explicit_transform",count:target.length,unique:target.length===1,value:q.answerSpecs[q.answer]};
  m.machine.semantic_solution_count=target.length;

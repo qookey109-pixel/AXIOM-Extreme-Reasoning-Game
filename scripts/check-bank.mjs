@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import {PUZZLES,CATEGORIES,BANK_META} from "../src/questions.js";
-assert.equal(PUZZLES.length,50);
+assert.equal(PUZZLES.length,62);
 assert.equal(CATEGORIES.length,12);
-assert.deepEqual(BANK_META.difficultyCounts,{Hard:18,Expert:22,"Ω":10});
+assert.deepEqual(BANK_META.difficultyCounts,{Hard:20,Expert:29,"Ω":13});
 const ids=new Set();
 for(const q of PUZZLES){
  assert(!ids.has(q.id),"duplicate id "+q.id);ids.add(q.id);
@@ -34,7 +34,12 @@ for(const q of PUZZLES){
  }
 }
 assert.equal(Object.keys(BANK_META.categoryCounts).length,12);
+assert.deepEqual(
+ [...PUZZLES].filter(q=>q.id.match(/^(P0[67]|C0[67]|R05|M0[67]|S06|ROT05|MOVE05|COM05|ORD05)$/)).map(q=>q.id).sort(),
+ ["P06","P07","C06","C07","R05","M06","M07","S06","ROT05","MOVE05","COM05","ORD05"].sort(),
+ "exactly 12 new release IDs must exist"
+);
 assert(Object.values(BANK_META.categoryCounts).every(n=>n>=3));
 assert(!PUZZLES.find(q=>q.id==="ROT01").prompt.includes("請選 B"),"answer leaked in prompt");
-console.log(JSON.stringify({status:"PASS",version:BANK_META.version,questionCount:50,
+console.log(JSON.stringify({status:"PASS",version:BANK_META.version,questionCount:62,
   tiers:BANK_META.difficultyCounts,categories:BANK_META.categoryCounts},null,2));
