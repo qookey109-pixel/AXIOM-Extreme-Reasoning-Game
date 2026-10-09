@@ -7,19 +7,20 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta name="description" content="AXIOM 極限推理實驗室 — 12 大類、62 道 Hard / Expert / Ω 原創圖形與邏輯挑戰。">
 <title>AXIOM — Extreme Reasoning Game</title>
-<link rel="stylesheet" href="src/styles.css?release=axiom-v081-20261009">
-<link rel="stylesheet" href="src/art-direction.css?release=axiom-v081-20261009">
-<link rel="stylesheet" href="src/assembly.css?release=axiom-v081-20261009">
-<link rel="stylesheet" href="src/liquid-logic.css?release=axiom-v081-20261009">
-<link rel="stylesheet" href="src/full-bleed.css?release=axiom-v081-20261009">
-<script type="module" src="src/app.js?release=axiom-v081-20261009"></script>
+<link rel="stylesheet" href="src/styles.css?release=axiom-v082-20261009">
+<link rel="stylesheet" href="src/art-direction.css?release=axiom-v082-20261009">
+<link rel="stylesheet" href="src/assembly.css?release=axiom-v082-20261009">
+<link rel="stylesheet" href="src/liquid-logic.css?release=axiom-v082-20261009">
+<link rel="stylesheet" href="src/full-bleed.css?release=axiom-v082-20261009">
+<link rel="stylesheet" href="src/unified-stage.css?release=axiom-v082-20261009">
+<script type="module" src="src/app.js?release=axiom-v082-20261009"></script>
 </head>
 <body data-screen="home">
 <div class="app">
  <section class="page is-active" id="home" aria-label="開始挑戰">
   <div class="hero">
+   <canvas id="liquidField" aria-hidden="true"></canvas>
    <div class="hero-art" aria-hidden="true">
-    <canvas id="liquidField" aria-hidden="true"></canvas>
     <div class="art-top"><span>FIELD STUDY / 002</span><span class="structure-count" id="assemblyStatus">STRUCTURE / DISPERSED</span></div>
     <div class="art-center">
      <div class="art-orbit art-orbit-a"></div><div class="art-orbit art-orbit-b"></div>
@@ -28,8 +29,7 @@
     </div>
     <div class="art-bottom"><span>NOT A TEST OF MEMORY.<br>A TEST OF POSSIBILITY.</span><span class="art-coordinates">35° 41′ 22″ N<br>THINK OUTSIDE</span></div>
    </div>
-  </div>
-  <div class="filters">
+   <div class="filters">
    <div class="control"><label for="categoryFilter">01 / 選擇題型</label><select id="categoryFilter"></select></div>
    <div class="control"><label>02 / 選擇難度</label>
     <div class="chip-row" id="difficultyFilter" role="group" aria-label="難度篩選">
