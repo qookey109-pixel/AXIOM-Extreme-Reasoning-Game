@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'index.html'
+      - 'src/art-direction.css'
       - 'src/**'
       - 'scripts/check-*.mjs'
       - 'scripts/sync-question-bank.mjs'
@@ -51,6 +52,8 @@ jobs:
         run: node scripts/check-visual.mjs
       - name: Preview three unpublished Omega visual candidates
         run: node scripts/check-promotion-visual.mjs
+      - name: Editorial design QA across five viewports
+        run: node scripts/check-art-direction.mjs
       - name: Upload visual audit captures
         if: always()
         uses: actions/upload-artifact@v4

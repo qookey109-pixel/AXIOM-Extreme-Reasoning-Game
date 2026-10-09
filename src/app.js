@@ -1,6 +1,6 @@
 import {PUZZLES,CATEGORIES,BANK_META} from "./questions.js";
 import {renderFigure,renderChoiceImage} from "./graphics.js";
-export const APP_BUILD="V0.5.2-20261009";
+export const APP_BUILD="V0.6.0-20261009";
 const $=id=>document.getElementById(id);
 const screens=["home","game","results"];
 const state={pool:[],index:0,selected:-1,answered:[],hints:0,hinted:false,hintStep:0,started:0,questionStart:0,correct:0,mode:10,category:"全部",difficulty:"全部"};
