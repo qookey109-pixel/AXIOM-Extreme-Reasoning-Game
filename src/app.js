@@ -1,6 +1,6 @@
 import {PUZZLES,CATEGORIES,BANK_META} from "./questions.js";
 import {renderFigure,renderChoiceImage} from "./graphics.js";
-export const APP_BUILD="V0.5.0-20261007";
+export const APP_BUILD="V0.5.2-20261009";
 const $=id=>document.getElementById(id);
 const screens=["home","game","results"];
 const state={pool:[],index:0,selected:-1,answered:[],hints:0,hinted:false,hintStep:0,started:0,questionStart:0,correct:0,mode:10,category:"全部",difficulty:"全部"};
@@ -40,7 +40,7 @@ function updateEstimate(){
  $("availableCount").textContent=len+" 道已收錄題目";
  $("startTen").disabled=len===0;
  $("startAll").disabled=len===0;
- $("startAll").textContent=len===50?"完整試煉 · 50 題":"挑戰此題組 · "+len+" 題";
+ $("startAll").textContent=len===BANK_META.count?"完整試煉 · "+BANK_META.count+" 題":"挑戰此題組 · "+len+" 題";
 }
 function shuffled(list){
  const a=list.slice();
