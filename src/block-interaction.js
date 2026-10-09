@@ -20,7 +20,14 @@ const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
 function hash(text){let h=2166136261;for(const ch of text){h=Math.imul(h^ch.charCodeAt(0),16777619);}return h>>>0;}
 function piece(index,cssClass){
  const s=document.createElement("span");s.className=cssClass+" tone-"+sceneColors[index];
- s.textContent=marks[index];s.dataset.piece=String(index+1);s.style.setProperty("--order",index);
+ // Physical brick geometry: opaque molded shell, raised four-stud top and embossed marking.
+ // CSS owns material/lighting so no images, Three.js or external models are needed.
+ const face=document.createElement("span");face.className="brick-face";
+ const studs=document.createElement("span");studs.className="brick-studs";
+ for(let n=0;n<4;n++){const stud=document.createElement("i");stud.className="brick-stud";studs.append(stud);}
+ const glyph=document.createElement("span");glyph.className="brick-glyph";glyph.textContent=marks[index];
+ face.append(studs,glyph);s.append(face);
+ s.dataset.piece=String(index+1);s.dataset.material="molded-polymer";s.style.setProperty("--order",index);
  return s;
 }
 export function createBlockInteraction(){

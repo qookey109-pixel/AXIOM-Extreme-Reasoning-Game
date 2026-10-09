@@ -52,11 +52,14 @@ try{
    size.name+" liquid shader does not extend to controls");
   assert(Math.abs(result.hero.w-result.art.w)<=2&&Math.abs(result.hero.h-result.art.h)<=2,
    size.name+" art should cover full hero, not only upper region");
-  assert(result.controls.y>result.hero.y+25&&result.controls.y<result.art.bottom-40,
-   size.name+" floating controls still occupy separate row");
-  assert(result.controls.bottom<=result.hero.bottom+1&&result.controls.bottom>=result.hero.bottom-53,
-   size.name+" floating controls displaced");
+  assert(Math.abs(result.controls.y-result.hero.y)<=2,
+   size.name+" entire interaction layer must cover full orbital stage");
+  assert(Math.abs(result.controls.h-result.hero.h)<=2,
+   size.name+" interactive field must have no separate bottom row");
+  assert(Math.abs(result.controls.bottom-result.hero.bottom)<=2,
+   size.name+" interaction plane should extend to stage bottom");
   assert.equal(result.artBottomCaption,"none",size.name+" ornamental divider still present");
+  assert.equal(result.cardBoxes.length,3,"three instrument clusters");
   assert(result.clip.w<=size.width+1&&result.clip.h<=size.height+1,size.name+" page scroll/overflow");
   for(const [i,card] of result.cardBoxes.entries()){
    assert(card.x>=-1&&card.right<=size.width+1&&card.y>=-1&&card.bottom<=size.height+1,
@@ -97,5 +100,5 @@ try{
  assert.equal(await reduced.locator("#blockLaunch").isHidden(),true);
  await reduced.close();
 }finally{await browser.close();}
-await writeFile("visual-qa/no-seam-audit.json",JSON.stringify({build:"V0.8.3",viewports:records.length,records},null,2)+"\n");
-console.log("AXIOM V0.8.3 seamless-scene QA PASS: "+records.length+" viewport pairs and reduced motion");
+await writeFile("visual-qa/no-seam-audit.json",JSON.stringify({build:"V0.9.0",viewports:records.length,records},null,2)+"\n");
+console.log("AXIOM V0.9.0 seamless-scene QA PASS: "+records.length+" viewport pairs and reduced motion");

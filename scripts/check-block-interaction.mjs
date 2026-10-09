@@ -24,7 +24,7 @@ try{
     build:window.AXIOM_QA.build,visible:getComputedStyle(document.querySelector(".hero-art")).display!=="none",
     bodyWidth:document.documentElement.scrollWidth,bodyHeight:document.documentElement.scrollHeight};
   });
-  assert.equal(start.build,"V0.8.3-20261009",vp.name+" stale site");
+  assert.equal(start.build,"V0.9.0-20261009",vp.name+" stale site");
   assert.equal(start.mode,"scattered",vp.name+" should start scattered");
   assert.equal(start.count,12,vp.name+" twelve blocks");
   assert.equal(new Set(start.coords.map(x=>x.join(","))).size,12,vp.name+" scattered corners must be distinct");

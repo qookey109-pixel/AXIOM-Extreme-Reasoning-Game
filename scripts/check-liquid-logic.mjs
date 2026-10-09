@@ -32,7 +32,7 @@ try{
     sceneWidth:figure.getBoundingClientRect().width,heroWidth:hero.getBoundingClientRect().width,
     dockInside:hero.contains(document.querySelector(".filters"))};
   });
-  assert.equal(before.pageBuild,"V0.8.3-20261009",size.label+" wrong build");
+  assert.equal(before.pageBuild,"V0.9.0-20261009",size.label+" wrong build");
   assert(before.canvas,size.label+" missing liquid field");
   assert(["webgl","fallback"].includes(before.mode),size.label+" missing shader/fallback");
   assert.equal(before.blocks,12,size.label+" lost assembly pieces");
