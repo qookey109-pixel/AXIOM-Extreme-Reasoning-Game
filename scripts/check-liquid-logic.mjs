@@ -20,25 +20,24 @@ try{
   const before=await page.evaluate(()=>{
    const canvas=document.querySelector("#liquidField");
    const hero=document.querySelector(".hero"),figure=document.querySelector(".hero-art");
-   const fg=getComputedStyle(document.querySelector(".hero h1"));
    const c=getComputedStyle(hero);
    return {canvas:!!canvas,mode:canvas?.dataset.renderMode,
     mood:canvas?.dataset.mood,canvasWidth:canvas?.width,
     canvasHeight:canvas?.height,htmlWidth:document.documentElement.scrollWidth,
     htmlHeight:document.documentElement.scrollHeight,
     heroRadius:c.borderTopLeftRadius,heroBackground:c.backgroundColor,
-    typeWeight:fg.fontWeight,artDisplay:getComputedStyle(figure).display,
-    edition:document.querySelector(".tag").textContent,
+    artDisplay:getComputedStyle(figure).display,
+    removedPanels:[".app-header",".hero-content",".filter-heading"].every(s=>!document.querySelector(s)),
     pageBuild:window.AXIOM_QA.build,blocks:document.querySelectorAll(".block-piece").length,
-    mainText:document.querySelector(".hero h1").innerText};
+    sceneWidth:figure.getBoundingClientRect().width,heroWidth:hero.getBoundingClientRect().width};
   });
-  assert.equal(before.pageBuild,"V0.8.0-20261009",size.label+" wrong build");
+  assert.equal(before.pageBuild,"V0.8.1-20261009",size.label+" wrong build");
   assert(before.canvas,size.label+" missing liquid field");
   assert(["webgl","fallback"].includes(before.mode),size.label+" missing shader/fallback");
   assert.equal(before.blocks,12,size.label+" lost assembly pieces");
   assert.equal(before.heroRadius,"0px",size.label+" expected unframed editorial art");
-  assert(Number(before.typeWeight)<=500,size.label+" hero typography is too heavy");
-  assert(before.mainText.includes("BREAK")&&before.mainText.includes("PATTERNS"),size.label+" wrong hero");
+  assert(before.removedPanels,size.label+" old panels still present");
+  assert(Math.abs(before.sceneWidth-before.heroWidth)<3,size.label+" artwork must fill full hero");
   assert(before.htmlWidth<=size.width+1&&before.htmlHeight<=size.height+1,size.label+" home overflow");
   await page.screenshot({path:"visual-qa/liquid-"+size.label+"-home.png",animations:"disabled"});
   const options=await page.locator("#categoryFilter option").allTextContents();
@@ -91,4 +90,4 @@ try{
  await reduced.close();
 }finally{await browser.close();}
 await writeFile("visual-qa/liquid-logic.json",JSON.stringify({viewports:records.length,reducedMotion:true,records},null,2)+"\n");
-console.log("AXIOM V0.8 Liquid Logic PASS: "+records.length+" viewports and accessible low-motion state");
+console.log("AXIOM V0.8.1 Liquid Logic PASS: "+records.length+" viewports and accessible low-motion state");
