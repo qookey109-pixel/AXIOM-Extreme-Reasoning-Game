@@ -1,14 +1,16 @@
 {
   "name": "axiom-extreme-reasoning-game",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/check-bank.mjs && node scripts/check-verification.mjs && node scripts/check-advanced-prototypes.mjs && node scripts/sync-question-bank.mjs --check",
+    "test": "node scripts/check-bank.mjs && node scripts/check-verification.mjs && node scripts/check-advanced-prototypes.mjs && node scripts/sync-question-bank.mjs --check && node scripts/check-promotion-gate.mjs",
     "test:bank": "node scripts/check-bank.mjs",
     "test:verification": "node scripts/check-verification.mjs",
     "test:prototypes": "node scripts/check-advanced-prototypes.mjs",
     "test:snapshot": "node scripts/sync-question-bank.mjs --check",
-    "bank:sync": "node scripts/sync-question-bank.mjs --write"
+    "bank:sync": "node scripts/sync-question-bank.mjs --write",
+    "test:promotion": "node scripts/check-promotion-gate.mjs",
+    "test:promotion-visual": "node scripts/check-promotion-visual.mjs"
   }
 }
