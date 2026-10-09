@@ -35,6 +35,8 @@ jobs:
           node --check src/verification.js
           node --check src/graphics.js
           node --check src/app.js
+          node --check src/candidate-graphics.js
+          node --check src/promotion-candidates.js
           npm test
       - name: Install browser testing tool
         run: |
@@ -47,6 +49,8 @@ jobs:
           node scripts/check-ui.mjs
       - name: Sweep all 62 visual questions and capture screenshots
         run: node scripts/check-visual.mjs
+      - name: Preview three unpublished Omega visual candidates
+        run: node scripts/check-promotion-visual.mjs
       - name: Upload visual audit captures
         if: always()
         uses: actions/upload-artifact@v4
