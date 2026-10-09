@@ -1,12 +1,14 @@
 import {PUZZLES,CATEGORIES,BANK_META} from "./questions.js";
 import {renderFigure,renderChoiceImage} from "./graphics.js";
 import {createBlockInteraction} from "./block-interaction.js";
-export const APP_BUILD="V0.7.0-20261009";
+import {createLiquidField} from "./liquid-field.js";
+export const APP_BUILD="V0.8.0-20261009";
 const $=id=>document.getElementById(id);
 const screens=["home","game","results"];
 const state={pool:[],index:0,selected:-1,answered:[],hints:0,hinted:false,hintStep:0,started:0,questionStart:0,correct:0,mode:10,category:"全部",difficulty:"全部"};
 const saveKey="axiom-v04-completed";
 const blockArt=createBlockInteraction();
+const liquidArt=createLiquidField();
 function setScreen(name){
  screens.forEach(id=>$(id).classList.toggle("is-active",id===name));
  document.body.dataset.screen=name;
@@ -28,9 +30,9 @@ function setChoices(){
   const option=document.createElement("option");option.value=name;option.textContent=name;frag.appendChild(option);
  });
  categories.appendChild(frag);
- categories.onchange=()=>{state.category=categories.value;updateEstimate();blockArt.recompose(state.category,state.difficulty);};
+ categories.onchange=()=>{state.category=categories.value;updateEstimate();blockArt.recompose(state.category,state.difficulty);liquidArt.mood(state.category,state.difficulty);};
  [...$("difficultyFilter").children].forEach(btn=>{
-  btn.onclick=()=>{state.difficulty=btn.dataset.value;selectChip($("difficultyFilter"),state.difficulty);updateEstimate();blockArt.recompose(state.category,state.difficulty);};
+  btn.onclick=()=>{state.difficulty=btn.dataset.value;selectChip($("difficultyFilter"),state.difficulty);updateEstimate();blockArt.recompose(state.category,state.difficulty);liquidArt.mood(state.category,state.difficulty);};
  });
  updateEstimate();
 }
@@ -220,4 +222,4 @@ setInterval(()=>{
 setChoices();
 const counter=$("bankCounter");
 counter.textContent=BANK_META.count+" QUESTIONS · "+BANK_META.categoryCount+" DOMAINS";
-window.AXIOM_QA={bank:PUZZLES,meta:BANK_META,build:APP_BUILD,state,render,renderFigure,renderChoiceImage,blockArt};
+window.AXIOM_QA={bank:PUZZLES,meta:BANK_META,build:APP_BUILD,state,render,renderFigure,renderChoiceImage,blockArt,liquidArt};
